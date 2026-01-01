@@ -61,6 +61,7 @@
     grim
     slurp
     hyprpolkitagent
+    swaynotificationcenter
 
     # Dev tools
     gh
