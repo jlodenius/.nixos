@@ -6,7 +6,6 @@
       vim = "nvim";
       bt = "bluetuith";
       lsa = "ls -a";
-      test = "asd";
     };
     interactiveShellInit = ''
       fish_vi_key_bindings
