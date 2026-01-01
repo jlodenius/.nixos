@@ -20,11 +20,11 @@
     # Create these
     download = "${config.home.homeDirectory}/Downloads";
     documents = "${config.home.homeDirectory}/Documents";
+    pictures = "${config.home.homeDirectory}/Pictures";
 
     # And ignore these
     desktop = "${config.home.homeDirectory}";
     music = "${config.home.homeDirectory}";
-    pictures = "${config.home.homeDirectory}";
     videos = "${config.home.homeDirectory}";
     templates = "${config.home.homeDirectory}";
     publicShare = "${config.home.homeDirectory}";
@@ -55,6 +55,8 @@
     vicinae
     bluetuith
     stow
+    grim
+    slurp
 
     # Dev tools
     gh
