@@ -30,6 +30,9 @@
     publicShare = "${config.home.homeDirectory}";
   };
 
+  # Create the Screenshots folder inside Pictures
+  home.file."Pictures/screenshots/.keep".text = "";
+
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
     GPG_TTY = "$(tty)";
