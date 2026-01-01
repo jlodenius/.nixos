@@ -77,9 +77,10 @@
     yazi
 
     # Applications
+    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     google-chrome
     discord
-    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    nordpass
   ];
 
   programs.git = {
