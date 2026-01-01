@@ -14,6 +14,11 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:nix-community/stylix/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -22,6 +27,7 @@
     nixpkgs-unstable,
     home-manager,
     zen-browser,
+    stylix,
   }: let
     system = "x86_64-linux";
     overlay-unstable = final: prev: {
@@ -41,6 +47,8 @@
           ...
         }: {nixpkgs.overlays = [overlay-unstable];})
         ./configuration.nix
+
+        stylix.nixosModules.stylix
 
         # Add Home Manager as a module
         home-manager.nixosModules.home-manager
