@@ -48,6 +48,7 @@
         }: {nixpkgs.overlays = [overlay-unstable];})
         ./configuration.nix
 
+        # System wide theming
         stylix.nixosModules.stylix
 
         # Add Home Manager as a module
@@ -56,7 +57,12 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = {inherit zen-browser;};
-          home-manager.users.jacob = import ./home.nix;
+          home-manager.users.jacob = {
+            imports = [
+              ./home.nix
+              stylix.homeManagerModules.stylix
+            ];
+          };
         }
       ];
     };
