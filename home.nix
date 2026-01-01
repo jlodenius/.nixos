@@ -60,6 +60,7 @@
     stow
     grim
     slurp
+    hyprpolkitagent
 
     # Dev tools
     gh
