@@ -46,6 +46,7 @@
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
     GPG_TTY = "$(tty)";
+    GTK_THEME = "Adwaita:dark";
 
     # XDG & Desktop
     XDG_CONFIG_HOME = "$HOME/.config";
