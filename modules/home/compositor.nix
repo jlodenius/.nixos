@@ -11,6 +11,9 @@
     zen-browser,
     ...
   }: {
+    # Note:
+    # Important that these imports are inside the home-manager and not at top-level, because then it would
+    # be considered system packages
     imports = [
       ./tmux.nix
       ./fish.nix
@@ -77,12 +80,14 @@
       ripgrep
       fd
       yazi
+      wl-clipboard
 
       # Applications
       zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       google-chrome
       discord
       nordpass
+      pavucontrol
     ];
 
     programs.git = {

@@ -23,8 +23,4 @@
       };
     };
   };
-
-  environment.systemPackages = with pkgs; [
-    pavucontrol
-  ];
 }
