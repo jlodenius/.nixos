@@ -7,6 +7,7 @@
   imports = [
     ./modules/tmux.nix
     ./modules/fish.nix
+    ./modules/dark-theme.nix
   ];
 
   home.username = "jacob";

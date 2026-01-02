@@ -8,12 +8,6 @@
     ./modules/audio.nix
   ];
 
-  programs.dconf.profiles.user.databases = [
-    {
-      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-    }
-  ];
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
