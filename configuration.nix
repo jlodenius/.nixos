@@ -37,9 +37,7 @@
   users.users.jacob = {
     shell = pkgs.fish;
     isNormalUser = true;
-    description = "Jacob";
     extraGroups = ["wheel"];
-    packages = with pkgs; [];
   };
 
   # Fonts
