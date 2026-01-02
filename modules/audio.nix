@@ -29,4 +29,8 @@
     powerOnBoot = false; # Keeps bluetooth off until you turn it on
     package = pkgs.bluez5-experimental; # Good for the latest codec support
   };
+
+  environment.systemPackages = with pkgs; [
+    pavucontrol
+  ];
 }
