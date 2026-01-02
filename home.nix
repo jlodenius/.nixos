@@ -30,16 +30,6 @@
     publicShare = "${config.home.homeDirectory}";
   };
 
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-    autoEnable = false;
-
-    # ONLY enable the "core" dark mode signals
-    targets.gtk.enable = true; # For most apps (Files, Browser, etc.)
-    targets.gnome.enable = true; # Helps with some browser dark-mode detection
-  };
-
   # Create the Screenshots folder inside Pictures
   home.file."Pictures/screenshots/.keep".text = "";
 
