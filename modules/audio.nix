@@ -26,8 +26,13 @@
 
   hardware.bluetooth = {
     enable = true;
-    powerOnBoot = false; # Keeps bluetooth off until you turn it on
+    powerOnBoot = true;
     package = pkgs.bluez5-experimental; # Good for the latest codec support
+    settings = {
+      Policy = {
+        AutoEnable = true;
+      };
+    };
   };
 
   environment.systemPackages = with pkgs; [

@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -7,6 +8,12 @@
     ./hardware-configuration.nix
     ./modules/audio.nix
   ];
+
+  # options.my.screencast.output = lib.mkOption {
+  #   type = lib.types.str;
+  #   default = "eDP-1";
+  #   description = "Screen output name for screen sharing";
+  # };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -72,6 +79,17 @@
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [xdg-desktop-portal-hyprland];
+    config = {
+      common = {
+        default = "wlr";
+      };
+    };
+    wlr.enable = true;
+    wlr.settings.screencast = {
+      # output_name = config.my.screencast.output;
+      chooser_type = "simple";
+      chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+    };
   };
 
   # Enable nix-ld to run unpatched binaries (like Node from nvm)
