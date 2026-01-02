@@ -14,6 +14,13 @@
   home.homeDirectory = "/home/jacob";
   home.stateVersion = "25.11";
 
+  home.pointerCursor = {
+    name = "Adwaita";
+    package = pkgs.adwaita-icon-theme;
+    size = 16;
+    gtk.enable = true;
+  };
+
   xdg.userDirs = {
     enable = true;
     createDirectories = true;

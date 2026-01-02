@@ -7,21 +7,12 @@
   imports = [
     ./hardware-configuration.nix
     ./modules/audio.nix
+    ./modules/laptop.nix
   ];
-
-  # options.my.screencast.output = lib.mkOption {
-  #   type = lib.types.str;
-  #   default = "eDP-1";
-  #   description = "Screen output name for screen sharing";
-  # };
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  security.polkit.enable = true;
-
   networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Stockholm";
 
@@ -38,7 +29,6 @@
     LC_TIME = "sv_SE.UTF-8";
   };
 
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
@@ -48,16 +38,14 @@
     shell = pkgs.fish;
     isNormalUser = true;
     description = "Jacob";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["wheel"];
     packages = with pkgs; [];
   };
 
+  # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.geist-mono
   ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     vim
@@ -75,7 +63,7 @@
     xwayland.enable = true;
   };
 
-  # Screen sharing, link/file opening etc..
+  # Screen sharing
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [xdg-desktop-portal-hyprland];
@@ -86,7 +74,6 @@
     };
     wlr.enable = true;
     wlr.settings.screencast = {
-      # output_name = config.my.screencast.output;
       chooser_type = "simple";
       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
     };
@@ -106,6 +93,13 @@
     curl
     expat
   ];
+
+  nixpkgs.config.allowUnfree = true;
+
+  # Security for GUI session
+  services.gnome.gnome-keyring.enable = true;
+  security.polkit.enable = true;
+  security.pam.services.swaylock = {};
 
   system.stateVersion = "25.11";
   nix.settings.experimental-features = ["nix-command" "flakes"];
