@@ -1,4 +1,4 @@
-# Laptop-specific configuration (power, battery, lid)
+# Laptop-specific configuration (wifi, power, battery, lid)
 {
   config,
   pkgs,

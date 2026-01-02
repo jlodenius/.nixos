@@ -2,8 +2,8 @@
   description = "NixOS configuration with Flakes and Home Manager";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -22,39 +22,45 @@
     nixpkgs-unstable,
     home-manager,
     zen-browser,
+    ...
   }: let
     system = "x86_64-linux";
+
+    # Add your hostnames here.
+    # Nix will look for a folder in ./hosts/ with this exact name.
+    hosts = ["thinkpad"];
+
     overlay-unstable = final: prev: {
       unstable = import nixpkgs-unstable {
-        system = prev.stdenv.hostPlatform.system;
+        inherit system;
         config.allowUnfree = true;
       };
     };
   in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        # Overlays-module makes "pkgs.unstable" available in configuration.nix
-        ({
-          config,
-          pkgs,
-          ...
-        }: {nixpkgs.overlays = [overlay-unstable];})
-        ./configuration.nix
+    nixosConfigurations = nixpkgs.lib.genAttrs hosts (
+      name:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
 
-        # Add Home Manager as a module
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {inherit zen-browser;};
-          home-manager.users.jacob = {
-            imports = [
-              ./home.nix
-            ];
-          };
+          # These are passed to BOTH nixos and home-manager modules
+          specialArgs = {inherit zen-browser;};
+
+          modules = [
+            # 1. Point to the host folder
+            ./hosts/${name}
+
+            # 2. Apply the unstable overlay
+            ({...}: {nixpkgs.overlays = [overlay-unstable];})
+
+            # 3. Setup Home Manager
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {inherit zen-browser;};
+            }
+          ];
         }
-      ];
-    };
+    );
   };
 }

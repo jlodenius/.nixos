@@ -24,17 +24,6 @@
     };
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    package = pkgs.bluez5-experimental; # Good for the latest codec support
-    settings = {
-      Policy = {
-        AutoEnable = true;
-      };
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     pavucontrol
   ];
