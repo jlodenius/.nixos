@@ -48,7 +48,7 @@
       enable = true;
       settings = {
         default = {
-          path = "${config.home.homeDirectory}/.nixos/dotfiles/wallpapers/ufo-3840x2160.jpg";
+          path = "${config.home.homeDirectory}/.nixos/wallpapers/ufo-3840x2160.jpg";
         };
       };
     };
