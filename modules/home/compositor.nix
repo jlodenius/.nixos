@@ -43,6 +43,18 @@
     };
     home.file."Pictures/screenshots/.keep".text = "";
 
+    services.wpaperd = {
+      enable = true;
+      settings = {
+        # "eDP-1" = {
+        #   path = "${config.home.homeDirectory}/.nixos/dotfiles/wallpapers/laptop-wall.png";
+        # };
+        default = {
+          path = ../../wallpapers/ufo-3840x2160.jpg;
+        };
+      };
+    };
+
     # User packages
     home.packages = with pkgs; [
       # System & UI
