@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
+
+# Error handler function
+failure() {
+  local lineno=$1
+  local msg=$2
+  echo "------------------------------------------------"
+  echo "❌ ERROR: Command failed at line $lineno"
+  echo "Failed Command: $msg"
+  echo "Exit Code: $?"
+  echo "------------------------------------------------"
+}
+
+# Set the trap to catch errors (ERR)
+trap 'failure ${BASH_LINENO[0]} "$BASH_COMMAND"' ERR
+
 set -e
 
 # 1. Configuration & Detection
@@ -27,8 +42,6 @@ if git diff --quiet HEAD; then
     echo "No changes detected, exiting."
     exit 0
 fi
-
-git diff -U0 HEAD
 
 echo "NixOS Rebuilding for $TARGET_HOST..."
 

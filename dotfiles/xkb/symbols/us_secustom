@@ -1,0 +1,14 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    include "us(basic)"
+    name[Group1]= "English (US, with åöä remap)";
+
+    // [ ; ' remaps
+    key <AD11> { [ aring, braceleft, bracketleft ] };   // [ → å
+    key <AC10> { [ odiaeresis, colon, semicolon ] };    // ; → ö
+    key <AC11> { [ adiaeresis, quotedbl, apostrophe ] }; // ' → ä
+
+    // AltGr (Right Alt) to get original US symbols
+    include "level3(lalt_switch)"
+};

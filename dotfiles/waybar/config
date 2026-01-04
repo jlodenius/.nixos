@@ -1,0 +1,61 @@
+[{
+  // ThinkPad
+  "output": "eDP-1",
+  "include": "~/.config/waybar/modules.json",
+  "modules-left": [
+    "sway/workspaces",
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "tray",
+  ],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "disk",
+    "cpu",
+    "temperature",
+    "battery",
+    "clock#time"
+  ]
+}, {
+  // Tuxedo
+  "output": "eDP-2",
+  "include": "~/.config/waybar/modules.json",
+  "modules-left": [
+    "sway/workspaces",
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "tray",
+  ],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "disk",
+    "cpu",
+    "temperature",
+    "battery",
+    "clock#time"
+  ]
+}, {
+  // External
+  "output": ["DP-1", "DP-2", "DP-3", "DP-4", "DP-5", "HDMI-A-1"],
+  "include": "~/.config/waybar/modules.json",
+  "modules-left": [
+    "sway/workspaces",
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "tray",
+  ],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "disk",
+    "cpu",
+    "temperature",
+    "battery",
+    "clock#time"
+  ]
+}]

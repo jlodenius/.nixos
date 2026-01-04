@@ -13,6 +13,7 @@
       ./tmux.nix
       ./fish.nix
       ./dark-theme.nix
+      ./symlinks.nix
     ];
 
     home.stateVersion = "25.11";
@@ -51,7 +52,6 @@
       swww
       vicinae
       bluetuith
-      stow
       grim
       slurp
       hyprpolkitagent
