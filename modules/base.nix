@@ -36,7 +36,6 @@
     git
     htop
     openssh
-    ripgrep
     rsync
     wget
   ];

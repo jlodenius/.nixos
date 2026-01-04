@@ -1,0 +1,77 @@
+# Development user configuration
+{
+  config,
+  pkgs,
+  ...
+}: {
+  home-manager.users.jacob = {
+    config,
+    pkgs,
+    ...
+  }: {
+    home.sessionVariables = {
+      RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
+      GPG_TTY = "$(tty)";
+      AWS_PROFILE = "caesari-authentik-saml";
+    };
+
+    services.gpg-agent = {
+      enable = true;
+      defaultCacheTtl = 1800;
+      enableSshSupport = true;
+    };
+
+    programs.neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    programs.git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "jlodenius";
+          email = "jacoblodenius@gmail.com";
+        };
+        init.defaultBranch = "master";
+      };
+    };
+
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+      options = ["--cmd cd"];
+    };
+
+    home.packages = with pkgs; [
+      gh
+      fzf
+      ripgrep
+
+      # LSP
+      bash-language-server
+      tailwindcss-language-server
+      emmet-ls
+      lua-language-server
+      pyright
+      nil
+      nodePackages.vscode-langservers-extracted # cssls, html
+      nodePackages.svelte-language-server
+      nodePackages.graphql-language-service-cli
+      nodePackages.typescript-language-server
+      rust-analyzer
+
+      # Linters & Formatters
+      prettierd
+      stylua
+      alejandra
+      ruff
+      shellcheck
+    ];
+  };
+}

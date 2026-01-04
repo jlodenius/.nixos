@@ -24,15 +24,9 @@
 
     home.sessionVariables = {
       MOZ_ENABLE_WAYLAND = "1";
-      GPG_TTY = "$(tty)";
       GTK_THEME = "Adwaita:dark";
-
-      # XDG & Desktop
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_CURRENT_DESKTOP = "Hyprland";
-
-      # App specific
-      AWS_PROFILE = "caesari-authentik-saml";
     };
 
     # Set up directories
@@ -68,18 +62,8 @@
       hyprpolkitagent
       swaynotificationcenter
 
-      # Dev tools
-      gh
-      rustup
-      alejandra
-      gcc
-      gnumake
-      cmake
-
       # CLI utils
-      ripgrep
       fd
-      yazi
       wl-clipboard
 
       # Applications
@@ -88,35 +72,7 @@
       discord
       nordpass
       pavucontrol
+      yazi
     ];
-
-    programs.git = {
-      enable = true;
-      settings = {
-        user = {
-          name = "jlodenius";
-          email = "jacoblodenius@gmail.com";
-        };
-        init.defaultBranch = "master";
-      };
-    };
-
-    programs.zoxide = {
-      enable = true;
-      enableFishIntegration = true;
-      options = ["--cmd cd"];
-    };
-
-    programs.neovim = {
-      enable = true;
-      defaultEditor = true;
-    };
-
-    programs.direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-
-    programs.fzf.enable = true;
   };
 }

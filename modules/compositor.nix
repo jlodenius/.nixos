@@ -8,6 +8,7 @@
   imports = [
     ./home/compositor.nix
     ./base.nix
+    ./dev.nix
   ];
 
   config = {
@@ -92,20 +93,5 @@
     services.gnome.gnome-keyring.enable = true;
     security.polkit.enable = true;
     security.pam.services.swaylock = {};
-
-    # Enable nix-ld to run unpatched binaries (like Node from nvm)
-    programs.nix-ld.enable = true;
-
-    # List the libraries that these binaries usually expect to find
-    programs.nix-ld.libraries = with pkgs; [
-      stdenv.cc.cc
-      zlib
-      fuse3
-      icu
-      nss
-      openssl
-      curl
-      expat
-    ];
   };
 }
