@@ -2,22 +2,7 @@
   "layer": "top",
   "position": "top",
   "height": 30,
-
-  "custom/power-button": {
-    "format": "<span size='small'>⏻\u2009</span>",
-    "on-click": "wlogout",
-    "tooltip": false
-  },
-
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-      "activated": "<span size='small'> </span>",
-      "deactivated": "<span size='small'> </span>"
-    },
-    // in minutes
-    "timeout": 120
-  },
+  "margin": 5,
 
   "pulseaudio": {
     "format": "{icon} \u2009{volume}%",
@@ -37,9 +22,7 @@
       "warning": 30,
       "critical": 15
     },
-    // Connected to AC
     "format": "\u2009\u2009{capacity}%",
-    // Not connected to AC
     "format-discharging": "{icon} \u2009{capacity}%",
     "format-icons": [
       "",
@@ -86,21 +69,6 @@
     "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
   },
 
-  "sway/window": {
-    "format": "{}",
-    "max-length": 120
-  },
-
-  "sway/workspaces": {
-    "all-outputs": false,
-    "disable-scroll": true,
-    "format": "{icon} {name}",
-    "format-icons": {
-      "focused": "󰣇",
-      "default": "󰣇"
-    }
-  },
-
   "hyprland/window": {
     "format": "{}",
     "max-length": 120
@@ -108,11 +76,7 @@
 
   "hyprland/workspaces": {
     "all-outputs": false,
-    "format": "{icon} {name}",
-    "format-icons": {
-      "focused": "󰣇",
-      "default": "󰣇"
-    }
+    "format": "{name}",
   },
 
   "temperature": {

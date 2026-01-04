@@ -1,133 +1,61 @@
-/* lua vim.diagnostic.disable(0) to ignore errors due to gtk-css syntax */
-
-@import "mocha.css";
-@import "cows.css";
-
-/* reset all styles */
+/* --- Reset & Font --- */
 * {
   border: none;
   border-radius: 0;
-  min-height: 0;
-  margin: 0;
-  padding: 0;
-  padding-top: 1px;
-  padding-bottom: 1px;
-}
-
-/* the whole bar */
-#waybar {
-  color: @text;
-  font-family: "geist mono";
+  font-family: "Geist Mono", monospace;
   font-weight: 600;
-  font-size: 16px;
-  background: black;
-  /* background-color: @crust; */
-  /* border-bottom: 1px solid @mantle; */
+  font-size: 15px;
+  min-height: 0;
 }
 
-/* right modules */
+/* --- The Main Bar --- */
+window#waybar {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+/* --- Workspaces --- */
+#workspaces button {
+  padding: 0 10px;
+  /* Inactive workspaces are semi-transparent */
+  color: rgba(255, 255, 255, 0.3);
+  background: transparent;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+  color: #ffffff;
+}
+
+#workspaces button.urgent {
+  color: #ff5555;
+  opacity: 1;
+}
+
+/* --- Modules Styling --- */
 #battery,
 #clock,
 #disk,
 #cpu,
-#memory,
 #network,
 #pulseaudio,
-#temperature {
-  background-color: black;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-left: 4px;
-  color: @alien;
-}
-
-/* workspace buttons */
-#workspaces button {
-  padding: 5px;
-  color: @text;
-  background-color: black;
-}
-
-#workspaces button:hover {
-  box-shadow: inherit;
-  text-shadow: inherit;
-  background: black;
-}
-
-/* focused = sway, active = hyprland */
-#workspaces button.focused,
-#workspaces button.active {
-  color: @alien;
-  border-color: @alien;
-}
-
-#workspaces button.urgent {
-  color: @maroon;
-  border-color: @maroon;
-}
-
-/* center modules (not applied to the laptop monitor) */
-#waybar:not(.edp-2) .modules-center {
-  /* margin-top: 4px; */
-}
-
+#temperature,
 #tray {
-  background-color: black;
-  padding: 5px;
+  padding: 0 12px;
+  background: transparent;
+  color: #ffffff;
 }
 
-/* right modules */
-#network {}
-
-#network.disconnected {
-  color: @maroon;
-  border-color: @maroon;
-}
-
-#pulseaudio {}
-
-#pulseaudio.muted {
-  color: @maroon;
-  border-color: @maroon;
-}
-
-#disk {}
-
-#cpu {}
-
-#cpu.warning {
-  color: @peach;
-  border-color: @peach;
-}
-
-#cpu.critical {
-  color: @maroon;
-  border-color: @maroon;
-}
-
-#temperature {}
-
+/* --- Status-Specific Colors --- */
+#network.disconnected,
+#pulseaudio.muted,
+#battery.critical,
 #temperature.critical {
-  color: @maroon;
-  border-color: @maroon;
+  color: #ff5555;
 }
 
-#battery {}
-
-#battery.warning {
-  color: @peach;
-  border-color: @peach;
-}
-
-#battery.critical {
-  color: @maroon;
-  border-color: @maroon;
-}
-
-#clock.time {}
-
-/* custom styles for dp-1 (external monitor) */
-#waybar.dp-1,
-#waybar.dp-3 {
-  font-size: 18px;
+#battery.warning,
+#cpu.warning {
+  color: #f1fa8c;
 }
