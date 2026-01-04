@@ -43,23 +43,6 @@
     };
     home.file."Pictures/screenshots/.keep".text = "";
 
-    # Wallpaper
-    services.hyprpaper = {
-      enable = true;
-      settings = {
-        ipc = "on";
-        splash = false;
-
-        preload = [
-          "${config.home.homeDirectory}/.nixos/wallpapers/ufo-3840x2160.jpg"
-        ];
-
-        wallpaper = [
-          ",${config.home.homeDirectory}/.nixos/wallpapers/ufo-3840x2160.jpg"
-        ];
-      };
-    };
-
     # User packages
     home.packages = with pkgs; [
       # System & UI
@@ -70,6 +53,7 @@
       grim
       slurp
       hyprpolkitagent
+      hyprpaper
       swaynotificationcenter
 
       # CLI utils
