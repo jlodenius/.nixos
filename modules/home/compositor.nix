@@ -43,23 +43,21 @@
     };
     home.file."Pictures/screenshots/.keep".text = "";
 
-    # Wallpaper daemon
-    services.wpaperd = {
+    # Wallpaper
+    services.hyprpaper = {
       enable = true;
       settings = {
-        default = {
-          path = "${config.home.homeDirectory}/.nixos/wallpapers/ufo-3840x2160.jpg";
-        };
-      };
-    };
+        ipc = "on";
+        splash = false;
 
-    # Force the service to wait for the graphical session
-    systemd.user.services.wpaperd = {
-      Unit = {
-        After = ["graphical-session.target"];
-        PartOf = ["graphical-session.target"];
+        preload = [
+          "${config.home.homeDirectory}/.nixos/wallpapers/ufo-3840x2160.jpg"
+        ];
+
+        wallpaper = [
+          ",${config.home.homeDirectory}/.nixos/wallpapers/ufo-3840x2160.jpg"
+        ];
       };
-      Install.WantedBy = ["graphical-session.target"];
     };
 
     # User packages

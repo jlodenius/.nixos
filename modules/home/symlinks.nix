@@ -7,7 +7,8 @@ in {
   # Files in ~/.config
   xdg.configFile = {
     "ghostty".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/ghostty";
-    "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
+    "hypr/hyprland.conf".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/hyprland.conf";
+    "hypr/dota.conf".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/dota.conf";
     "nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/nvim";
     "swaync".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaync";
     "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
