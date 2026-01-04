@@ -16,10 +16,6 @@
         name = "bass";
         src = pkgs.fishPlugins.bass.src;
       }
-      {
-        name = "nvm";
-        src = pkgs.fishPlugins.nvm.src;
-      }
     ];
   };
 
