@@ -7,8 +7,11 @@
   ];
 
   config = {
-    # Graphics (extraPackages are host-specific)
-    hardware.graphics.enable = true;
+    # Graphics
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true; # Critical for Steam
+    };
 
     # Bluetooth
     hardware.bluetooth = {
@@ -88,5 +91,15 @@
     services.gnome.gnome-keyring.enable = true;
     security.polkit.enable = true;
     security.pam.services.swaylock = {};
+
+    # Steam
+    programs.steam = {
+      enable = true;
+      # Enable Gamescope (highly recommended for Wayland/Hyprland users)
+      gamescopeSession.enable = true;
+    };
+
+    # Optional but recommended for gaming
+    programs.gamemode.enable = true;
   };
 }
