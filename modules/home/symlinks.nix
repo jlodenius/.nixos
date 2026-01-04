@@ -1,6 +1,8 @@
 # Symlinks for dotfiles
 {config, ...}: let
-  dotfilesPath = ../../dotfiles;
+  # Use a STRING starting with the home directory variable.
+  # This prevents Nix from copying the folder to the store.
+  dotfilesPath = "${config.home.homeDirectory}/.nixos/dotfiles";
 in {
   # Files in ~/.config
   xdg.configFile = {
