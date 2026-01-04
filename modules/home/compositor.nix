@@ -1,10 +1,5 @@
 # Personal user configuration (GUI + personal services)
-{
-  config,
-  pkgs,
-  zen-browser,
-  ...
-}: {
+{...}: {
   home-manager.users.jacob = {
     config,
     pkgs,

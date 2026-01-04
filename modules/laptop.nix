@@ -1,9 +1,5 @@
 # Laptop-specific configuration (wifi, power, battery, lid)
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   # NetworkManager for wifi
   networking.networkmanager.enable = true;
   users.users.jacob.extraGroups = ["networkmanager"];

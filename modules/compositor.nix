@@ -1,10 +1,5 @@
 # Personal machine configuration (GUI + personal services)
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./home/compositor.nix
     ./base.nix

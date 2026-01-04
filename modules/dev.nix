@@ -1,9 +1,5 @@
 # Development environment
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./home/dev.nix
   ];

@@ -1,9 +1,5 @@
 # Development user configuration
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   home-manager.users.jacob = {
     config,
     pkgs,
