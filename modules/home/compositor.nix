@@ -53,6 +53,15 @@
       };
     };
 
+    # Force the service to wait for the graphical session
+    systemd.user.services.wpaperd = {
+      Unit = {
+        After = ["graphical-session.target"];
+        PartOf = ["graphical-session.target"];
+      };
+      Install.WantedBy = ["graphical-session.target"];
+    };
+
     # User packages
     home.packages = with pkgs; [
       # System & UI
