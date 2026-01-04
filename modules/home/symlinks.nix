@@ -1,8 +1,8 @@
-# Create symlinks for all dotfiles
+# Symlinks for dotfiles
 {config, ...}: let
-  dotfilesPath = "${config.home.homeDirectory}/.nixos/dotfiles";
+  dotfilesPath = ../../dotfiles;
 in {
-  # --- Files in ~/.config/ ---
+  # Files in ~/.config
   xdg.configFile = {
     "ghostty".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/ghostty";
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
@@ -12,9 +12,4 @@ in {
     "xkb".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/xkb";
     "yazi".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/yazi";
   };
-
-  # --- Files directly in ~/ ---
-  # home.file = {
-  #   ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/tmux.conf";
-  # };
 }

@@ -44,6 +44,14 @@
       options = ["--cmd cd"];
     };
 
+    programs.tmux = {
+      enable = true;
+      extraConfig = builtins.readFile ../../dotfiles/tmux/tmux.conf;
+      plugins = with pkgs; [
+        tmuxPlugins.vim-tmux-navigator
+      ];
+    };
+
     home.packages = with pkgs; [
       gh
       fzf

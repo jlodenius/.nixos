@@ -10,7 +10,6 @@
     # Important that these imports are inside the home-manager and not at top-level, because then it would
     # be considered system packages
     imports = [
-      ./tmux.nix
       ./fish.nix
       ./dark-theme.nix
       ./symlinks.nix
