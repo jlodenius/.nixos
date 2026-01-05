@@ -67,6 +67,7 @@
       nordpass
       pavucontrol
       yazi
+      mpv
     ];
   };
 }
