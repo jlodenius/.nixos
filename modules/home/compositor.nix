@@ -65,6 +65,7 @@
       google-chrome
       discord
       nordpass
+      spotify
       pavucontrol
       yazi
       mpv
