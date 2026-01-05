@@ -38,6 +38,7 @@
     openssh
     rsync
     wget
+    nh
   ];
 
   system.stateVersion = "25.11";
