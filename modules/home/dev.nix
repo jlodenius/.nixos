@@ -6,9 +6,9 @@
     ...
   }: {
     home.sessionVariables = {
-      RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
       GPG_TTY = "$(tty)";
       AWS_PROFILE = "caesari-authentik-saml";
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
     };
 
     services.gpg-agent = {
@@ -56,6 +56,8 @@
       gh
       fzf
       ripgrep
+      pkg-config
+      openssl
 
       # LSP
       bash-language-server

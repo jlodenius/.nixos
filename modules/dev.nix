@@ -12,7 +12,6 @@
     gdb
     lldb
     nodejs
-    pkg-config
 
     # Rust
     rustup
