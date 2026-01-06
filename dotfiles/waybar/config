@@ -7,6 +7,7 @@
     "tray",
   ],
   "modules-right": [
+    "custom/market",
     "network",
     "pulseaudio",
     "disk",

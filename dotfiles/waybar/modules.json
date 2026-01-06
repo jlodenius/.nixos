@@ -96,7 +96,7 @@
   "tray": {
     "icon-size": 18,
     "spacing": 8
-  }
+  },
 
   "custom/market": {
     "format": "📈 {}",
