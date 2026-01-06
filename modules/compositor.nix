@@ -45,6 +45,7 @@
               "bluez5.enable-msbc" = true;
               "bluez5.enable-hw-volume" = true;
               "bluez5.codecs" = ["sbc" "sbc_xq" "aac" "ldac" "aptx" "aptx_hd" "cvsd" "msbc" "lc3"];
+              "bluez5.roles" = ["hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
             };
           };
         };
