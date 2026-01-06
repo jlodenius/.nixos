@@ -14,10 +14,7 @@
     nodejs
 
     # Rust
-    rustc
-    rustfmt
-    clippy
-    cargo
+    rustup
     cargo-expand
     cargo-hack
     cargo-insta
