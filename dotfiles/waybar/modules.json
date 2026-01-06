@@ -97,4 +97,12 @@
     "icon-size": 18,
     "spacing": 8
   }
+
+  "custom/market": {
+    "format": "📈 {}",
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/market.sh",
+    "interval": 300,
+    "on-click": "ghostty -e ticker -w BTC-USD,ETH-USD,AAPL"
+  }
 }
