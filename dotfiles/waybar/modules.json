@@ -5,7 +5,7 @@
   "margin": 5,
 
   "pulseaudio": {
-    "format": "{icon} \u2009{volume}%",
+    "format": "{icon} {volume}%",
     "format-bluetooth": "{icon} {volume}%",
     "format-muted": " {volume}%",
     "format-icons": {
@@ -22,8 +22,8 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "\u2009\u2009{capacity}%",
-    "format-discharging": "{icon} \u2009{capacity}%",
+    "format": " {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
     "format-icons": [
       "",
       "",
@@ -63,7 +63,7 @@
 
   "network": {
     "interval": 5,
-    "format-wifi": "  {essid}",
+    "format-wifi": " {essid}",
     "format-ethernet": "󰈀 {ifname}",
     "format-disconnected": "⚠ Disconnected",
     "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
@@ -82,7 +82,7 @@
   "temperature": {
     "critical-threshold": 80,
     "interval": 5,
-    "format": "{icon}\u2009{temperatureC}°C",
+    "format": "{icon} {temperatureC}°C",
     "format-icons": [
       "",
       "",
