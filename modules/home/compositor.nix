@@ -59,9 +59,6 @@
       # CLI utils
       fd
       wl-clipboard
-      ticker
-      jq
-      bc
 
       # Applications
       zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
