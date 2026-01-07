@@ -1,5 +1,5 @@
 # Host configuration for thinkpad
-{pkgs, ...}: {
+{...}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/compositor.nix
@@ -11,4 +11,7 @@
   # Boot configuration (may differ between hosts)
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Firewall
+  networking.firewall.enable = false;
 }
