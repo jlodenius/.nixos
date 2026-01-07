@@ -58,6 +58,7 @@
       ripgrep
       pkg-config
       openssl
+      nssTools
 
       # LSP
       bash-language-server
