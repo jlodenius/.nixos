@@ -42,6 +42,7 @@
     cups
     libgbm
     pango
+    cairo
   ];
 
   environment.systemPackages = with pkgs; [
