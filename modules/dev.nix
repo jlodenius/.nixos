@@ -39,6 +39,7 @@
     xorg.libXfixes
     xorg.libXrandr
     mesa
+    cups
   ];
 
   environment.systemPackages = with pkgs; [
