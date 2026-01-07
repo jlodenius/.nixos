@@ -12,6 +12,7 @@
     gdb
     lldb
     nodejs
+    pnpm
 
     # Rust
     rustup
