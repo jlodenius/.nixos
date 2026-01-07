@@ -11,6 +11,7 @@
     cpuset
     gdb
     lldb
+    mkcert
     nodejs
     pnpm
 
