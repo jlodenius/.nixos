@@ -41,6 +41,7 @@
     mesa
     cups
     libgbm
+    pango
   ];
 
   environment.systemPackages = with pkgs; [
