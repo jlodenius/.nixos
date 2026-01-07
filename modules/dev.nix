@@ -17,15 +17,6 @@
   virtualisation.docker.enable = true;
   users.users.jacob.extraGroups = ["docker"];
 
-  # Run unpatched binaries
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    cups
-    libgbm
-    pango
-    cairo
-  ];
-
   environment.systemPackages = with pkgs; [
     gcc
     gnumake

@@ -9,7 +9,6 @@
       GPG_TTY = "$(tty)";
       AWS_PROFILE = "caesari-authentik-saml";
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-      PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "1";
     };
 
     services.gpg-agent = {
@@ -61,11 +60,6 @@
       pkg-config
       openssl
       nssTools
-
-      # AWS
-      saml2aws
-      aws-vault
-      awscli2
 
       # LSP
       bash-language-server
