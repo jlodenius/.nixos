@@ -10,9 +10,4 @@ return {
     version = "*",
     config = true,
   },
-  {
-    "esmuellert/codediff.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    cmd = "CodeDiff",
-  },
 }
