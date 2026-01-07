@@ -4,6 +4,15 @@
     ./home/dev.nix
   ];
 
+  # SIS Dev
+  networking.hosts = {
+    "127.0.0.1" = [
+      "mol-dev.sis.se"
+      "mol-admin-dev.sis.se"
+      "dev-viewer.standard.sis.se"
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     gcc
     gnumake
