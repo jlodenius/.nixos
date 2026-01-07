@@ -13,6 +13,10 @@
     ];
   };
 
+  # Docker
+  virtualisation.docker.enable = true;
+  users.users.jacob.extraGroups = ["docker"];
+
   environment.systemPackages = with pkgs; [
     gcc
     gnumake
