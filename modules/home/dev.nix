@@ -61,6 +61,11 @@
       openssl
       nssTools
 
+      # AWS
+      saml2aws
+      aws-vault
+      awscli2
+
       # LSP
       bash-language-server
       tailwindcss-language-server
