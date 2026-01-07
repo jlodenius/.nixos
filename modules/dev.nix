@@ -40,6 +40,7 @@
     xorg.libXrandr
     mesa
     cups
+    libgbm
   ];
 
   environment.systemPackages = with pkgs; [
