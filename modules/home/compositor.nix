@@ -64,6 +64,7 @@
       zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       google-chrome
       discord
+      slack
       nordpass
       spotify
       pavucontrol
