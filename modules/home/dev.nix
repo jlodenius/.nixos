@@ -68,6 +68,7 @@
       lua-language-server
       pyright
       nil
+      eslint_d
       nodePackages.vscode-langservers-extracted # cssls, html
       nodePackages.svelte-language-server
       nodePackages.graphql-language-service-cli
