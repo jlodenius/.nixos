@@ -17,6 +17,31 @@
   virtualisation.docker.enable = true;
   users.users.jacob.extraGroups = ["docker"];
 
+  # Run unpatched bins
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    nss
+    nspr
+    glib
+    dbus
+    atk
+    at-spi2-atk
+    libdrm
+    expat
+    libxcb
+    libxkbcommon
+    at-spi2-core
+    alsa-lib
+    cups
+    mesa
+    libgbm
+    pango
+    cairo
+    stdenv.cc.cc
+    openssl
+    zlib
+  ];
+
   environment.systemPackages = with pkgs; [
     gcc
     gnumake
