@@ -37,12 +37,6 @@
         };
         init.defaultBranch = "master";
         pull.rebase = false;
-        merge = {
-          tool = "code-diff";
-        };
-        mergetool."code-diff" = {
-          cmd = "nvim \"$MERGED\" -c \"CodeDiff merge \\\"$MERGED\\\"\"";
-        };
       };
     };
 
