@@ -22,28 +22,34 @@
 
   # Define the libraries available to unpatched binaries
   programs.nix-ld.libraries = with pkgs; [
-    # Basic system libs
-    stdenv.cc.cc
-    zlib
-    fuse3
-    icu
+    glib
     nss
     nspr
-    openssl
-    curl
-    expat
-
-    # Graphics/Browser libs (Required for Playwright/Chromium)
+    dbus
     atk
     at-spi2-atk
+    cups
     libdrm
+    expat
+    libxcb
+    libxkbcommon
+    at-spi2-core
+    xorg.libX11
+    xorg.libXcomposite
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXrandr
     mesa
-    libgbm
     pango
     cairo
+    udev
     alsa-lib
-    dbus
-    glib
+
+    # --- Essentials for most binaries ---
+    stdenv.cc.cc
+    zlib
+    openssl
   ];
 
   environment.systemPackages = with pkgs; [
