@@ -58,6 +58,7 @@
       ripgrep
       pkg-config
       openssl
+      docker
 
       # LSP
       bash-language-server
