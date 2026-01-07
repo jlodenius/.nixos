@@ -35,6 +35,7 @@
           email = "jacoblodenius@gmail.com";
         };
         init.defaultBranch = "master";
+        pull.rebase = false;
       };
     };
 
