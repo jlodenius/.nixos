@@ -59,6 +59,7 @@
     cmake
     cpuset
     gdb
+    glib
     lldb
     mkcert
     nodejs
