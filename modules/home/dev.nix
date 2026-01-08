@@ -55,12 +55,16 @@
     };
 
     home.packages = with pkgs; [
+      # Misc
       gh
       fzf
       ripgrep
       pkg-config
       openssl
+
+      # CA
       nssTools
+      mkcert
 
       # AWS
       chamber
