@@ -55,6 +55,7 @@
       hyprpolkitagent
       hyprpaper
       swaynotificationcenter
+      swaylock
 
       # CLI utils
       fd
