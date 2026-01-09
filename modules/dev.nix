@@ -77,6 +77,11 @@
       with ps; [
         pip
         setuptools
+
+        # Some caesari requirements
+        pyzmq
+        requests
+        protobuf
       ]))
 
     # Rust
