@@ -71,7 +71,6 @@
       yazi
       mpv
       networkmanagerapplet
-      openvpn
     ];
   };
 }
