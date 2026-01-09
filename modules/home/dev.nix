@@ -85,7 +85,6 @@
       nodePackages.svelte-language-server
       nodePackages.graphql-language-service-cli
       nodePackages.typescript-language-server
-      rust-analyzer
 
       # Linters & Formatters
       prettierd
