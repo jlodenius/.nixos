@@ -62,7 +62,6 @@
       pkg-config
       openssl
       protobuf
-      openvpn
 
       # CA
       nssTools
