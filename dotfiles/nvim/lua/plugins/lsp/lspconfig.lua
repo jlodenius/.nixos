@@ -37,6 +37,12 @@ return {
     })
     vim.lsp.enable("rust_analyzer")
 
+    -- Python
+    vim.lsp.config("pyright", {
+      capabilities,
+    })
+    vim.lsp.enable("pyright")
+
     -- Typescript
     vim.lsp.config("ts_ls", {
       capabilities,
