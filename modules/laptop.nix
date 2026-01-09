@@ -1,9 +1,5 @@
 # Laptop-specific configuration (wifi, power, battery, lid)
 {pkgs, ...}: {
-  # NetworkManager for wifi
-  networking.networkmanager.enable = true;
-  users.users.jacob.extraGroups = ["networkmanager"];
-
   # Don't suspend just because I closed the lid
   services.logind.settings.Login.HandleLidSwitch = "ignore";
 

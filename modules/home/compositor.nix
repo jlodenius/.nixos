@@ -70,6 +70,7 @@
       pavucontrol
       yazi
       mpv
+      networkmanagerapplet
     ];
   };
 }

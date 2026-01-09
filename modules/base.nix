@@ -26,7 +26,15 @@
   users.users.jacob = {
     shell = pkgs.fish;
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = ["wheel" "networkmanager"];
+  };
+
+  # NetworkManager for wifi & openvpn
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-openvpn
+    ];
   };
 
   programs.fish.enable = true;
