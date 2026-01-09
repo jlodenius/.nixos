@@ -61,6 +61,7 @@
       ripgrep
       pkg-config
       openssl
+      protobuf
 
       # CA
       nssTools
