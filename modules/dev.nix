@@ -72,6 +72,13 @@
     nodejs
     pnpm
 
+    # Python
+    (python3.withPackages (ps:
+      with ps; [
+        pip
+        setuptools
+      ]))
+
     # Rust
     rustup
     cargo-expand
