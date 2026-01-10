@@ -71,7 +71,6 @@
     lldb
     nodejs
     pnpm
-    libxkbcommon
 
     # Python
     (python3.withPackages (ps:
