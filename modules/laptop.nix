@@ -1,4 +1,4 @@
-# Laptop-specific configuration (wifi, power, battery, lid)
+# Laptop-specific configuration
 {pkgs, ...}: {
   # Don't suspend just because I closed the lid
   services.logind.settings.Login.HandleLidSwitch = "ignore";
