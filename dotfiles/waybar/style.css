@@ -41,7 +41,8 @@ window#waybar {
 #network,
 #pulseaudio,
 #temperature,
-#tray {
+#tray,
+#custom-stockfin {
   padding: 0 12px;
   background: transparent;
   color: #ffffff;
@@ -58,4 +59,17 @@ window#waybar {
 #battery.warning,
 #cpu.warning {
   color: #f1fa8c;
+}
+
+/* --- Stockfin --- */
+#custom-stockfin.bullish {
+  color: #a6e3a1;
+}
+
+#custom-stockfin.bearish {
+  color: #ff5555;
+}
+
+#custom-stockfin.neutral {
+  color: #cdd6f4;
 }
