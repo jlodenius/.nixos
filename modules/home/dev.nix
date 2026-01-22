@@ -62,6 +62,7 @@
       pkg-config
       openssl
       protobuf
+      claude-code
 
       # CA
       nssTools
