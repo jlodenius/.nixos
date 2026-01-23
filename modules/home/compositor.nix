@@ -72,6 +72,7 @@
       yazi
       mpv
       networkmanagerapplet
+      postman
     ];
   };
 }
