@@ -83,6 +83,7 @@
         requests
         protobuf
       ]))
+    uv
 
     # Rust
     rustup
