@@ -68,16 +68,14 @@
     # Screen sharing
     xdg.portal = {
       enable = true;
-      extraPortals = with pkgs; [xdg-desktop-portal-hyprland];
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-hyprland
+        xdg-desktop-portal-gtk
+      ];
       config = {
         common = {
-          default = "wlr";
+          default = ["hyprland" "gtk"];
         };
-      };
-      wlr.enable = true;
-      wlr.settings.screencast = {
-        chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
       };
     };
 
