@@ -51,6 +51,16 @@
       extraConfig = builtins.readFile ../../dotfiles/tmux/tmux.conf;
       plugins = with pkgs; [
         tmuxPlugins.vim-tmux-navigator
+        (tmuxPlugins.mkTmuxPlugin {
+          pluginName = "tmux-scrollback";
+          version = "unstable";
+          src = fetchFromGitHub {
+            owner = "jlodenius";
+            repo = "tmux-scrollback";
+            rev = "master";
+            sha256 = "sha256-Z2vD/lEoHRgp7aCMaB44XeicgBb2SZ3b6YkAY/952u4=";
+          };
+        })
       ];
     };
 
