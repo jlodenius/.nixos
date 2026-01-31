@@ -53,6 +53,7 @@
         tmuxPlugins.vim-tmux-navigator
         (tmuxPlugins.mkTmuxPlugin {
           pluginName = "tmux-scrollback";
+          rtpFilePath = "scrollback.tmux";
           version = "unstable";
           src = fetchFromGitHub {
             owner = "jlodenius";
