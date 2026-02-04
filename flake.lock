@@ -88,11 +88,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770197213,
-        "narHash": "sha256-xh+OQWt40O/J/hTKVb68173ck1ultI4zuY4B3N6Pr3g=",
+        "lastModified": 1770199240,
+        "narHash": "sha256-7oTQEyNuta4sT0Vp1TqHLIxcW59GBHX8YMg5tLJoEUI=",
         "owner": "jlodenius",
         "repo": "stockfin",
-        "rev": "778a09322251ea6af0702521fa53a8fba6564675",
+        "rev": "06a24bf05104dc50d41dbe5d42854b0297e30bdd",
         "type": "github"
       },
       "original": {
