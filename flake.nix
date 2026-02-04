@@ -14,6 +14,11 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stockfin = {
+      url = "github:jlodenius/stockfin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -21,6 +26,7 @@
     nixpkgs-unstable,
     home-manager,
     zen-browser,
+    stockfin,
     ...
   }: let
     system = "x86_64-linux";
@@ -42,7 +48,7 @@
           inherit system;
 
           # These are passed to BOTH nixos and home-manager modules
-          specialArgs = {inherit zen-browser;};
+          specialArgs = {inherit zen-browser stockfin;};
 
           modules = [
             # 1. Point to the host folder
@@ -56,7 +62,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {inherit zen-browser;};
+              home-manager.extraSpecialArgs = {inherit zen-browser stockfin;};
             }
           ];
         }

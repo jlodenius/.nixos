@@ -1,5 +1,5 @@
 # Personal user configuration (GUI + personal services)
-{...}: {
+{stockfin, ...}: {
   home-manager.users.jacob = {
     config,
     pkgs,
@@ -62,6 +62,7 @@
       wl-clipboard
 
       # Applications
+      stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
       zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       google-chrome
       discord
