@@ -13,5 +13,6 @@ in {
     "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
     "xkb".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/xkb";
     "yazi".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/yazi";
+    "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/qutebrowser";
   };
 }
