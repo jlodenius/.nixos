@@ -10,7 +10,7 @@ c.tabs.padding = {'top': 6, 'bottom': 6, 'left': 16, 'right': 10}
 c.tabs.indicator.width = 3
 c.tabs.indicator.padding = {'top': 4, 'bottom': 4, 'left': 2, 'right': 6}
 
-# Tell sites we prefer dark mode (let them handle it natively)
+# Dark mode
 c.colors.webpage.darkmode.enabled = False
 c.colors.webpage.preferred_color_scheme = 'dark'
 
@@ -35,7 +35,3 @@ c.qt.args = ['disable-frame-rate-limit']
 
 # Smooth scrolling for keyboard navigation
 c.scrolling.smooth = True
-
-# Rebind Ctrl+D/U to use smooth scroll instead of scroll-page
-config.bind('<Ctrl-d>', 'cmd-repeat 20 scroll down')
-config.bind('<Ctrl-u>', 'cmd-repeat 20 scroll up')
