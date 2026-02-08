@@ -64,6 +64,7 @@
       # Applications
       stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
       zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      qutebrowser
       google-chrome
       discord
       slack
