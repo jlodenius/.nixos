@@ -60,7 +60,6 @@
       # CLI utils
       fd
       wl-clipboard
-      wtype
 
       # Applications
       stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default

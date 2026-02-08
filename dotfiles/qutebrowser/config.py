@@ -23,10 +23,6 @@ c.completion.shrink = True  # Shrink to fit content
 c.completion.timestamp_format = '%Y-%m-%d'  # Shorter date format
 c.completion.use_best_match = True
 
-# NordPass integration (triggers global autofill shortcut via wtype)
-config.bind('<Alt-p>', 'spawn --userscript nordpass', mode='insert')
-config.bind('<Alt-p>', 'spawn --userscript nordpass', mode='normal')
-
 # Tab navigation with Ctrl+h/l
 config.bind('<Ctrl-h>', 'tab-prev')
 config.bind('<Ctrl-l>', 'tab-next')
