@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# NordPass autofill userscript for qutebrowser
+# Triggers NordPass's global autofill shortcut
+
+# Use wtype for Wayland to simulate the NordPass global shortcut
+# Default NordPass shortcut is Ctrl+Shift+L
+# You can change this in NordPass settings under "Keyboard shortcuts"
+
+sleep 0.1  # Brief delay to ensure focus is on the page
+wtype -M ctrl -M shift -k l -m shift -m ctrl

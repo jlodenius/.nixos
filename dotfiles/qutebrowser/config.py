@@ -1,7 +1,7 @@
 config.load_autoconfig(False)
 config.source('theme.py')
 
-# Font configuration - GeistMono Nerd Font (matching kitty)
+# Font configuration
 c.fonts.default_family = 'GeistMono Nerd Font'
 c.fonts.default_size = '13pt'
 
@@ -23,16 +23,9 @@ c.completion.shrink = True  # Shrink to fit content
 c.completion.timestamp_format = '%Y-%m-%d'  # Shorter date format
 c.completion.use_best_match = True
 
-# 1Password integration
-config.bind('<Alt-p>', 'spawn --userscript 1password', mode='insert')
-config.bind('<Alt-p>', 'spawn --userscript 1password', mode='normal')
-config.bind('<Alt-u>', 'spawn --userscript 1password-user', mode='insert')
-config.bind('<Alt-u>', 'spawn --userscript 1password-user', mode='normal')
-config.bind('<Alt-Shift-p>', 'spawn --userscript 1password-pass', mode='insert')
-config.bind('<Alt-Shift-p>', 'spawn --userscript 1password-pass', mode='normal')
-
-# Sync quickmarks from phone (synced app) then open quickmarks
-config.bind('<Ctrl-b>', 'spawn --userscript sync-quickmarks')
+# NordPass integration (triggers global autofill shortcut via wtype)
+config.bind('<Alt-p>', 'spawn --userscript nordpass', mode='insert')
+config.bind('<Alt-p>', 'spawn --userscript nordpass', mode='normal')
 
 # Tab navigation with Ctrl+h/l
 config.bind('<Ctrl-h>', 'tab-prev')
