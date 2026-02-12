@@ -69,6 +69,8 @@
       discord
       slack
       nordpass
+      bitwarden-desktop
+      bitwarden-cli
       spotify
       pavucontrol
       yazi
