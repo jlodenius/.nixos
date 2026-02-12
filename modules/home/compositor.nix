@@ -61,6 +61,7 @@
       fd
       wl-clipboard
       rofi
+      wtype # For rofi-rbw typing on Wayland
       keyutils
 
       # Applications
@@ -73,6 +74,8 @@
       nordpass
       bitwarden-desktop
       bitwarden-cli
+      rbw
+      rofi-rbw
       spotify
       pavucontrol
       yazi

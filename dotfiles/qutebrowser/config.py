@@ -36,5 +36,5 @@ c.qt.args = ['disable-frame-rate-limit']
 # Smooth scrolling for keyboard navigation
 c.scrolling.smooth = True
 
-# Bitwarden password fill
-config.bind('<Ctrl-b>', 'spawn --userscript qute-bitwarden -d "rofi -dmenu -i -p Bitwarden"')
+# Bitwarden password fill (using rbw + rofi-rbw)
+config.bind('<Ctrl-b>', 'spawn rofi-rbw --action type --target username --target tab --target password --typer wtype --clipboarder wl-copy')
