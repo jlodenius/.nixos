@@ -60,6 +60,7 @@
       # CLI utils
       fd
       wl-clipboard
+      rofi
 
       # Applications
       stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
