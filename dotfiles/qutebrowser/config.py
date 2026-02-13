@@ -1,3 +1,7 @@
+# ruff: noqa: F821
+# pyright: reportUndefinedVariable=false
+# `config` and `c` are globals injected by qutebrowser
+
 config.load_autoconfig(False)
 config.source('theme.py')
 

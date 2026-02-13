@@ -1,3 +1,7 @@
+# ruff: noqa: F821
+# pyright: reportUndefinedVariable=false
+# `c` is a global injected by qutebrowser
+
 c.colors.completion.fg = '#EDEDED'
 c.colors.completion.odd.bg = '#1B1B1B'
 c.colors.completion.even.bg = '#181818'
