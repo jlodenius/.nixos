@@ -62,6 +62,7 @@
       wl-clipboard
       rofi
       keyutils
+      unzip
 
       # Applications
       stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
