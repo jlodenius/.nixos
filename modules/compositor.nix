@@ -91,6 +91,15 @@
     security.polkit.enable = true;
     security.pam.services.swaylock = {};
 
+    # Enable kernel keyring for login sessions (needed for bitwarden CLI session caching)
+    security.pam.services.login.enableGnomeKeyring = true;
+    security.pam.services.login.rules.session.keyinit = {
+      order = 5000;
+      control = "optional";
+      modulePath = "pam_keyinit.so";
+      args = ["force" "revoke"];
+    };
+
     # Steam
     programs.steam = {
       enable = true;

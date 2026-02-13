@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+"""Bitwarden autofill for qutebrowser using rbw"""
+
+import os
+import subprocess
+import sys
+
+
+def qute_command(cmd):
+    with open(os.environ["QUTE_FIFO"], "w") as fifo:
+        fifo.write(cmd + "\n")
+
+
+def fake_key_raw(text):
+    for char in text:
+        if char == " ":
+            seq = '" "'
+        else:
+            seq = rf"\{char}"
+        qute_command(f"fake-key {seq}")
+
+
+def main():
+    # Get credentials using rofi-rbw
+    result = subprocess.run(
+        ["rofi-rbw", "--action", "print", "--target", "username", "--target", "password"],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0 or not result.stdout.strip():
+        sys.exit(0)
+
+    lines = result.stdout.strip().split("\n")
+    if len(lines) < 2:
+        sys.exit(1)
+
+    username = lines[0]
+    password = lines[1]
+
+    # Type username, tab, password
+    fake_key_raw(username)
+    qute_command("fake-key <Tab>")
+    fake_key_raw(password)
+
+    # Enter insert mode so user can press Enter to submit
+    qute_command("mode-enter insert")
+
+
+if __name__ == "__main__":
+    main()

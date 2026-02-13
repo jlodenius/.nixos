@@ -61,7 +61,6 @@
       fd
       wl-clipboard
       rofi
-      wtype # For rofi-rbw typing on Wayland
       keyutils
       pinentry-gnome3 # For rbw password prompts
 
