@@ -62,7 +62,6 @@
       wl-clipboard
       rofi
       keyutils
-      pinentry-gnome3 # For rbw password prompts
 
       # Applications
       stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -74,8 +73,6 @@
       nordpass
       bitwarden-desktop
       bitwarden-cli
-      rbw
-      rofi-rbw
       spotify
       pavucontrol
       yazi
