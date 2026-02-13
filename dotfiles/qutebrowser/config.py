@@ -38,3 +38,14 @@ c.scrolling.smooth = True
 
 # Bitwarden password fill (using built-in qute-bitwarden, 8h session cache)
 config.bind('<Ctrl-b>', 'spawn --userscript qute-bitwarden --auto-lock 28800')
+
+# Ad blocking
+c.content.blocking.method = 'both'
+c.content.blocking.adblock.lists = [
+    "https://easylist.to/easylist/easylist.txt",
+    "https://easylist.to/easylist/easyprivacy.txt",
+    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt",
+    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt",
+    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt",
+    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances-cookies.txt",
+]
