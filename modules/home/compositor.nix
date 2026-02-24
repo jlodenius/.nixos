@@ -88,7 +88,7 @@
       settings = {
         base_url = "https://vault.bitwarden.eu";
         email = "jacob@lodenius.com";
-        pinentry = pkgs.pinentry-qt;
+        pinentry = pkgs.pinentry-rofi;
       };
     };
   };
