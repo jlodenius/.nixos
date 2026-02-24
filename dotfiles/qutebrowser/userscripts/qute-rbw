@@ -21,7 +21,7 @@ from urllib.parse import urlparse
 
 argument_parser = argparse.ArgumentParser(description=__doc__)
 argument_parser.add_argument('url', nargs='?', default=os.getenv('QUTE_URL'))
-argument_parser.add_argument('--dmenu-invocation', '-d', default='rofi -dmenu -i -p rbw',
+argument_parser.add_argument('--dmenu-invocation', '-d', default='wofi --dmenu -i -p rbw',
                              help='Invocation used to execute a dmenu-provider')
 argument_parser.add_argument('--no-insert-mode', '-n', dest='insert_mode', action='store_false',
                              help="Don't automatically enter insert mode")

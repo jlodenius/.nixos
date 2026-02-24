@@ -60,7 +60,7 @@
       # CLI utils
       fd
       wl-clipboard
-      rofi
+      wofi
       keyutils
       unzip
 
@@ -88,7 +88,7 @@
       settings = {
         base_url = "https://vault.bitwarden.eu";
         email = "jacob@lodenius.com";
-        pinentry = pkgs.pinentry-rofi;
+        pinentry = pkgs.pinentry-qt;
       };
     };
   };
