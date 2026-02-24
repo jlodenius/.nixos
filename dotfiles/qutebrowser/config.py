@@ -47,6 +47,9 @@ c.scrolling.smooth = True
 config.bind('<Ctrl-b>', 'spawn --userscript qute-rbw')
 config.bind('<Ctrl-Shift-b>', 'spawn --userscript qute-rbw --username-only')
 config.bind('<Ctrl-Shift-p>', 'spawn --userscript qute-rbw --password-only')
+config.bind('<Ctrl-b>', 'spawn --userscript qute-rbw', mode='insert')
+config.bind('<Ctrl-Shift-b>', 'spawn --userscript qute-rbw --username-only', mode='insert')
+config.bind('<Ctrl-Shift-p>', 'spawn --userscript qute-rbw --password-only', mode='insert')
 
 # Ad blocking
 c.content.blocking.method = 'both'
