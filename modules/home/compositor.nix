@@ -74,6 +74,7 @@
       nordpass
       bitwarden-desktop
       bitwarden-cli
+      rbw # Fast Bitwarden CLI alternative (uses background daemon)
       spotify
       pavucontrol
       yazi

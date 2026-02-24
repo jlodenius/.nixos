@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+"""
+Insert login information using rbw (Rust Bitwarden CLI) and rofi.
+
+rbw uses a background daemon that keeps the vault decrypted in memory,
+making lookups nearly instant compared to the official bw CLI.
+
+Usage in qutebrowser:
+    spawn --userscript qute-rbw
+    spawn --userscript qute-rbw --username-only
+    spawn --userscript qute-rbw --password-only
+    spawn --userscript qute-rbw --totp-only
+"""
+
+import argparse
+import os
+import shlex
+import subprocess
+import sys
+from urllib.parse import urlparse
+
+argument_parser = argparse.ArgumentParser(description=__doc__)
+argument_parser.add_argument('url', nargs='?', default=os.getenv('QUTE_URL'))
+argument_parser.add_argument('--dmenu-invocation', '-d', default='rofi -dmenu -i -p rbw',
+                             help='Invocation used to execute a dmenu-provider')
+argument_parser.add_argument('--no-insert-mode', '-n', dest='insert_mode', action='store_false',
+                             help="Don't automatically enter insert mode")
+
+group = argument_parser.add_mutually_exclusive_group()
+group.add_argument('--username-only', '-e', action='store_true',
+                   help='Only insert username')
+group.add_argument('--password-only', '-w', action='store_true',
+                   help='Only insert password')
+group.add_argument('--totp-only', '-T', action='store_true',
+                   help='Only insert TOTP code')
+
+
+def qute_command(command: str) -> None:
+    """Send a command to qutebrowser."""
+    with open(os.environ['QUTE_FIFO'], 'w') as fifo:
+        fifo.write(command + '\n')
+
+
+def notify(message: str, error: bool = False) -> None:
+    """Show a notification in qutebrowser."""
+    level = 'error' if error else 'info'
+    qute_command(f'message-{level} "{message}"')
+
+
+def run_rbw(*args: str) -> tuple[int, str, str]:
+    """Run an rbw command and return (returncode, stdout, stderr)."""
+    result = subprocess.run(
+        ['rbw', *args],
+        capture_output=True,
+        text=True
+    )
+    return result.returncode, result.stdout.strip(), result.stderr.strip()
+
+
+def get_domain(url: str) -> str:
+    """Extract the domain from a URL."""
+    parsed = urlparse(url)
+    return parsed.netloc or parsed.path.split('/')[0]
+
+
+def dmenu(items: list[str], invocation: str) -> str:
+    """Show a dmenu/rofi selection dialog."""
+    command = shlex.split(invocation)
+    result = subprocess.run(
+        command,
+        input='\n'.join(items),
+        capture_output=True,
+        text=True
+    )
+    return result.stdout.strip()
+
+
+def fake_key_raw(text: str) -> None:
+    """Type text using qutebrowser's fake-key command."""
+    for char in text:
+        if char == ' ':
+            sequence = '" "'
+        else:
+            sequence = f'\\{char}'
+        qute_command(f'fake-key {sequence}')
+
+
+def get_entries_for_domain(domain: str) -> list[str]:
+    """Get rbw entries that match the domain."""
+    # Get all entries
+    code, stdout, stderr = run_rbw('list')
+    if code != 0:
+        return []
+
+    all_entries = stdout.splitlines()
+
+    # Filter entries that contain the domain (case-insensitive)
+    domain_lower = domain.lower()
+    # Also try without 'www.' prefix
+    domain_stripped = domain_lower.removeprefix('www.')
+
+    matches = []
+    for entry in all_entries:
+        entry_lower = entry.lower()
+        if domain_lower in entry_lower or domain_stripped in entry_lower:
+            matches.append(entry)
+
+    # If no matches, try just the base domain (e.g., 'github' from 'github.com')
+    if not matches:
+        base_domain = domain_stripped.split('.')[0]
+        for entry in all_entries:
+            if base_domain in entry.lower():
+                matches.append(entry)
+
+    return matches
+
+
+def main():
+    args = argument_parser.parse_args()
+
+    if not args.url:
+        notify("No URL provided", error=True)
+        return 1
+
+    # Check if rbw is unlocked (this will prompt if needed)
+    code, _, stderr = run_rbw('unlocked')
+    if code != 0:
+        # Try to unlock - this will spawn the pinentry
+        code, _, stderr = run_rbw('unlock')
+        if code != 0:
+            notify(f"Failed to unlock rbw: {stderr}", error=True)
+            return 1
+
+    domain = get_domain(args.url)
+    entries = get_entries_for_domain(domain)
+
+    if not entries:
+        notify(f"No entries found for {domain}", error=True)
+        return 2
+
+    # Select entry
+    if len(entries) == 1:
+        selected = entries[0]
+    else:
+        selected = dmenu(entries, args.dmenu_invocation)
+
+    if not selected:
+        return 0  # User cancelled
+
+    # Get credentials
+    if args.totp_only:
+        code, totp, stderr = run_rbw('code', selected)
+        if code != 0:
+            notify(f"Failed to get TOTP: {stderr}", error=True)
+            return 1
+        fake_key_raw(totp)
+    elif args.username_only:
+        code, username, stderr = run_rbw('get', '--field', 'username', selected)
+        if code != 0:
+            notify(f"Failed to get username: {stderr}", error=True)
+            return 1
+        fake_key_raw(username)
+    elif args.password_only:
+        code, password, stderr = run_rbw('get', selected)
+        if code != 0:
+            notify(f"Failed to get password: {stderr}", error=True)
+            return 1
+        fake_key_raw(password)
+    else:
+        # Get both username and password
+        code, username, stderr = run_rbw('get', '--field', 'username', selected)
+        if code != 0:
+            notify(f"Failed to get username: {stderr}", error=True)
+            return 1
+
+        code, password, stderr = run_rbw('get', selected)
+        if code != 0:
+            notify(f"Failed to get password: {stderr}", error=True)
+            return 1
+
+        fake_key_raw(username)
+        qute_command('fake-key <Tab>')
+        fake_key_raw(password)
+
+    if args.insert_mode:
+        qute_command('mode-enter insert')
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
