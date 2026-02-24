@@ -40,21 +40,13 @@ c.qt.args = ['disable-frame-rate-limit']
 # Smooth scrolling for keyboard navigation
 c.scrolling.smooth = True
 
-# Bitwarden password fill (using built-in qute-bitwarden, 8h session cache)
-# Ctrl-b: fill both username and password (traditional login forms)
-# Ctrl-Shift-b: fill username only (for split login flows - username page)
-# Ctrl-Shift-p: fill password only (for split login flows - password page)
-config.bind('<Ctrl-b>', 'spawn --userscript qute-bitwarden --auto-lock 28800')
-config.bind('<Ctrl-Shift-b>', 'spawn --userscript qute-bitwarden --auto-lock 28800 --username-only')
-config.bind('<Ctrl-Shift-p>', 'spawn --userscript qute-bitwarden --auto-lock 28800 --password-only')
-
-# rbw - fast Bitwarden alternative (uses background daemon, near-instant lookups)
-# Alt-b: fill both username and password
-# Alt-Shift-b: fill username only
-# Alt-Shift-p: fill password only
-config.bind('<Alt-b>', 'spawn --userscript qute-rbw')
-config.bind('<Alt-Shift-b>', 'spawn --userscript qute-rbw --username-only')
-config.bind('<Alt-Shift-p>', 'spawn --userscript qute-rbw --password-only')
+# Bitwarden password fill using rbw
+# Ctrl-b: fill both username and password
+# Ctrl-Shift-b: fill username only
+# Ctrl-Shift-p: fill password only
+config.bind('<Ctrl-b>', 'spawn --userscript qute-rbw')
+config.bind('<Ctrl-Shift-b>', 'spawn --userscript qute-rbw --username-only')
+config.bind('<Ctrl-Shift-p>', 'spawn --userscript qute-rbw --password-only')
 
 # Ad blocking
 c.content.blocking.method = 'both'
