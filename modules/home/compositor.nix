@@ -74,7 +74,6 @@
       nordpass
       bitwarden-desktop
       bitwarden-cli
-      rbw # Fast Bitwarden CLI alternative (uses background daemon)
       spotify
       pavucontrol
       yazi
@@ -82,5 +81,15 @@
       networkmanagerapplet
       postman
     ];
+
+    # rbw - fast Bitwarden CLI (uses background daemon for instant lookups)
+    programs.rbw = {
+      enable = true;
+      settings = {
+        base_url = "https://vault.bitwarden.eu";
+        email = "jacob@lodenius.com";
+        pinentry = pkgs.pinentry-gnome3;
+      };
+    };
   };
 }
