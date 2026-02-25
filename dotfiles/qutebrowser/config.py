@@ -31,6 +31,14 @@ c.completion.use_best_match = True
 config.bind('<Ctrl-h>', 'tab-prev')
 config.bind('<Ctrl-l>', 'tab-next')
 
+# Move tabs left/right with Ctrl+Shift+h/l
+config.bind('<Ctrl-Shift-h>', 'tab-move -')
+config.bind('<Ctrl-Shift-l>', 'tab-move +')
+
+# Break out tab to new window / join tab to another window
+config.bind('<Ctrl-Shift-k>', 'tab-give')
+config.bind('<Ctrl-Shift-j>', 'tab-give 0')
+
 # Restore tabs from last session on startup
 c.auto_save.session = True
 
