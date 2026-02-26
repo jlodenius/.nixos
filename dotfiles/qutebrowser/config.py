@@ -16,7 +16,7 @@ c.tabs.indicator.padding = {'top': 4, 'bottom': 4, 'left': 2, 'right': 6}
 
 # Dark mode
 c.colors.webpage.darkmode.enabled = False
-c.colors.webpage.preferred_color_scheme = 'dark'
+c.colors.webpage.preferred_color_scheme = 'auto'
 
 # Ctrl+j/k to navigate completion lists
 config.bind('<Ctrl-j>', 'completion-item-focus next', mode='command')
