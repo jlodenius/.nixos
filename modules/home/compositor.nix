@@ -71,6 +71,7 @@
       google-chrome
       discord
       slack
+      teams-for-linux
       nordpass
       bitwarden-desktop
       bitwarden-cli
