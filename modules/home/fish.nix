@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   programs.fish = {
     enable = true;
     shellAliases = {
