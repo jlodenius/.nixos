@@ -79,7 +79,7 @@ return {
     --
     -- likely ill add a mode check and assert on required visual mode
     -- so just prepare for it now
-    vim.keymap.set("v", "<leader>9v", function() _99.visual() end)
+    vim.keymap.set("v", "<leader>ae", function() _99.visual() end)
 
     --- if you have a request you dont want to make any changes, just cancel it
     vim.keymap.set("n", "<leader>9x", function() _99.stop_all_requests() end)
