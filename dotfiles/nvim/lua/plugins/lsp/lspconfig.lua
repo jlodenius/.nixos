@@ -114,6 +114,12 @@ return {
     })
     vim.lsp.enable("emmet_ls")
 
+    -- C#
+    vim.lsp.config("roslyn", {
+      capabilities,
+    })
+    vim.lsp.enable("roslyn")
+
     -- Nix
     vim.lsp.config("nil_ls", {
       capabilities = capabilities,

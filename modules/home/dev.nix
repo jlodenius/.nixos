@@ -86,6 +86,7 @@
       aws-vault
 
       # LSP
+      roslyn-ls
       bash-language-server
       tailwindcss-language-server
       emmet-ls
