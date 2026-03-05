@@ -117,6 +117,12 @@ return {
     -- C#
     vim.lsp.config("roslyn", {
       capabilities,
+      on_init = function(client)
+        -- disable format on save via willSaveWaitUntil
+        if client.server_capabilities.textDocumentSync then
+          client.server_capabilities.textDocumentSync.willSaveWaitUntil = false
+        end
+      end,
     })
     vim.lsp.enable("roslyn")
 
