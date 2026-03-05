@@ -22,6 +22,7 @@
       GTK_THEME = "Adwaita:dark";
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_CURRENT_DESKTOP = "Hyprland";
+      BROWSER = "qutebrowser";
     };
 
     # Set up directories
