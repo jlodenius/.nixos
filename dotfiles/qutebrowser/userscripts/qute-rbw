@@ -17,6 +17,7 @@ import os
 import shlex
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urlparse
 
 argument_parser = argparse.ArgumentParser(description=__doc__)
@@ -66,11 +67,20 @@ def get_domain(url: str) -> str:
 def dmenu(items: list[str], invocation: str) -> str:
     """Show a dmenu/wofi selection dialog."""
     command = shlex.split(invocation)
+    # Ensure Wayland env vars are passed through for wofi
+    env = os.environ.copy()
+    for var in ['WAYLAND_DISPLAY', 'XDG_RUNTIME_DIR']:
+        if var not in env:
+            if var == 'WAYLAND_DISPLAY':
+                env[var] = 'wayland-1'
+            elif var == 'XDG_RUNTIME_DIR':
+                env[var] = f'/run/user/{os.getuid()}'
     result = subprocess.run(
         command,
         input='\n'.join(items),
         capture_output=True,
-        text=True
+        text=True,
+        env=env
     )
     return result.stdout.strip()
 
@@ -85,32 +95,89 @@ def fake_key_raw(text: str) -> None:
         qute_command(f'fake-key {sequence}')
 
 
-def get_entries_for_domain(domain: str) -> list[str]:
-    """Get rbw entries that match the domain."""
-    # Get all entries
-    code, stdout, stderr = run_rbw('list')
+def get_entry_uri(name: str, folder: str) -> str:
+    """Get the URI field for an entry."""
+    args = ['get', '--full']
+    if folder:
+        args.extend(['--folder', folder])
+    args.append(name)
+    code, stdout, _ = run_rbw(*args)
+    if code != 0:
+        return ''
+    # Parse output - URI line looks like "URI: https://..."
+    for line in stdout.splitlines():
+        if line.startswith('URI: '):
+            return line[5:].strip()
+    return ''
+
+
+def get_entries_for_domain(domain: str) -> list[tuple[str, str, str]]:
+    """Get rbw entries that match the domain.
+
+    Returns list of (display_name, entry_name, folder) tuples.
+    Matches by entry name first, then falls back to URI matching.
+    """
+    # Get all entries with folder and user info for disambiguation
+    code, stdout, stderr = run_rbw('list', '--fields', 'folder,name,user')
     if code != 0:
         return []
 
-    all_entries = stdout.splitlines()
+    all_entries = []
+    for line in stdout.splitlines():
+        parts = line.split('\t')
+        if len(parts) >= 3:
+            folder, name, user = parts[0], parts[1], parts[2]
+        elif len(parts) == 2:
+            folder, name, user = parts[0], parts[1], ''
+        else:
+            folder, name, user = '', parts[0] if parts else '', ''
+        all_entries.append((folder, name, user))
+
+    def make_display(folder: str, name: str, user: str) -> str:
+        if folder:
+            display = f"{folder}/{name}"
+        else:
+            display = name
+        if user:
+            display = f"{display} ({user})"
+        return display
 
     # Filter entries that contain the domain (case-insensitive)
     domain_lower = domain.lower()
     # Also try without 'www.' prefix
     domain_stripped = domain_lower.removeprefix('www.')
 
-    matches = []
-    for entry in all_entries:
-        entry_lower = entry.lower()
-        if domain_lower in entry_lower or domain_stripped in entry_lower:
-            matches.append(entry)
+    # Extract base domain (e.g., "github" from "github.com", "microsoft" from "login.microsoft.com")
+    parts = domain_stripped.split('.')
+    # For simple domains like github.com, use first part
+    # For subdomains like login.microsoft.com, use second part (the main domain)
+    if len(parts) == 2:
+        base_domain = parts[0]  # github from github.com
+    elif len(parts) >= 3:
+        base_domain = parts[-2]  # microsoft from login.microsoft.com
+    else:
+        base_domain = domain_stripped
 
-    # If no matches, try just the base domain (e.g., 'github' from 'github.com')
+    matches = []
+    for folder, name, user in all_entries:
+        name_lower = name.lower()
+        # Try full domain first, then base domain
+        if domain_lower in name_lower or domain_stripped in name_lower or base_domain in name_lower:
+            matches.append((make_display(folder, name, user), name, folder))
+
+    # If still no matches, search by URI (slower but more accurate)
     if not matches:
-        base_domain = domain_stripped.split('.')[0]
-        for entry in all_entries:
-            if base_domain in entry.lower():
-                matches.append(entry)
+        def check_entry(entry):
+            folder, name, user = entry
+            uri = get_entry_uri(name, folder)
+            if uri and (domain_lower in uri.lower()):
+                return (make_display(folder, name, user), name, folder)
+            return None
+
+        # Use thread pool to check URIs in parallel
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            results = executor.map(check_entry, all_entries)
+            matches = [r for r in results if r is not None]
 
     return matches
 
@@ -138,42 +205,57 @@ def main():
         notify(f"No entries found for {domain}", error=True)
         return 2
 
-    # Select entry
+    # Select entry - entries are (display_name, entry_name, folder) tuples
     if len(entries) == 1:
-        selected = entries[0]
+        display, entry_name, folder = entries[0]
     else:
-        selected = dmenu(entries, args.dmenu_invocation)
+        display_names = [e[0] for e in entries]
+        selected_display = dmenu(display_names, args.dmenu_invocation)
+        if not selected_display:
+            return 0  # User cancelled
+        # Find the matching entry
+        for display, entry_name, folder in entries:
+            if display == selected_display:
+                break
+        else:
+            notify("Selection not found", error=True)
+            return 1
 
-    if not selected:
-        return 0  # User cancelled
+    # Build rbw get args - include folder if present for disambiguation
+    def rbw_get_args(*extra_args: str) -> list[str]:
+        args_list = list(extra_args)
+        if folder:
+            args_list.extend(['--folder', folder])
+        args_list.append(entry_name)
+        return args_list
 
     # Get credentials
     if args.totp_only:
-        code, totp, stderr = run_rbw('code', selected)
+        code, totp, stderr = run_rbw('code', *rbw_get_args())
         if code != 0:
             notify(f"Failed to get TOTP: {stderr}", error=True)
             return 1
         fake_key_raw(totp)
     elif args.username_only:
-        code, username, stderr = run_rbw('get', '--field', 'username', selected)
+        code, username, stderr = run_rbw('get', *rbw_get_args('--field', 'username'))
         if code != 0:
             notify(f"Failed to get username: {stderr}", error=True)
             return 1
         fake_key_raw(username)
     elif args.password_only:
-        code, password, stderr = run_rbw('get', selected)
+        code, password, stderr = run_rbw('get', *rbw_get_args())
         if code != 0:
             notify(f"Failed to get password: {stderr}", error=True)
             return 1
         fake_key_raw(password)
     else:
         # Get both username and password
-        code, username, stderr = run_rbw('get', '--field', 'username', selected)
+        code, username, stderr = run_rbw('get', *rbw_get_args('--field', 'username'))
         if code != 0:
             notify(f"Failed to get username: {stderr}", error=True)
             return 1
 
-        code, password, stderr = run_rbw('get', selected)
+        code, password, stderr = run_rbw('get', *rbw_get_args())
         if code != 0:
             notify(f"Failed to get password: {stderr}", error=True)
             return 1
