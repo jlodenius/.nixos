@@ -6,11 +6,7 @@ pkgs.mkShell {
   name = "dotnet-dev-shell";
 
   packages = with pkgs; [
-    (with dotnetCorePackages;
-      combinePackages [
-        sdk_8_0
-        sdk_10_0
-      ])
+    dotnetCorePackages.sdk_8_0
     azure-cli
     icu
     openssl

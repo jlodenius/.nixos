@@ -10,6 +10,7 @@
       vim = "nvim";
       bt = "bluetuith";
       lsa = "ls -a";
+      nix-shell = "nix-shell --command fish";
     };
     interactiveShellInit = ''
       fish_vi_key_bindings
