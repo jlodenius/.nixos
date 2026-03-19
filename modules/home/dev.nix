@@ -10,7 +10,6 @@
       AWS_PROFILE = "caesari-authentik-saml";
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
       PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "1";
-      LD_LIBRARY_PATH = "${pkgs.icu}/lib";
     };
 
     services.gpg-agent = {
