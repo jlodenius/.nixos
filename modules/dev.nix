@@ -62,6 +62,7 @@
     stdenv.cc.cc
     openssl
     zlib
+    icu
   ];
 
   environment.systemPackages = with pkgs; [

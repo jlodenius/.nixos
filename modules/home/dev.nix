@@ -74,7 +74,6 @@
       openssl
       protobuf
       claude-code
-      icu
 
       # CA
       nssTools
