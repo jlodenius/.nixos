@@ -10,11 +10,21 @@
       vim = "nvim";
       bt = "bluetuith";
       lsa = "ls -a";
-      nix-shell = "nix-shell --command fish";
+    };
+    functions = {
+      nix-shell = ''
+        if test (count $argv) -eq 1; and test -f ~/.nixos/shells/$argv[1].nix
+          command nix-shell ~/.nixos/shells/$argv[1].nix --command fish
+        else
+          command nix-shell $argv --command fish
+        end
+      '';
     };
     interactiveShellInit = ''
       fish_vi_key_bindings
       set -g fish_greeting ""
+
+      complete -c nix-shell -a '(for f in ~/.nixos/shells/*.nix; string replace -r ".*/" "" $f | string replace ".nix" ""; end)'
     '';
     plugins = [
       {
