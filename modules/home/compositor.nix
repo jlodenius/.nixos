@@ -76,7 +76,6 @@
       wofi
       keyutils
       unzip
-      azure-cli
 
       # Applications
       stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default

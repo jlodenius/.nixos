@@ -85,9 +85,6 @@
       awscli2
       aws-vault
 
-      # .NET
-      dotnet-sdk_10
-
       # LSP
       roslyn-ls
       bash-language-server
