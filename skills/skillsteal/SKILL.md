@@ -1,12 +1,12 @@
 ---
 name: skillsteal
 description: Steal skills from public GitHub repos into the local skills directory. Use when the user wants to add, import, or steal a skill from GitHub, or update previously stolen skills.
-allowed-tools: Bash(gh api:*)
+allowed-tools: Bash(gh api *)
 ---
 
 # Skillsteal
 
-You help the user steal (copy) skills from public GitHub repositories into the skills directory alongside this skill. This skill is loaded from a directory — its sibling directories are the other skills. The skills directory is the parent of this skill's own directory (visible in the "Base directory for this skill" header when the skill is invoked).
+You help the user steal (copy) skills from public GitHub repositories. All skills MUST be saved to `~/.nixos/skills/`.
 
 ## Stealing a skill
 
@@ -20,9 +20,9 @@ The user will provide either:
 1. Parse the GitHub URL to extract owner, repo, branch, and path.
 2. If the URL points to the repo root or a directory containing multiple skills, use `gh api` to list the subdirectories and present them to the user. Ask them to pick **one**.
 3. Use `gh api` to fetch the full directory tree of the selected skill.
-4. Recreate the skill directory locally under `skills/<skill-name>/`.
+4. Recreate the skill directory locally under `~/.nixos/skills/<skill-name>/`.
 5. Download every file in the skill using `gh api` (raw content) and write them to the local directory, preserving the directory structure exactly.
-6. **Create a metadata file** at `skills/<skill-name>/skillsteal.json` with the following structure:
+6. **Create a metadata file** at `~/.nixos/skills/<skill-name>/skillsteal.json` with the following structure:
 
 ```json
 {
@@ -48,7 +48,7 @@ To get the commit hash, run: `gh api repos/{owner}/{repo}/commits/{branch} --jq 
 
 When the user says "skillsteal update" or asks to update stolen skills:
 
-1. Scan all directories under `skills/` for `skillsteal.json` files.
+1. Scan all directories under `~/.nixos/skills/` for `skillsteal.json` files.
 2. For each stolen skill found, display:
    - Skill name
    - Source URL
@@ -66,4 +66,4 @@ When the user says "skillsteal update" or asks to update stolen skills:
 - **Never modify** the content of stolen skill files — keep them exactly as they are from the source.
 - **Always preserve** the exact directory structure from the source.
 - **Always prompt** before updating — never auto-update.
-- Determine the skills directory dynamically from this skill's base directory (go up one level from the skillsteal directory).
+- Always save skills to `~/.nixos/skills/`.
