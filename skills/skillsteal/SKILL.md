@@ -22,40 +22,48 @@ The user will provide either:
 3. Use `gh api` to fetch the full directory tree of the selected skill.
 4. Recreate the skill directory locally under `skills/<skill-name>/`.
 5. Download every file in the skill using `gh api` (raw content) and write them to the local directory, preserving the directory structure exactly.
-6. **Add metadata** to the top of `SKILL.md` (the main entrypoint). Insert an HTML comment block at the very top of the file, **before** any existing content (including frontmatter):
+6. **Create a metadata file** at `skills/<skill-name>/skillsteal.json` with the following structure:
 
-```
-<!-- skillsteal
-source: <full GitHub URL to the skill directory>
-commit: <latest commit hash of the source repo at time of steal>
-stolen: <YYYY-MM-DD>
--->
+```json
+{
+  "source": "<full GitHub URL to the skill directory>",
+  "owner": "<repo owner>",
+  "repo": "<repo name>",
+  "branch": "<branch>",
+  "path": "<path to skill in repo>",
+  "history": [
+    {
+      "commit": "<commit hash>",
+      "date": "YYYY-MM-DD"
+    }
+  ]
+}
 ```
 
 To get the commit hash, run: `gh api repos/{owner}/{repo}/commits/{branch} --jq '.sha'`
 
-7. Do NOT modify any other content in the skill files — keep them exactly as they are in the source repo.
+7. Do NOT modify any content in the skill files — keep them exactly as they are in the source repo.
 
 ## Updating stolen skills (`skillsteal update`)
 
 When the user says "skillsteal update" or asks to update stolen skills:
 
-1. Scan all directories under `skills/` for `SKILL.md` files containing the `<!-- skillsteal` metadata comment.
+1. Scan all directories under `skills/` for `skillsteal.json` files.
 2. For each stolen skill found, display:
    - Skill name
    - Source URL
    - Date it was last stolen
-   - Current commit hash vs latest commit hash from the source repo
+   - Current local commit hash vs latest remote commit hash
 3. **Ask the user which skills they want to update.** Never update automatically. Present the list and let them choose.
 4. For each skill the user approves:
-   - Re-fetch all files from the source, overwriting the local copies
-   - Update the metadata comment with the new commit hash and today's date
+   - Re-fetch all files from the source, overwriting the local copies (but not `skillsteal.json`)
+   - **Append** a new entry to the `history` array with the new commit hash and today's date (preserving all previous entries)
    - Show a summary of what changed
 
 ## Important rules
 
 - **One skill at a time** unless the user explicitly asks for more.
-- **Never modify** the content of stolen skill files (except for the metadata comment in SKILL.md).
+- **Never modify** the content of stolen skill files — keep them exactly as they are from the source.
 - **Always preserve** the exact directory structure from the source.
 - **Always prompt** before updating — never auto-update.
 - The skills directory is: `skills/` at the repo root (same level as `flake.nix`).
