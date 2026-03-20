@@ -1,6 +1,7 @@
 ---
 name: skillsteal
 description: Steal skills from public GitHub repos into the local skills directory. Use when the user wants to add, import, or steal a skill from GitHub, or update previously stolen skills.
+allowed-tools: Bash(gh api:*)
 ---
 
 # Skillsteal
