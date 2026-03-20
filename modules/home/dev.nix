@@ -43,13 +43,6 @@
     programs.claude-code = {
       enable = true;
       settings = {
-        enabledPlugins = {
-          "claude@cc-marketplace" = true;
-          "lua-lsp@claude-plugins-official" = true;
-          "rust-analyzer-lsp@claude-plugins-official" = true;
-          "typescript-lsp@claude-plugins-official" = true;
-          "pyright-lsp@claude-plugins-official" = true;
-        };
         alwaysThinkingEnabled = true;
       };
       skillsDir = ../../skills;

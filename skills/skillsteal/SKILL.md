@@ -6,7 +6,7 @@ allowed-tools: Bash(gh api:*)
 
 # Skillsteal
 
-You help the user steal (copy) skills from public GitHub repositories into their local skills directory at the root of this repo under `skills/`.
+You help the user steal (copy) skills from public GitHub repositories into the skills directory alongside this skill. This skill is loaded from a directory — its sibling directories are the other skills. The skills directory is the parent of this skill's own directory (visible in the "Base directory for this skill" header when the skill is invoked).
 
 ## Stealing a skill
 
@@ -66,4 +66,4 @@ When the user says "skillsteal update" or asks to update stolen skills:
 - **Never modify** the content of stolen skill files — keep them exactly as they are from the source.
 - **Always preserve** the exact directory structure from the source.
 - **Always prompt** before updating — never auto-update.
-- The skills directory is: `skills/` at the repo root (same level as `flake.nix`).
+- Determine the skills directory dynamically from this skill's base directory (go up one level from the skillsteal directory).
