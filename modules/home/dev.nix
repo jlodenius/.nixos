@@ -76,6 +76,7 @@
       # Misc
       gh
       fzf
+      television
       ripgrep
       pkg-config
       openssl
