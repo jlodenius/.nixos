@@ -6,7 +6,10 @@ pkgs.mkShell {
   name = "dotnet-dev-shell";
 
   packages = with pkgs; [
-    dotnetCorePackages.sdk_8_0
+    (dotnetCorePackages.combinePackages [
+      dotnetCorePackages.sdk_8_0
+      dotnetCorePackages.sdk_9_0
+    ])
     azure-cli
     azuredatastudio
     icu
