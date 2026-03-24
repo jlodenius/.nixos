@@ -1,19 +1,6 @@
 # Development environment — system and user config in one place
 {self, ...}: {
   flake.nixosModules.dev = {pkgs, ...}: {
-    security.pki.certificateFiles = [
-      ../certs/SIS-RootCA.crt
-    ];
-
-    networking.hosts = {
-      "127.0.0.1" = [
-        "mol-dev.sis.se"
-        "mol-admin-dev.sis.se"
-        "dev-viewer.standard.sis.se"
-        "sd-api.dev.sis.se"
-      ];
-    };
-
     # Docker
     virtualisation.docker.enable = true;
     users.users.jacob.extraGroups = ["docker"];

@@ -23,6 +23,7 @@ in {
       self.nixosModules.base
       self.nixosModules.laptop
       self.nixosModules.dev
+      self.nixosModules.sis
       self.nixosModules.compositor
       self.nixosModules.fish
       self.nixosModules.dark-theme
