@@ -5,6 +5,9 @@ return {
     after = function()
       require("transparent").setup({ extra_groups = { "NvimTreeNormal" } })
       vim.cmd([[:TransparentEnable]])
+
+      -- Re-apply devicons colors after transparent clears highlights
+      require("nvim-web-devicons").setup()
     end,
   },
   {
