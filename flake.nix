@@ -21,6 +21,8 @@
       url = "github:jlodenius/stockfin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
   };
 
   outputs = inputs:
@@ -30,6 +32,7 @@
         ++ [
           ./flake-parts.nix
           ./hosts/thinkpad
+          ./wrappedPrograms/neovim/neovim.nix
         ];
     };
 }

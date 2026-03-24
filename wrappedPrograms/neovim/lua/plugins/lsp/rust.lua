@@ -1,9 +1,9 @@
 return {
   {
-    "saecki/crates.nvim",
+    "crates.nvim",
     ft = { "toml" },
     event = { "BufRead Cargo.toml" },
-    config = function()
+    after = function()
       require("crates").setup({
         lsp = {
           enabled = true,
