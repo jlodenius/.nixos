@@ -1,16 +1,5 @@
 return {
   {
-    "transparent.nvim",
-    lazy = false,
-    after = function()
-      require("transparent").setup({ extra_groups = { "NvimTreeNormal" } })
-      vim.cmd([[:TransparentEnable]])
-
-      -- Re-apply devicons colors after transparent clears highlights
-      require("nvim-web-devicons").setup()
-    end,
-  },
-  {
     "melange-nvim",
     lazy = false,
     after = function()
