@@ -41,6 +41,13 @@ return {
       hl("TelescopeNormal", { bg = melange.surface, fg = melange.text })
       hl("TelescopeTitle", { bg = melange.surface, fg = melange.gold, bold = true })
       hl("NvimTreeNormal", { bg = "None" })
+
+      -- Re-apply MatchParen on every ColorScheme event (melange links it to Substitute)
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = function()
+          vim.api.nvim_set_hl(0, "MatchParen", { fg = melange.lavender, bg = melange.overlay, bold = true })
+        end,
+      })
     end,
   },
 }
