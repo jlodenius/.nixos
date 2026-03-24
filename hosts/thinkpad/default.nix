@@ -45,6 +45,12 @@ in {
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
         networking.firewall.enable = false;
+
+        # Note:
+        # Set these once at install time, never change. Ensures backwards compatibility
+        # when NixOS/home-manager modules change defaults between releases.
+        system.stateVersion = "25.11";
+        home-manager.users.jacob.home.stateVersion = "25.11";
       }
     ];
   };

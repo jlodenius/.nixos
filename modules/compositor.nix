@@ -111,8 +111,6 @@
       pkgs,
       ...
     }: {
-      home.stateVersion = "25.11";
-
       home.sessionVariables = {
         MOZ_ENABLE_WAYLAND = "1";
         GTK_THEME = "Adwaita:dark";
