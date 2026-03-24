@@ -2,33 +2,12 @@
 {
   inputs,
   self,
+  lib,
   ...
 }: {
-  flake.nvimWrapper = {
-    config,
-    wlib,
-    lib,
-    pkgs,
-    ...
-  }: {
-    imports = [wlib.wrapperModules.neovim];
-
-    # ── Config directory ───────────────────────────────────────────────
-    config.settings.config_directory = ./.;
-
-    # ── Extra packages (LSPs, formatters, linters) ─────────────────────
-    config.extraPackages = with pkgs; [
-      # LSPs
-      lua-language-server
-      pyright
-      nil
-      roslyn-ls
-      bash-language-server
-      tailwindcss-language-server
-      emmet-ls
-      nodePackages.vscode-langservers-extracted # cssls, html, eslint
-      nodePackages.typescript-language-server
-
+  # Shared formatters & linters — used by both the neovim wrapper and dev.nix
+  flake.lib.lintAndFormat = pkgs:
+    with pkgs; [
       # Formatters
       prettierd
       stylua
@@ -39,6 +18,59 @@
       eslint_d
       shellcheck
     ];
+
+  flake.nvimWrapper = {
+    config,
+    wlib,
+    lib,
+    pkgs,
+    ...
+  }: {
+    imports = [wlib.wrapperModules.neovim];
+
+    # ── Test mode ──────────────────────────────────────────────────────
+    # When true, reads config from disk (instant edits). When false, baked into store (portable).
+    options.settings.test_mode = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+    };
+
+    options.settings.wrapped_config = lib.mkOption {
+      type = wlib.types.stringable;
+      default = ./.;
+    };
+
+    options.settings.unwrapped_config = lib.mkOption {
+      type = lib.types.either wlib.types.stringable lib.types.luaInline;
+      default = lib.generators.mkLuaInline "vim.uv.os_homedir() .. '/.nixos/modules/packages/neovim'";
+    };
+
+    config.settings.config_directory =
+      if config.settings.test_mode
+      then config.settings.unwrapped_config
+      else config.settings.wrapped_config;
+
+    # devMode uses "vim" as binary name so both derivations can coexist
+    config.binName = lib.mkIf config.settings.test_mode (lib.mkDefault "vim");
+    config.settings.dont_link = config.binName != "nvim";
+
+    # ── Extra packages (LSPs, formatters, linters) ─────────────────────
+    config.extraPackages =
+      (with pkgs; [
+        # LSP
+        lua-language-server
+        pyright
+        nil
+        roslyn-ls
+        bash-language-server
+        tailwindcss-language-server
+        emmet-ls
+        nodePackages.vscode-langservers-extracted # cssls, html, eslint
+        nodePackages.typescript-language-server
+        nodePackages.svelte-language-server
+        nodePackages.graphql-language-service-cli
+      ])
+      ++ self.lib.lintAndFormat pkgs;
 
     # ── Init ───────────────────────────────────────────────────────────
     config.specs.initLua = {
@@ -163,9 +195,29 @@
     self',
     ...
   }: {
+    # Portable neovim — config baked into nix store
     packages.neovim = inputs.wrapper-modules.wrappers.neovim.wrap {
       inherit pkgs;
       imports = [self.nvimWrapper];
+    };
+
+    # Dev mode — reads config from disk for instant edits, binary named "vim"
+    packages.devMode = inputs.wrapper-modules.wrappers.neovim.wrap {
+      inherit pkgs;
+      settings.test_mode = true;
+      imports = [self.nvimWrapper];
+    };
+
+    # Auto-detects: if the repo is cloned locally, use devMode; otherwise portable
+    packages.neovimDynamic = pkgs.writeShellApplication {
+      name = "nvim";
+      text = ''
+        if [ -d ~/.nixos/modules/packages/neovim/lua ]; then
+            ${lib.getExe self'.packages.devMode} "$@"
+        else
+            ${lib.getExe self'.packages.neovim} "$@"
+        fi
+      '';
     };
   };
 }

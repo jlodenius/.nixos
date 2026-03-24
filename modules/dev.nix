@@ -1,5 +1,5 @@
 # Development environment — system and user config in one place
-{...}: {
+{self, ...}: {
   flake.nixosModules.dev = {pkgs, ...}: {
     security.pki.certificateFiles = [
       ../certs/SIS-RootCA.crt
@@ -117,11 +117,6 @@
         enableSshSupport = true;
       };
 
-      programs.neovim = {
-        enable = true;
-        defaultEditor = true;
-      };
-
       programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
@@ -171,47 +166,33 @@
         ];
       };
 
-      home.packages = with pkgs; [
-        # Misc
-        gh
-        fzf
-        television
-        ripgrep
-        pkg-config
-        openssl
-        protobuf
+      home.sessionVariables.EDITOR = "nvim";
 
-        # CA
-        nssTools
-        mkcert
+      home.packages = with pkgs;
+        [
+          # Neovim
+          self.packages.${pkgs.stdenv.hostPlatform.system}.neovimDynamic
 
-        # AWS
-        chamber
-        saml2aws
-        awscli2
-        aws-vault
+          # Misc
+          gh
+          fzf
+          television
+          ripgrep
+          pkg-config
+          openssl
+          protobuf
 
-        # LSP
-        roslyn-ls
-        bash-language-server
-        tailwindcss-language-server
-        emmet-ls
-        lua-language-server
-        pyright
-        nil
-        eslint_d
-        nodePackages.vscode-langservers-extracted # cssls, html
-        nodePackages.svelte-language-server
-        nodePackages.graphql-language-service-cli
-        nodePackages.typescript-language-server
+          # CA
+          nssTools
+          mkcert
 
-        # Linters & Formatters
-        prettierd
-        stylua
-        alejandra
-        ruff
-        shellcheck
-      ];
+          # AWS
+          chamber
+          saml2aws
+          awscli2
+          aws-vault
+        ]
+        ++ self.lib.lintAndFormat pkgs;
     };
   };
 }
