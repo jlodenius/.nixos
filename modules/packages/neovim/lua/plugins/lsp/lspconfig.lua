@@ -4,6 +4,7 @@ return {
   after = function()
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+    -- Rust
     vim.lsp.config("rust_analyzer", {
       capabilities,
       settings = {
@@ -18,12 +19,15 @@ return {
     })
     vim.lsp.enable("rust_analyzer")
 
+    -- Python
     vim.lsp.config("pyright", { capabilities })
     vim.lsp.enable("pyright")
 
+    -- Typescript
     vim.lsp.config("ts_ls", { capabilities })
     vim.lsp.enable("ts_ls")
 
+    -- Lua
     vim.lsp.config("lua_ls", {
       capabilities,
       settings = {
@@ -42,30 +46,36 @@ return {
     })
     vim.lsp.enable("lua_ls")
 
+    -- Tailwind
     vim.lsp.config("tailwindcss", { capabilities })
     vim.lsp.enable("tailwindcss")
 
+    -- HTML
     vim.lsp.config("html", { capabilities })
     vim.lsp.enable("html")
 
+    -- CSS
     vim.lsp.config("cssls", {
       capabilities,
       settings = { css = { lint = { unknownAtRules = "ignore" } } },
     })
     vim.lsp.enable("cssls")
 
+    -- ESLint
     vim.lsp.config("eslint", {
       capabilities,
       settings = { workingDirectories = { mode = "auto" } },
     })
     vim.lsp.enable("eslint")
 
+    -- Emmet
     vim.lsp.config("emmet_ls", {
       capabilities,
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
     vim.lsp.enable("emmet_ls")
 
+    -- C#
     vim.lsp.config("roslyn", {
       capabilities,
       on_init = function(client)
@@ -76,6 +86,7 @@ return {
     })
     vim.lsp.enable("roslyn")
 
+    -- Nix
     vim.lsp.config("nil_ls", {
       capabilities = capabilities,
       settings = { ["nil"] = { formatting = { command = { "alejandra" } } } },
