@@ -1,5 +1,13 @@
 return {
   {
+    "transparent.nvim",
+    lazy = false,
+    after = function()
+      require("transparent").setup({ extra_groups = { "NvimTreeNormal" } })
+      vim.cmd([[:TransparentEnable]])
+    end,
+  },
+  {
     "melange-nvim",
     lazy = false,
     after = function()

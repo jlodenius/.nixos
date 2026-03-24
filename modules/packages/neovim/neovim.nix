@@ -93,8 +93,9 @@
       p.nvim-treesitter.withAllGrammars
       p.vim-tmux-navigator
 
-      # Colorscheme
+      # Colorscheme + transparency
       p.melange-nvim
+      p.transparent-nvim
 
       # Status line
       p.lightline-vim
