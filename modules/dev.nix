@@ -1,102 +1,217 @@
-# Development environment
-{pkgs, ...}: {
-  imports = [
-    ./home/dev.nix
-  ];
-
-  security.pki.certificateFiles = [
-    ../certs/SIS-RootCA.crt
-  ];
-
-  networking.hosts = {
-    "127.0.0.1" = [
-      "mol-dev.sis.se"
-      "mol-admin-dev.sis.se"
-      "dev-viewer.standard.sis.se"
-      "sd-api.dev.sis.se"
+# Development environment — system and user config in one place
+{...}: {
+  flake.nixosModules.dev = {pkgs, ...}: {
+    security.pki.certificateFiles = [
+      ../certs/SIS-RootCA.crt
     ];
-  };
 
-  # Docker
-  virtualisation.docker.enable = true;
-  users.users.jacob.extraGroups = ["docker"];
+    networking.hosts = {
+      "127.0.0.1" = [
+        "mol-dev.sis.se"
+        "mol-admin-dev.sis.se"
+        "dev-viewer.standard.sis.se"
+        "sd-api.dev.sis.se"
+      ];
+    };
 
-  # Required to run unpatched bins (not in nix-store)
-  #
-  # TODO:
-  # Remove if no longer necessary/clean up unused libs, not sure
-  # if the ones currently listed are all necessary
-  #
-  # Used for:
-  # 1. AWS auth with playwright
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXcursor
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXrender
-    xorg.libXtst
-    xorg.libXrandr
+    # Docker
+    virtualisation.docker.enable = true;
+    users.users.jacob.extraGroups = ["docker"];
 
-    nss
-    nspr
-    glib
-    dbus
-    atk
-    at-spi2-atk
-    libdrm
-    expat
-    libxcb
-    libxkbcommon
-    at-spi2-core
-    alsa-lib
-    cups
-    mesa
-    libgbm
-    pango
-    cairo
-    stdenv.cc.cc
-    openssl
-    zlib
-  ];
+    # Required to run unpatched bins (not in nix-store)
+    #
+    # TODO:
+    # Remove if no longer necessary/clean up unused libs, not sure
+    # if the ones currently listed are all necessary
+    #
+    # Used for:
+    # 1. AWS auth with playwright
+    programs.nix-ld.enable = true;
+    programs.nix-ld.libraries = with pkgs; [
+      xorg.libX11
+      xorg.libXcomposite
+      xorg.libXcursor
+      xorg.libXdamage
+      xorg.libXext
+      xorg.libXfixes
+      xorg.libXi
+      xorg.libXrender
+      xorg.libXtst
+      xorg.libXrandr
 
-  environment.systemPackages = with pkgs; [
-    # Misc
-    gcc
-    gnumake
-    cmake
-    cpuset
-    gdb
-    glib
-    lldb
-    nodejs
-    pnpm
+      nss
+      nspr
+      glib
+      dbus
+      atk
+      at-spi2-atk
+      libdrm
+      expat
+      libxcb
+      libxkbcommon
+      at-spi2-core
+      alsa-lib
+      cups
+      mesa
+      libgbm
+      pango
+      cairo
+      stdenv.cc.cc
+      openssl
+      zlib
+    ];
 
-    # Python
-    (python3.withPackages (ps:
-      with ps; [
-        pip
-        setuptools
+    environment.systemPackages = with pkgs; [
+      # Misc
+      gcc
+      gnumake
+      cmake
+      cpuset
+      gdb
+      glib
+      lldb
+      nodejs
+      pnpm
 
-        # Some caesari requirements
-        pyzmq
-        requests
+      # Python
+      (python3.withPackages (ps:
+        with ps; [
+          pip
+          setuptools
+
+          # Some caesari requirements
+          pyzmq
+          requests
+          protobuf
+        ]))
+      uv
+
+      # Rust
+      rustup
+      cargo-expand
+      cargo-hack
+      cargo-insta
+      cargo-machete
+      cargo-msrv
+      cargo-nextest
+      cargo-outdated
+    ];
+
+    # ── User-level dev config ──────────────────────────────────────────
+
+    home-manager.users.jacob = {
+      config,
+      pkgs,
+      ...
+    }: {
+      home.sessionVariables = {
+        GPG_TTY = "$(tty)";
+        AWS_PROFILE = "caesari-authentik-saml";
+        PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+        PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "1";
+      };
+
+      services.gpg-agent = {
+        enable = true;
+        defaultCacheTtl = 1800;
+        enableSshSupport = true;
+      };
+
+      programs.neovim = {
+        enable = true;
+        defaultEditor = true;
+      };
+
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+
+      programs.git = {
+        enable = true;
+        settings = {
+          user = {
+            name = "jlodenius";
+            email = "jacoblodenius@gmail.com";
+          };
+          init.defaultBranch = "master";
+          pull.rebase = false;
+        };
+      };
+
+      programs.claude-code = {
+        enable = true;
+        settings = {
+          alwaysThinkingEnabled = true;
+        };
+      };
+
+      programs.zoxide = {
+        enable = true;
+        enableFishIntegration = true;
+        options = ["--cmd cd"];
+      };
+
+      programs.tmux = {
+        enable = true;
+        extraConfig = builtins.readFile ../dotfiles/tmux/tmux.conf;
+        plugins = with pkgs; [
+          tmuxPlugins.vim-tmux-navigator
+          (tmuxPlugins.mkTmuxPlugin {
+            pluginName = "tmux-scrollback";
+            rtpFilePath = "scrollback.tmux";
+            version = "unstable";
+            src = fetchFromGitHub {
+              owner = "jlodenius";
+              repo = "tmux-scrollback";
+              rev = "master";
+              sha256 = "sha256-Z2vD/lEoHRgp7aCMaB44XeicgBb2SZ3b6YkAY/952u4=";
+            };
+          })
+        ];
+      };
+
+      home.packages = with pkgs; [
+        # Misc
+        gh
+        fzf
+        television
+        ripgrep
+        pkg-config
+        openssl
         protobuf
-      ]))
-    uv
 
-    # Rust
-    rustup
-    cargo-expand
-    cargo-hack
-    cargo-insta
-    cargo-machete
-    cargo-msrv
-    cargo-nextest
-    cargo-outdated
-  ];
+        # CA
+        nssTools
+        mkcert
+
+        # AWS
+        chamber
+        saml2aws
+        awscli2
+        aws-vault
+
+        # LSP
+        roslyn-ls
+        bash-language-server
+        tailwindcss-language-server
+        emmet-ls
+        lua-language-server
+        pyright
+        nil
+        eslint_d
+        nodePackages.vscode-langservers-extracted # cssls, html
+        nodePackages.svelte-language-server
+        nodePackages.graphql-language-service-cli
+        nodePackages.typescript-language-server
+
+        # Linters & Formatters
+        prettierd
+        stylua
+        alejandra
+        ruff
+        shellcheck
+      ];
+    };
+  };
 }
