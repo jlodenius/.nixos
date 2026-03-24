@@ -32,7 +32,6 @@
         ++ [
           ./flake-parts.nix
           ./hosts/thinkpad
-          ./wrappedPrograms/neovim/neovim.nix
         ];
     };
 }
