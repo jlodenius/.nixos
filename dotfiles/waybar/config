@@ -1,7 +1,9 @@
 {
   "include": "~/.config/waybar/modules.json",
   "modules-left": [
-    "hyprland/workspaces"
+    "hyprland/workspaces",
+    "niri/workspaces",
+    "custom/niri-minimap"
   ],
   "modules-center": [
     "tray",

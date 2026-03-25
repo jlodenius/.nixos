@@ -98,6 +98,14 @@
     "spacing": 8
   },
 
+  "custom/niri-minimap": {
+    "format": "{}",
+    "return-type": "json",
+    "interval": 1,
+    "exec": "~/.config/waybar/scripts/niri-minimap.sh",
+    "tooltip": true
+  },
+
   "custom/stockfin": {
     "format": " {}",
     "return-type": "json",
