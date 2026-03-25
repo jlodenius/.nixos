@@ -17,6 +17,7 @@
       # Linters
       eslint_d
       shellcheck
+      statix
     ];
 
   flake.nvimWrapper = {

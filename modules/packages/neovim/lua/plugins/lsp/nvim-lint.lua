@@ -12,6 +12,7 @@ return {
       svelte = { "eslint_d" },
       vue = { "eslint_d" },
       python = { "ruff" },
+      nix = { "statix" },
       css = { "stylelint" },
     }
     lint.linters.stylelint.args = function()
