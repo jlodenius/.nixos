@@ -1,0 +1,123 @@
+prefer-no-csd
+
+input {
+    keyboard {
+        xkb {
+            layout "custom,se"
+            variant "basic"
+            options "lv3:lalt_switch,caps:none,ctrl:nocaps"
+        }
+        repeat-rate 40
+        repeat-delay 250
+    }
+    touchpad {
+        natural-scroll
+        tap
+    }
+    mouse {
+        accel-profile "flat"
+    }
+}
+
+spawn-at-startup "swaybg" "-i" "~/.nixos/wallpapers/ufo-3840x2160.jpg" "-m" "fill"
+spawn-at-startup "waybar"
+spawn-at-startup "swaync"
+spawn-at-startup "hyprpolkitagent"
+spawn-at-startup "vicinae" "server"
+spawn-at-startup "stockfin"
+spawn-at-startup "xwayland-satellite"
+
+layout {
+    gaps 10
+    border {
+        width 3
+        active-color "#a89984"
+        inactive-color "#32302f"
+    }
+    focus-ring {
+        width 0
+    }
+}
+
+binds {
+    // Programs
+    Mod+T { spawn "ghostty"; }
+    Mod+B { spawn "qutebrowser"; }
+    Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
+    Mod+Space { spawn "vicinae" "toggle"; }
+
+    // Window management
+    Mod+Shift+Q { close-window; }
+    Mod+F { toggle-window-floating; }
+    Mod+Return { maximize-column; }
+    Mod+Shift+Return { fullscreen-window; }
+    Mod+C { center-column; }
+
+    // Focus
+    Mod+Left { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up { focus-window-up; }
+    Mod+Down { focus-window-down; }
+
+    // Move windows
+    Mod+Shift+Left { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+Up { move-window-up; }
+    Mod+Shift+Down { move-window-down; }
+
+    // Workspaces
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
+
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+    Mod+Shift+0 { move-column-to-workspace 10; }
+
+    // Scroll through workspaces
+    Mod+WheelScrollDown { focus-workspace-down; }
+    Mod+WheelScrollUp { focus-workspace-up; }
+
+    // Resize
+    Mod+Ctrl+H { set-column-width "-5%"; }
+    Mod+Ctrl+L { set-column-width "+5%"; }
+    Mod+Ctrl+J { set-window-height "-5%"; }
+    Mod+Ctrl+K { set-window-height "+5%"; }
+
+    // Screenshots
+    Print { spawn "sh" "-c" "path=~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png; grim \"$path\" && cat \"$path\" | wl-copy"; }
+    Mod+Shift+P { spawn "sh" "-c" "grim -g \"$(slurp -w 0)\" - | wl-copy"; }
+
+    // Volume
+    XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+    XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+    XF86AudioMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    // Brightness
+    XF86MonBrightnessUp { spawn "brightnessctl" "s" "10%+"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "s" "10%-"; }
+
+    // Media
+    XF86AudioNext { spawn "playerctl" "next"; }
+    XF86AudioPrev { spawn "playerctl" "previous"; }
+    XF86AudioPlay { spawn "playerctl" "play-pause"; }
+    XF86AudioPause { spawn "playerctl" "play-pause"; }
+
+    // Keyboard layout switch
+    Mod+Shift+L { switch-layout "next"; }
+}
