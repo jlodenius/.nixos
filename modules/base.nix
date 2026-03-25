@@ -7,6 +7,7 @@
 
     # Run any nixpkgs program without installing
     programs.nix-index-database.comma.enable = true;
+
     nixpkgs.config.allowUnfree = true;
 
     nix.settings.experimental-features = [
