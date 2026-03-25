@@ -181,7 +181,7 @@
             p.crates-nvim
             p.auto-session
 
-            # 99 (ThePrimeagen)
+            # AI
             (pkgs.vimUtils.buildVimPlugin {
               pname = "99";
               version = "unstable";
