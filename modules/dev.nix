@@ -6,10 +6,6 @@
 
     # Required to run unpatched bins (not in nix-store)
     #
-    # TODO:
-    # Remove if no longer necessary/clean up unused libs, not sure
-    # if the ones currently listed are all necessary
-    #
     # Used for:
     # 1. AWS auth with playwright
     programs.nix-ld.enable = true;
@@ -158,6 +154,7 @@
           self.packages.${pkgs.stdenv.hostPlatform.system}.neovimDynamic
 
           # Misc
+          git
           gh
           fzf
           television

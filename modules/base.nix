@@ -49,7 +49,6 @@
 
     environment.systemPackages = with pkgs; [
       vim
-      git
       htop
       openssh
       rsync
