@@ -130,6 +130,7 @@
 
         # CLI utils
         fd
+        jq
         wl-clipboard
         wofi
         keyutils
