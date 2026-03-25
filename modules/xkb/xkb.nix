@@ -2,7 +2,7 @@
 {...}: {
   flake.nixosModules.xkb = {...}: {
     services.xserver.xkb = {
-      layout = "custom,se";
+      layout = "us";
       variant = "";
     };
 
