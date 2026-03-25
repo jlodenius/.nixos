@@ -27,6 +27,7 @@ in {
       self.nixosModules.fish
       self.nixosModules.dark-theme
       self.nixosModules.symlinks
+      self.nixosModules.xkb
       self.nixosModules.desktop
       self.nixosModules.gaming
       self.nixosModules.hyprland

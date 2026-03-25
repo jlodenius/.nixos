@@ -45,31 +45,6 @@
       };
     };
 
-    # Keyboard layout — US with åöä
-    services.xserver.xkb = {
-      layout = "us_secustom,se";
-      variant = "basic";
-      options = "lv3:lalt_switch,caps:none,ctrl:nocaps";
-
-      extraLayouts.us_secustom = {
-        description = "English (US, with åöä remap)";
-        languages = ["eng" "swe"];
-        symbolsFile = builtins.toFile "us_secustom" ''
-          default partial alphanumeric_keys
-          xkb_symbols "basic" {
-              include "us(basic)"
-              name[Group1]= "English (US, with åöä remap)";
-
-              key <AD11> { [ aring, braceleft, bracketleft ] };
-              key <AC10> { [ odiaeresis, colon, semicolon ] };
-              key <AC11> { [ adiaeresis, quotedbl, apostrophe ] };
-
-              include "level3(lalt_switch)"
-          };
-        '';
-      };
-    };
-
     # Screen sharing (generic portal, compositor adds its own)
     xdg.portal = {
       enable = true;
@@ -106,7 +81,6 @@
     }: {
       home.sessionVariables = {
         MOZ_ENABLE_WAYLAND = "1";
-        GTK_THEME = "Adwaita:dark";
         XDG_CONFIG_HOME = "$HOME/.config";
         BROWSER = "qutebrowser";
       };
