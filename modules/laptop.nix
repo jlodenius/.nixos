@@ -1,4 +1,3 @@
-# Laptop-specific configuration
 {...}: {
   flake.nixosModules.laptop = {pkgs, ...}: {
     # Don't suspend just because I closed the lid

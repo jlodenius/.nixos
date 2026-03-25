@@ -1,17 +1,16 @@
-# Desktop environment — system and user config in one place
 {inputs, ...}: {
-  flake.nixosModules.compositor = {pkgs, ...}: {
+  flake.nixosModules.desktop = {pkgs, ...}: {
     # Graphics
     hardware.graphics = {
       enable = true;
-      enable32Bit = true; # Critical for Steam
+      enable32Bit = true;
     };
 
     # Bluetooth
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
-      package = pkgs.bluez5-experimental; # Good for the latest codec support
+      package = pkgs.bluez5-experimental;
       settings = {
         Policy = {
           AutoEnable = true;
@@ -52,25 +51,12 @@
       variant = "";
     };
 
-    # Hyprland
-    programs.hyprland = {
-      enable = true;
-      withUWSM = true;
-      xwayland.enable = true;
-    };
-
-    # Screen sharing
+    # Screen sharing (generic portal, compositor adds its own)
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
-        xdg-desktop-portal-hyprland
         xdg-desktop-portal-gtk
       ];
-      config = {
-        common = {
-          default = ["hyprland" "gtk"];
-        };
-      };
     };
 
     # Fonts
@@ -94,18 +80,6 @@
       args = ["force" "revoke"];
     };
 
-    # Steam
-    programs.steam = {
-      enable = true;
-      # Enable Gamescope (highly recommended for Wayland/Hyprland users)
-      gamescopeSession.enable = true;
-    };
-
-    # Optional but recommended for gaming
-    programs.gamemode.enable = true;
-
-    # ── User-level desktop config ──────────────────────────────────────
-
     home-manager.users.jacob = {
       config,
       pkgs,
@@ -115,7 +89,6 @@
         MOZ_ENABLE_WAYLAND = "1";
         GTK_THEME = "Adwaita:dark";
         XDG_CONFIG_HOME = "$HOME/.config";
-        XDG_CURRENT_DESKTOP = "Hyprland";
         BROWSER = "qutebrowser";
       };
 
@@ -136,12 +109,10 @@
         enable = true;
         createDirectories = true;
 
-        # Create these
         download = "${config.home.homeDirectory}/Downloads";
         documents = "${config.home.homeDirectory}/Documents";
         pictures = "${config.home.homeDirectory}/Pictures";
 
-        # And ignore these
         desktop = "${config.home.homeDirectory}";
         music = "${config.home.homeDirectory}";
         videos = "${config.home.homeDirectory}";
@@ -160,7 +131,7 @@
         grim
         slurp
         hyprpolkitagent
-        hyprpaper
+        swaybg
         swaynotificationcenter
         swaylock
 

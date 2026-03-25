@@ -1,4 +1,3 @@
-# Dotfile symlinks
 {...}: {
   flake.nixosModules.symlinks = {...}: {
     home-manager.users.jacob = {config, ...}: let
@@ -6,7 +5,6 @@
     in {
       xdg.configFile = {
         "ghostty".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/ghostty";
-        "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
         "swaync".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaync";
         "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
         "xkb".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/xkb";

@@ -1,4 +1,3 @@
-# SIS work environment
 {...}: {
   flake.nixosModules.sis = {...}: {
     security.pki.certificateFiles = [

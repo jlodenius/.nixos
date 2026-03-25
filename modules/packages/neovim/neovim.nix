@@ -1,4 +1,3 @@
-# Wrapped neovim — portable, self-contained neovim package
 {
   inputs,
   self,
@@ -31,8 +30,6 @@
 
     options = {
       settings = {
-        # ── Test mode ──────────────────────────────────────────────────────
-        # When true, reads config from disk (instant edits). When false, baked into store (portable).
         test_mode = lib.mkOption {
           type = lib.types.bool;
           default = false;
@@ -79,7 +76,6 @@
         ++ self.lib.lintAndFormat pkgs;
 
       specs = {
-        # ── Init ───────────────────────────────────────────────────────────
         initLua = {
           data = null;
           before = ["MAIN_INIT"];

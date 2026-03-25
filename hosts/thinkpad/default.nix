@@ -24,10 +24,12 @@ in {
       self.nixosModules.laptop
       self.nixosModules.dev
       self.nixosModules.sis
-      self.nixosModules.compositor
       self.nixosModules.fish
       self.nixosModules.dark-theme
       self.nixosModules.symlinks
+      self.nixosModules.desktop
+      self.nixosModules.gaming
+      self.nixosModules.hyprland
 
       # Unstable overlay
       ({...}: {nixpkgs.overlays = [overlay-unstable];})

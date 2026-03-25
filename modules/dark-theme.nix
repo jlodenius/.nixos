@@ -1,4 +1,3 @@
-# Dark theme for GTK/Qt
 {...}: {
   flake.nixosModules.dark-theme = {pkgs, ...}: {
     home-manager.users.jacob = {pkgs, ...}: {

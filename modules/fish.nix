@@ -1,4 +1,3 @@
-# Fish shell + Starship prompt
 {...}: {
   flake.nixosModules.fish = {pkgs, ...}: {
     home-manager.users.jacob = {pkgs, ...}: {

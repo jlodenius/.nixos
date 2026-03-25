@@ -1,4 +1,3 @@
-# Development environment — system and user config in one place
 {self, ...}: {
   flake.nixosModules.dev = {pkgs, ...}: {
     # Docker
@@ -83,8 +82,6 @@
       cargo-nextest
       cargo-outdated
     ];
-
-    # ── User-level dev config ──────────────────────────────────────────
 
     home-manager.users.jacob = {
       config,
