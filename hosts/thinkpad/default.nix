@@ -31,6 +31,7 @@ in {
       self.nixosModules.desktop
       self.nixosModules.gaming
       self.nixosModules.hyprland
+      self.nixosModules.niri
 
       # Unstable overlay
       ({...}: {nixpkgs.overlays = [overlay-unstable];})

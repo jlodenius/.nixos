@@ -1,5 +1,14 @@
 prefer-no-csd
 
+cursor {
+    xcursor-theme "Adwaita"
+    xcursor-size 24
+}
+
+environment {
+    QT_QPA_PLATFORM "wayland"
+}
+
 input {
     keyboard {
         xkb {
@@ -19,6 +28,29 @@ input {
     }
 }
 
+// Disable focus-follows-mouse (matches Hyprland follow_mouse = 0)
+// focus-follows-mouse
+
+// Monitors
+// Get names with: niri msg outputs
+output "eDP-1" {
+    mode "1920x1080@60"
+    position x=0 y=1080
+}
+
+output "DP-1" {
+    mode "2560x1440@60"
+    position x=1920 y=0
+}
+
+// Each monitor gets its own workspace set
+workspace "1" {
+    open-on-output "eDP-1"
+}
+workspace "2" {
+    open-on-output "DP-1"
+}
+
 spawn-at-startup "swaybg" "-i" "~/.nixos/wallpapers/ufo-3840x2160.jpg" "-m" "fill"
 spawn-at-startup "waybar"
 spawn-at-startup "swaync"
@@ -36,6 +68,21 @@ layout {
     }
     focus-ring {
         width 0
+    }
+}
+
+// Rounded corners for all windows
+window-rule {
+    geometry-corner-radius 5
+    clip-to-geometry true
+}
+
+// Vicinae layer rules
+layer-rule {
+    match namespace="^vicinae$"
+    opacity 0.95
+    shadow {
+        on
     }
 }
 
