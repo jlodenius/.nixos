@@ -1,6 +1,12 @@
 # Minimal system basics for ALL hosts
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.base = {pkgs, ...}: {
+    imports = [
+      inputs.nix-index-database.nixosModules.nix-index
+    ];
+
+    # Run any nixpkgs program without installing
+    programs.nix-index-database.comma.enable = true;
     nixpkgs.config.allowUnfree = true;
 
     nix.settings.experimental-features = [
