@@ -6,6 +6,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -21,8 +22,6 @@
       url = "github:jlodenius/stockfin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
