@@ -67,14 +67,14 @@ window-rule {
 
 binds {
     // Programs
-    Mod+T { spawn "ghostty"; }
-    Mod+B { spawn "qutebrowser"; }
-    Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
     Mod+Space { spawn "vicinae" "toggle"; }
-
-    // Navigation
-    Mod+Minus { spawn "sh" "-c" "niri msg action focus-window --id $(niri msg windows | awk '/Window ID/{id=$3} /discord/{print id}' | tr -d ':')"; }
+    Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
     Mod+O { focus-workspace-previous; }
+    Mod+T { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh com.mitchellh.ghostty ghostty"; }
+    Mod+Shift+T { spawn "ghostty"; }
+    Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh org.qutebrowser.qutebrowser qutebrowser"; }
+    Mod+Shift+B { spawn "qutebrowser"; }
+    Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh discord discord"; }
 
     // Window management
     Mod+Shift+Q { close-window; }
