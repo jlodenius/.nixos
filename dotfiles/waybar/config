@@ -2,11 +2,11 @@
   "include": "~/.config/waybar/modules.json",
   "modules-left": [
     "hyprland/workspaces",
-    "niri/workspaces",
-    "custom/niri-minimap"
+    "niri/workspaces"
   ],
   "modules-center": [
-    "tray",
+    "custom/niri-minimap",
+    "tray"
   ],
   "modules-right": [
     "custom/stockfin",
