@@ -7,6 +7,10 @@ font-feature = -dlig
 background = #000
 background-opacity = 0.8
 
-window-decoration = false
+# Note:
+# This breaks opacity in Niri.
+# Niris prefer-no-csd option takes care of removing window decorations
+# window-decoration = false
+
 window-padding-x = 5
 window-padding-y = 5

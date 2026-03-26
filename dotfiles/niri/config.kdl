@@ -59,14 +59,14 @@ layout {
     background-color "transparent"
 }
 
-// rounded corners for all windows
+// Rounded corners for all windows
 window-rule {
     geometry-corner-radius 5
     clip-to-geometry true
 }
 
 binds {
-    // programs
+    // Programs
     Mod+T { spawn "ghostty"; }
     Mod+B { spawn "qutebrowser"; }
     Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
@@ -74,7 +74,7 @@ binds {
 
     // Navigation
     Mod+Minus { spawn "sh" "-c" "niri msg action focus-window --id $(niri msg windows | awk '/Window ID/{id=$3} /discord/{print id}' | tr -d ':')"; }
-    Mod+Backspace { focus-workspace-previous; }
+    Mod+O { focus-workspace-previous; }
 
     // Window management
     Mod+Shift+Q { close-window; }
