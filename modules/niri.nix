@@ -10,6 +10,11 @@
       xdg.configFile."niri".source =
         config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.nixos/dotfiles/niri";
+
+      xdg.configFile."autostart/nm-applet.desktop".text = ''
+        [Desktop Entry]
+        Hidden=true
+      '';
     };
   };
 }
