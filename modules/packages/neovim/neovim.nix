@@ -8,6 +8,7 @@
   flake.lib.lintAndFormat = pkgs:
     with pkgs; [
       # Formatters
+      rustfmt
       prettierd
       stylua
       alejandra
@@ -61,6 +62,7 @@
       extraPackages =
         (with pkgs; [
           # LSP
+          rust-analyzer
           lua-language-server
           pyright
           nil
