@@ -17,6 +17,8 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
+    export DOTNET_ROOT="$(dirname $(readlink -f $(which dotnet)))"
     export LD_LIBRARY_PATH=${pkgs.icu}/lib:${pkgs.openssl}/lib:$LD_LIBRARY_PATH
+    export PATH="$HOME/.dotnet/tools:$PATH"
   '';
 }
