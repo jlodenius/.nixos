@@ -1,16 +1,1 @@
-font-family = "Geist Mono"
-font-size = 16
-font-feature = -calt
-font-feature = -liga
-font-feature = -dlig
-
-background = #000
-background-opacity = 0.8
-
-# Note:
-# This breaks opacity in Niri.
-# Niris prefer-no-csd option takes care of removing window decorations
-# window-decoration = false
-
-window-padding-x = 5
-window-padding-y = 5
+/nix/store/xfnq81qn1hrypkydbxlp41dyy8vadc30-home-manager-files/.config/ghostty/config

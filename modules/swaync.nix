@@ -9,7 +9,7 @@
           * {
             all: unset;
             font-size: 14px;
-            font-family: "Noto";
+            font-family: "Geist Mono";
             transition: 200ms;
           }
 

@@ -34,6 +34,8 @@ in {
       self.nixosModules.niri
       self.nixosModules.colours
       self.nixosModules.swaync
+      self.nixosModules.ghostty
+      self.nixosModules.yazi
 
       # Unstable overlay
       ({...}: {nixpkgs.overlays = [overlay-unstable];})

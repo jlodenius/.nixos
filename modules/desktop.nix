@@ -117,7 +117,6 @@
       # User packages
       home.packages = with pkgs; [
         # System & UI
-        ghostty
         waybar
         vicinae
         bluetuith
@@ -125,7 +124,6 @@
         slurp
         hyprpolkitagent
         swaybg
-        swaynotificationcenter
         swaylock
 
         # CLI utils
@@ -149,7 +147,6 @@
         bitwarden-cli
         spotify
         pavucontrol
-        yazi
         mpv
         networkmanagerapplet
         postman

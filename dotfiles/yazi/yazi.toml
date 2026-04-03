@@ -1,11 +1,1 @@
-[opener]
-edit = [
-	{ run = '${EDITOR:-nvim} "$@"', desc = "$EDITOR", block = true, for = "unix" },
-]
-
-# Speed up slow image previews
-[tasks]
-micro_workers    = 1
-macro_workers    = 1
-image_alloc      = 53687091
-image_bound      = [ 0, 0 ]
+/nix/store/xfnq81qn1hrypkydbxlp41dyy8vadc30-home-manager-files/.config/yazi/yazi.toml
