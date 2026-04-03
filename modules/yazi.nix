@@ -58,10 +58,10 @@
             };
             tab_active = {
               fg = c.background;
-              bg = c.subtle;
+              bg = c.comment;
             };
             tab_inactive = {
-              fg = c.subtle;
+              fg = c.comment;
               bg = c.selection;
             };
             tab_width = 1;
@@ -78,17 +78,17 @@
               bg = c.foreground;
             };
             border_symbol = "│";
-            border_style = {fg = c.selection;};
+            border_style = {fg = c.subtle;};
           };
 
           mode = {
             normal_main = {
               fg = c.background;
-              bg = c.subtle;
+              bg = c.comment;
               bold = true;
             };
             normal_alt = {
-              fg = c.subtle;
+              fg = c.comment;
               bg = c.selection;
             };
             select_main = {
@@ -97,7 +97,7 @@
               bold = true;
             };
             select_alt = {
-              fg = c.subtle;
+              fg = c.yellow;
               bg = c.selection;
             };
             unset_main = {
@@ -106,19 +106,19 @@
               bold = true;
             };
             unset_alt = {
-              fg = c.subtle;
+              fg = c.green;
               bg = c.selection;
             };
           };
 
           status = {
             sep_left = {
-              open = "\ue0be";
-              close = "\ue0b8";
+              open = "";
+              close = "";
             };
             sep_right = {
-              open = "\ue0be";
-              close = "\ue0b8";
+              open = "";
+              close = "";
             };
             overall = {};
             progress_label = {
@@ -126,22 +126,22 @@
               bold = true;
             };
             progress_normal = {
-              fg = c.selection;
+              fg = c.subtle;
               bg = c.surface;
             };
             progress_error = {
               fg = c.red;
               bg = c.surface;
             };
-            perm_type = {fg = c.selection;};
+            perm_type = {fg = c.subtle;};
             perm_read = {fg = c.green;};
             perm_write = {fg = c.red;};
             perm_exec = {fg = c.green;};
-            perm_sep = {fg = c.selection;};
+            perm_sep = {fg = c.subtle;};
           };
 
           pick = {
-            border = {fg = c.muted.blue;};
+            border = {fg = c.blue;};
             active = {
               fg = c.magenta;
               bold = true;
@@ -157,7 +157,7 @@
           };
 
           tasks = {
-            border = {fg = c.selection;};
+            border = {fg = c.subtle;};
             title = {};
             hovered = {underline = true;};
           };
@@ -165,10 +165,10 @@
           which = {
             mask = {bg = c.surface;};
             cand = {fg = c.cyan;};
-            rest = {fg = c.subtle;};
+            rest = {fg = c.comment;};
             desc = {fg = c.yellow;};
             separator = "  ";
-            separator_style = {fg = c.selection;};
+            separator_style = {fg = c.subtle;};
           };
 
           help = {
@@ -179,8 +179,8 @@
               bold = true;
             };
             footer = {
-              fg = c.surface;
-              bg = c.subtle;
+              fg = c.background;
+              bg = c.comment;
             };
           };
 
@@ -210,7 +210,7 @@
               }
               {
                 mime = "application/{pdf,doc,rtf,vnd.*}";
-                fg = c.muted.green;
+                fg = c.green;
               }
               {
                 name = "*";
@@ -224,7 +224,7 @@
           };
 
           confirm = {
-            border = {fg = c.subtle;};
+            border = {fg = c.comment;};
             title = {fg = c.cyan;};
             content = {fg = c.foreground;};
             body = {fg = c.red;};
@@ -238,7 +238,7 @@
           };
 
           cmp = {
-            border = {fg = c.subtle;};
+            border = {fg = c.comment;};
             active = {
               reversed = true;
               fg = c.cyan;
