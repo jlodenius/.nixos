@@ -36,6 +36,7 @@ in {
       self.nixosModules.swaync
       self.nixosModules.ghostty
       self.nixosModules.yazi
+      self.nixosModules.tmux
 
       # Unstable overlay
       ({...}: {nixpkgs.overlays = [overlay-unstable];})

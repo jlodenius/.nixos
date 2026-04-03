@@ -127,25 +127,6 @@
         options = ["--cmd cd"];
       };
 
-      programs.tmux = {
-        enable = true;
-        extraConfig = builtins.readFile ../dotfiles/tmux/tmux.conf;
-        plugins = with pkgs; [
-          tmuxPlugins.vim-tmux-navigator
-          (tmuxPlugins.mkTmuxPlugin {
-            pluginName = "tmux-scrollback";
-            rtpFilePath = "scrollback.tmux";
-            version = "unstable";
-            src = fetchFromGitHub {
-              owner = "jlodenius";
-              repo = "tmux-scrollback";
-              rev = "master";
-              sha256 = "sha256-Z2vD/lEoHRgp7aCMaB44XeicgBb2SZ3b6YkAY/952u4=";
-            };
-          })
-        ];
-      };
-
       home.sessionVariables.EDITOR = "nvim";
 
       home.packages = with pkgs;
