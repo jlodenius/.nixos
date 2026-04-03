@@ -136,7 +136,6 @@
         # Applications
         inputs.stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
         inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-        qutebrowser
         google-chrome
         discord
         slack

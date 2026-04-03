@@ -26,7 +26,6 @@ in {
       self.nixosModules.sis
       self.nixosModules.fish
       self.nixosModules.dark-theme
-      self.nixosModules.symlinks
       self.nixosModules.xkb
       self.nixosModules.desktop
       self.nixosModules.gaming
@@ -38,6 +37,7 @@ in {
       self.nixosModules.yazi
       self.nixosModules.tmux
       self.nixosModules.waybar
+      self.nixosModules.qutebrowser
 
       # Unstable overlay
       ({...}: {nixpkgs.overlays = [overlay-unstable];})

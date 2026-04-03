@@ -18,7 +18,6 @@ const skipAd = () => {
       Number.isNaN(v.duration) || (v.currentTime = v.duration);
     });
   }
-  // this is the interspersed ads around the recommended/related videos
   for (const el of document.getElementsByTagName('ytd-ad-slot-renderer')) {
     if (
       el?.parentElement?.parentElement?.tagName ===
@@ -29,19 +28,6 @@ const skipAd = () => {
       el?.remove();
     }
   }
-  // in youtube-shorts we get some ads, try remove them
-  // (this ain't working, freezes the whole thing)
-  // for (const el of document.getElementsByClassName('ad-created')) {
-  //     if (
-  //         el?.parentElement?.parentElement?.parentElement?.parentElement
-  //             ?.parentElement?.parentElement?.tagName ===
-  //         'YTD-REEL-VIDEO-RENDERER'
-  //     ) {
-  //         el?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.remove();
-  //     }
-  // }
-
-  // in related videos, this is the ad on top
   document.getElementById('player-ads')?.remove();
   document
     .querySelectorAll('.ytd-mealbar-promo-renderer#dismiss-button')
