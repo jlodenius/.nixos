@@ -1,5 +1,11 @@
 {...}: {
-  flake.nixosModules.fish = {pkgs, ...}: {
+  flake.nixosModules.fish = {
+    config,
+    pkgs,
+    ...
+  }: let
+    c = config.colours;
+  in {
     home-manager.users.jacob = {pkgs, ...}: {
       home.sessionPath = [
         "$HOME/.local/bin"
@@ -44,27 +50,24 @@
         enable = true;
         enableFishIntegration = true;
         settings = {
-          # Gruvbox Dark Palette colors
-          # bg0: #282828, red: #fb4934, green: #b8bb26, yellow: #fabd2f, blue: #83a598
-
           format = "$directory$git_branch$git_status$nix_shell$character";
 
           directory = {
-            style = "bold #83a598"; # Gruvbox Blue
+            style = "bold ${c.cyan}";
           };
 
           git_branch = {
             symbol = " ";
-            style = "bold #fb4934"; # Gruvbox Red
+            style = "bold ${c.red}";
           };
 
           git_status = {
-            style = "bold #fabd2f"; # Gruvbox Yellow
+            style = "bold ${c.yellow}";
           };
 
           character = {
-            success_symbol = "[➜](bold #b8bb26)"; # Gruvbox Green
-            error_symbol = "[➜](bold #fb4934)"; # Gruvbox Red
+            success_symbol = "[➜](bold ${c.green})";
+            error_symbol = "[➜](bold ${c.red})";
           };
         };
       };
