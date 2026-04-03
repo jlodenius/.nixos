@@ -190,7 +190,7 @@
 
           window#waybar {
             background-color: rgba(41, 37, 34, 0.5);
-            color: ${c.foreground};
+            color: #ffffff;
             border-radius: 4px;
           }
 
@@ -202,7 +202,7 @@
 
           #workspaces button.active,
           #workspaces button.focused {
-            color: ${c.foreground};
+            color: #ffffff;
           }
 
           #workspaces button.urgent {
@@ -221,7 +221,7 @@
           #custom-stockfin {
             padding: 0 12px;
             background: transparent;
-            color: ${c.foreground};
+            color: #ffffff;
           }
 
           #network.disconnected,
