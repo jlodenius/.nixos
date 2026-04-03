@@ -168,7 +168,7 @@
             };
 
             "custom/stockfin" = {
-              format = " {}";
+              format = " {}";
               return-type = "json";
               interval = 30;
               exec = "busctl --user get-property org.jlodenius.stockfin.Waybar /org/jlodenius/stockfin org.jlodenius.stockfin StatusJson | sed 's/s \"//;s/\"$//;s/\\\\//g'";
