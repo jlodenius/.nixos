@@ -37,7 +37,7 @@ output "Dell Inc. DELL U2725QE 8JM6C34" {
     scale 1
 }
 
-spawn-at-startup "sh" "-c" "swaybg -i ~/.nixos/wallpapers/city.jpg -m fill"
+spawn-at-startup "sh" "-c" "swaybg -i ~/.nixos/wallpapers/pixel_1.png -m fill"
 spawn-at-startup "waybar"
 spawn-at-startup "swaync"
 spawn-at-startup "hyprpolkitagent"
