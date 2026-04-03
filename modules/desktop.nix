@@ -117,7 +117,6 @@
       # User packages
       home.packages = with pkgs; [
         # System & UI
-        waybar
         vicinae
         bluetuith
         grim
