@@ -79,11 +79,11 @@
 
             pulseaudio = {
               format = "{icon} {volume}%";
-              format-bluetooth = "{icon} {volume}%";
-              format-muted = " {volume}%";
+              format-bluetooth = "{icon} {volume}%";
+              format-muted = " {volume}%";
               format-icons = {
-                headphones = "";
-                default = ["" ""];
+                headphones = "";
+                default = ["" ""];
               };
               scroll-step = 1;
               on-click = "pavucontrol";
@@ -95,9 +95,9 @@
                 warning = 30;
                 critical = 15;
               };
-              format = " {capacity}%";
+              format = " {capacity}%";
               format-discharging = "{icon} {capacity}%";
-              format-icons = ["" "" "" "" ""];
+              format-icons = ["" "" "" "" ""];
               tooltip = true;
             };
 
@@ -116,12 +116,12 @@
             disk = {
               path = "/home";
               interval = 30;
-              format = " {percentage_used}%";
+              format = " {percentage_used}%";
             };
 
             cpu = {
               interval = 5;
-              format = " {usage}%";
+              format = " {usage}%";
               states = {
                 warning = 70;
                 critical = 90;
@@ -130,7 +130,7 @@
 
             network = {
               interval = 5;
-              format-wifi = " {essid}";
+              format-wifi = " {essid}";
               format-ethernet = "󰈀 eth";
               format-disconnected = "⚠ Disconnected";
               tooltip-format = "{ifname}: {ipaddr}/{cidr}";
@@ -150,7 +150,7 @@
               critical-threshold = 80;
               interval = 5;
               format = "{icon} {temperatureC}°C";
-              format-icons = ["" "" "" "" ""];
+              format-icons = ["" "" "" "" ""];
               tooltip = true;
             };
 
