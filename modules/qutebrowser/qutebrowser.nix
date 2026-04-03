@@ -42,13 +42,17 @@
           };
         };
 
+        # This is necessary because this home-manager module's tabs.padding options are buggy
+        extraConfig = ''
+          c.tabs.padding = {'top': 6, 'bottom': 6, 'left': 6, 'right': 6}
+          c.tabs.indicator.padding = {'top': 4, 'bottom': 4, 'left': 4, 'right': 4}
+        '';
+
         settings = {
           fonts.default_family = "GeistMono Nerd Font";
           fonts.default_size = "13pt";
 
-          tabs.padding = 6;
           tabs.indicator.width = 3;
-          tabs.indicator.padding = 4;
 
           colors.webpage.darkmode.enabled = false;
           colors.webpage.preferred_color_scheme = "dark";
