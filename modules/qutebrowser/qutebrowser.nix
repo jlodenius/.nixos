@@ -46,14 +46,14 @@
           fonts.default_family = "GeistMono Nerd Font";
           fonts.default_size = "13pt";
 
-          "tabs.padding" = {
+          tabs.padding = {
             "top" = 6;
             "bottom" = 6;
             "left" = 16;
             "right" = 10;
           };
           tabs.indicator.width = 3;
-          "tabs.indicator.padding" = {
+          tabs.indicator.padding = {
             "top" = 4;
             "bottom" = 4;
             "left" = 2;
