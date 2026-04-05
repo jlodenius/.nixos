@@ -2,15 +2,15 @@
 
 ## Setup
 
-This repo must be cloned directly into the home directory as `~/.nixos`:
+This repo must be cloned to `~/.nixos` — several modules use symlinks that depend on this path.
 
 ```sh
 git clone git@github.com:jlodenius/nixos.git ~/.nixos
 ```
 
-Several modules use symlinks that reference this exact path.
+## Packages
 
-## Packaged
+Standalone packages that can be run independently from anywhere
 
 ### Neovim
 
