@@ -6,6 +6,7 @@
     home-manager.users.jacob = {
       programs.qutebrowser = {
         enable = true;
+        loadAutoconfig = true;
 
         quickmarks = bm.quickmarks;
 
