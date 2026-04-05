@@ -43,7 +43,7 @@
 
         unwrapped_config = lib.mkOption {
           type = lib.types.either wlib.types.stringable lib.types.luaInline;
-          default = lib.generators.mkLuaInline "vim.uv.os_homedir() .. '/.nixos/modules/packages/neovim'";
+          default = lib.generators.mkLuaInline "vim.uv.os_homedir() .. '/.nixos/packages/neovim'";
         };
       };
     };
@@ -220,7 +220,7 @@
       neovimDynamic = pkgs.writeShellApplication {
         name = "nvim";
         text = ''
-          if [ -d ~/.nixos/modules/packages/neovim/lua ]; then
+          if [ -d ~/.nixos/packages/neovim/lua ]; then
               ${lib.getExe self'.packages.devMode} "$@"
           else
               ${lib.getExe self'.packages.neovim} "$@"

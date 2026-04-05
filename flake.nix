@@ -33,6 +33,7 @@
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       imports =
         (inputs.import-tree ./modules).imports
+        ++ (inputs.import-tree ./packages).imports
         ++ [
           ./flake-parts.nix
           ./hosts/thinkpad
