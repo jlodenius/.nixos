@@ -189,7 +189,7 @@
           }
 
           window#waybar {
-            background-color: rgba(41, 37, 34, 0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             color: #ffffff;
             border-radius: 4px;
           }
