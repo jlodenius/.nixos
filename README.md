@@ -10,7 +10,9 @@ git clone git@github.com:jlodenius/nixos.git ~/.nixos
 
 Several modules use symlinks that reference this exact path.
 
-## Run packaged neovim from anywhere
+## Packaged
+
+### Neovim
 
 ```sh
 nix run --extra-experimental-features "nix-command flakes" github:jlodenius/nixos#neovim
