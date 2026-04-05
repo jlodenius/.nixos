@@ -30,7 +30,7 @@ in {
     gm = "https://mail.google.com/mail/u/0/#inbox";
     gh = "https://github.com/jlodenius";
     maps = "https://www.google.com/maps";
-    gemini = "https://gemini.google.com";
+    ai = "https://gemini.google.com";
     rd = "https://www.reddit.com";
     ch = "https://www.chess.com";
   };

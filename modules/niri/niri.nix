@@ -7,9 +7,13 @@
     ];
 
     home-manager.users.jacob = {config, ...}: {
-      xdg.configFile."niri".source =
+      xdg.configFile."niri/config.kdl".source =
         config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/.nixos/dotfiles/niri";
+        "${config.home.homeDirectory}/.nixos/modules/niri/config.kdl";
+
+      xdg.configFile."niri/scripts".source =
+        config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/.nixos/modules/niri/scripts";
 
       xdg.configFile."autostart/nm-applet.desktop".text = ''
         [Desktop Entry]
