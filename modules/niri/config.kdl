@@ -75,6 +75,8 @@ binds {
     Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh org.qutebrowser.qutebrowser qutebrowser"; }
     Mod+Shift+B { spawn "qutebrowser"; }
     Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh discord discord"; }
+    Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh Slack slack"; }
+    Mod+Backslash { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh teams-for-linux teams-for-linux"; }
 
     // Window management
     Mod+Shift+Q { close-window; }
