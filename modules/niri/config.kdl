@@ -128,6 +128,10 @@ binds {
     Mod+Shift+Comma { move-column-to-monitor-left; }
     Mod+Shift+Period { move-column-to-monitor-right; }
 
+    // Move workspace to monitor
+    Mod+Shift+Ctrl+Comma { move-workspace-to-monitor-left; }
+    Mod+Shift+Ctrl+Period { move-workspace-to-monitor-right; }
+
     // Resize
     Mod+Ctrl+H { set-column-width "-5%"; }
     Mod+Ctrl+L { set-column-width "+5%"; }
