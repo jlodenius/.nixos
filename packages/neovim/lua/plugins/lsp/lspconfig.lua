@@ -6,7 +6,7 @@ return {
 
     -- Rust
     vim.lsp.config("rust_analyzer", {
-      capabilities,
+      capabilities = capabilities,
       settings = {
         ["rust-analyzer"] = {
           cargo = { features = "all" },
@@ -20,16 +20,16 @@ return {
     vim.lsp.enable("rust_analyzer")
 
     -- Python
-    vim.lsp.config("pyright", { capabilities })
+    vim.lsp.config("pyright", { capabilities = capabilities })
     vim.lsp.enable("pyright")
 
     -- Typescript
-    vim.lsp.config("ts_ls", { capabilities })
+    vim.lsp.config("ts_ls", { capabilities = capabilities })
     vim.lsp.enable("ts_ls")
 
     -- Lua
     vim.lsp.config("lua_ls", {
-      capabilities,
+      capabilities = capabilities,
       settings = {
         Lua = {
           telemetry = { enable = false },
@@ -47,44 +47,39 @@ return {
     vim.lsp.enable("lua_ls")
 
     -- Tailwind
-    vim.lsp.config("tailwindcss", { capabilities })
+    vim.lsp.config("tailwindcss", { capabilities = capabilities })
     vim.lsp.enable("tailwindcss")
 
     -- HTML
-    vim.lsp.config("html", { capabilities })
+    vim.lsp.config("html", { capabilities = capabilities })
     vim.lsp.enable("html")
 
     -- CSS
     vim.lsp.config("cssls", {
-      capabilities,
+      capabilities = capabilities,
       settings = { css = { lint = { unknownAtRules = "ignore" } } },
     })
     vim.lsp.enable("cssls")
 
     -- ESLint
     vim.lsp.config("eslint", {
-      capabilities,
+      capabilities = capabilities,
       settings = { workingDirectories = { mode = "auto" } },
     })
     vim.lsp.enable("eslint")
 
     -- Emmet
     vim.lsp.config("emmet_ls", {
-      capabilities,
+      capabilities = capabilities,
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
     vim.lsp.enable("emmet_ls")
 
     -- C#
+    -- Note: roslyn.nvim calls vim.lsp.enable("roslyn")
     vim.lsp.config("roslyn", {
-      capabilities,
-      on_init = function(client)
-        if client.server_capabilities.textDocumentSync then
-          client.server_capabilities.textDocumentSync.willSaveWaitUntil = false
-        end
-      end,
+      capabilities = capabilities,
     })
-    vim.lsp.enable("roslyn")
 
     -- Nix
     vim.lsp.config("nil_ls", {
@@ -101,6 +96,7 @@ return {
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "gv", ":vsplit | lua vim.lsp.buf.definition()<CR>", opts)
@@ -110,6 +106,10 @@ return {
 
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         client.server_capabilities.semanticTokensProvider = nil
+
+        if client.name == "roslyn" and client.server_capabilities.textDocumentSync then
+          client.server_capabilities.textDocumentSync.willSaveWaitUntil = false
+        end
       end,
     })
   end,
