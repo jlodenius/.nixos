@@ -66,7 +66,7 @@
           lua-language-server
           pyright
           nil
-          inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.roslyn-ls
+
           bash-language-server
           tailwindcss-language-server
           emmet-ls
