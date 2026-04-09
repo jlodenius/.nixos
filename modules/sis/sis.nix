@@ -7,7 +7,7 @@
       postBuild = ''
         rm "$out/bin/dotnet"
         makeBinaryWrapper "${pkgs.dotnet-sdk_10}/bin/dotnet" "$out/bin/dotnet" \
-          --prefix LD_LIBRARY_PATH : "${pkgs.libsecret}/lib" \
+          --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [pkgs.libsecret pkgs.icu pkgs.openssl]}" \
           --set DOTNET_ROLL_FORWARD LatestMajor
       '';
     };
@@ -30,8 +30,6 @@
       pkgs.libsecret
       pkgs.azure-cli
       pkgs.azuredatastudio
-      pkgs.icu
-      pkgs.openssl
     ];
   };
 }
