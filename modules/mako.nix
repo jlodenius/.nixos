@@ -19,7 +19,7 @@
           margin = "18";
           font = "Geist Mono 11";
           icon-location = "left";
-          icon-path = "${pkgs.adwaita-icon-theme}/share/icons";
+          icon-path = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita";
           max-icon-size = 48;
           icons = true;
           default-timeout = 5000;
