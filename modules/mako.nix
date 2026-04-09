@@ -18,7 +18,7 @@
           padding = "14";
           margin = "18";
           font = "Geist Mono 11";
-          icon-location = "top";
+          icon-location = "left";
           icon-path = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita";
           max-icon-size = 48;
           icons = true;
