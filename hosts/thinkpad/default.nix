@@ -25,7 +25,6 @@ in {
       self.nixosModules.dev
       self.nixosModules.sis
       self.nixosModules.fish
-      self.nixosModules.dark-theme
       self.nixosModules.xkb
       self.nixosModules.desktop
       self.nixosModules.gaming
