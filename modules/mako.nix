@@ -13,9 +13,10 @@
           border-size = 1;
           padding = "14";
           margin = "18";
-          font = "Geist Mono 14";
+          font = "Geist Mono 11";
           icon-location = "left";
           max-icon-size = 48;
+          icons = true;
           default-timeout = 5000;
 
           "urgency=critical" = {
