@@ -32,7 +32,7 @@ in {
       self.nixosModules.hyprland
       self.nixosModules.niri
       self.nixosModules.colours
-      self.nixosModules.swaync
+      self.nixosModules.mako
       self.nixosModules.ghostty
       self.nixosModules.yazi
       self.nixosModules.tmux
