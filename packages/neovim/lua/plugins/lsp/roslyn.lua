@@ -3,6 +3,7 @@ return {
   lazy = false,
   after = function()
     require("roslyn").setup({
+      filewatching = "off",
       broad_search = true,
       lock_target = true,
       choose_target = function(targets)
