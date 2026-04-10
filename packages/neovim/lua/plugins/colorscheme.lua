@@ -3,7 +3,7 @@ return {
     "transparent.nvim",
     lazy = false,
     after = function()
-      require("transparent").setup({ extra_groups = { "NvimTreeNormal" } })
+      require("transparent").setup({ extra_groups = { "NvimTreeNormal", "NormalFloat", "FloatBorder" } })
       vim.cmd([[:TransparentEnable]])
     end,
   },
@@ -40,7 +40,6 @@ return {
       hl("TelescopeBorder", { bg = melange.surface, fg = melange.overlay })
       hl("TelescopeNormal", { bg = melange.surface, fg = melange.text })
       hl("TelescopeTitle", { bg = melange.surface, fg = melange.gold, bold = true })
-      hl("NvimTreeNormal", { bg = "None" })
 
       -- Re-apply MatchParen on every ColorScheme event (melange links it to Substitute)
       vim.api.nvim_create_autocmd("ColorScheme", {
