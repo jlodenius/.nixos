@@ -119,6 +119,12 @@
         settings = {
           alwaysThinkingEnabled = true;
         };
+        memory.text = ''
+          # Environment
+          This is a NixOS system. LSPs are managed declaratively through Nix and
+          bundled into the neovim wrapper. Do NOT suggest installing language servers
+          — they are already available in the editor.
+        '';
       };
 
       programs.zoxide = {
