@@ -16,6 +16,7 @@ input {
             variant "basic"
             options "lv3:lalt_switch,caps:none,ctrl:nocaps"
         }
+        track-layout "global"
     }
     touchpad {
         tap
