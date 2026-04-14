@@ -50,9 +50,9 @@ layout {
     gaps 10
     default-column-width { proportion 0.5; }
     border {
-        width 3
-        active-color "#a89984"
-        inactive-color "#32302f"
+        width 2
+        active-color "#ECE1D7"
+        inactive-color "#34302C"
     }
     focus-ring {
         width 0
