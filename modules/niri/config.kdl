@@ -40,7 +40,7 @@ output "Dell Inc. DELL U2725QE 8JM6C34" {
 
 spawn-at-startup "sh" "-c" "swaybg -i ~/.nixos/wallpapers/pixel_1.png -m fill"
 spawn-at-startup "waybar"
-spawn-at-startup "swaync"
+spawn-at-startup "mako"
 spawn-at-startup "hyprpolkitagent"
 spawn-at-startup "vicinae" "server"
 spawn-at-startup "stockfin"
@@ -67,7 +67,7 @@ window-rule {
 }
 
 binds {
-    // Programs
+    // Programs & Navigation
     Mod+Space { spawn "vicinae" "toggle"; }
     Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
     Mod+O { focus-workspace-previous; }
@@ -75,6 +75,7 @@ binds {
     Mod+Shift+T { spawn "ghostty"; }
     Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh org.qutebrowser.qutebrowser qutebrowser"; }
     Mod+Shift+B { spawn "qutebrowser"; }
+    Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh Spotify spotify"; }
     Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh discord discord"; }
     Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh Slack slack"; }
     Mod+Backslash { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh teams-for-linux teams-for-linux"; }
