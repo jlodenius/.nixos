@@ -14,19 +14,27 @@ let
       ["jira" "https://sisswe.atlassian.net/jira/software/c/projects/SU/boards/24/backlog"]
       ["azure" "https://portal.azure.com/?feature.msaljs=true#browse/Microsoft.App%2FcontainerApps"]
       ["timereport" "https://my.kleer.se/web2/time-reporting/month"]
-      ["viewer" "https://dev-viewer.standard.sis.se"]
+
+      # Viewer
+      ["viewer/local" "https://dev-viewer.standard.sis.se"]
       ["viewer/test" "https://viewer-tst.standard.sis.se"]
-      ["viewer/swagger" "https://api-dev.standard.sis.se/swagger/index.html"]
+      ["viewer/dev/swagger" "https://api-dev.standard.sis.se/swagger/index.html"]
+
+      # Mol
       ["mol" "https://mol-dev.sis.se"]
       ["mol-admin" "https://mol-admin-dev.sis.se"]
-      ["sd-local" "https://sd-api.dev.sis.se:7138/swagger/index.html"]
+
+      # SD
+      ["sd/local" "https://sd-api.dev.sis.se:7138/swagger/index.html"]
     ];
+
     caesari = [
       ["gh" "https://github.com/caesariab/caesari2/pulls"]
     ];
 
     sports = "http://www.fawanews.sc";
     fantasy = "https://fantasy.allsvenskan.se/my-team";
+    food = "https://www.cookwell.com/discover";
   };
 
   prefixed = builtins.concatLists (
@@ -37,8 +45,9 @@ in {
     yt = "https://www.youtube.com";
     z = "https://mail.zoho.eu/zm/#mail/folder/inbox";
     gm = "https://mail.google.com/mail/u/0/#inbox";
-    gh = "https://github.com/jlodenius";
+    cal = "https://calendar.google.com";
     maps = "https://www.google.com/maps";
+    gh = "https://github.com/jlodenius";
     ai = "https://gemini.google.com";
     rd = "https://www.reddit.com";
     ch = "https://www.chess.com";
