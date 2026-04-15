@@ -118,6 +118,21 @@
         enable = true;
         settings = {
           alwaysThinkingEnabled = true;
+          hooks = {
+            Notification = [
+              {
+                hooks = [
+                  {
+                    type = "command";
+                    command = ''
+                      msg=$(${pkgs.jq}/bin/jq -r '.message')
+                      ${pkgs.libnotify}/bin/notify-send -a "Claude Code" -i terminal "Claude Code" "$msg"
+                    '';
+                  }
+                ];
+              }
+            ];
+          };
         };
         memory.text = ''
           # Environment
