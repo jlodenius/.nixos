@@ -23,6 +23,7 @@ in {
       self.nixosModules.base
       self.nixosModules.laptop
       self.nixosModules.dev
+      self.nixosModules.claude
       self.nixosModules.sis
       self.nixosModules.fish
       self.nixosModules.xkb
