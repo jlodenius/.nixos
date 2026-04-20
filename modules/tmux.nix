@@ -37,6 +37,10 @@
           unbind [
           bind-key å copy-mode
 
+          # Vim-like copy mode bindings
+          bind-key -T copy-mode-vi v send-keys -X begin-selection
+          bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+
           # Split windows & open in current path
           unbind %
           bind | split-window -h -c "#{pane_current_path}"
