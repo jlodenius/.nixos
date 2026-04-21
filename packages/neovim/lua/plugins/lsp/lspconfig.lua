@@ -106,10 +106,6 @@ return {
 
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         client.server_capabilities.semanticTokensProvider = nil
-
-        if client.name == "roslyn" and client.server_capabilities.textDocumentSync then
-          client.server_capabilities.textDocumentSync.willSaveWaitUntil = false
-        end
       end,
     })
   end,

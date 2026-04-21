@@ -39,13 +39,10 @@ return {
           end,
         },
       },
-      format_after_save = function(bufnr)
-        if vim.bo[bufnr].filetype == "cs" then return end
-        return {
-          timeout_ms = 2000,
-          lsp_format = "fallback",
-        }
-      end,
+      format_after_save = {
+        timeout_ms = 2000,
+        lsp_format = "fallback",
+      },
     })
 
     vim.keymap.set(

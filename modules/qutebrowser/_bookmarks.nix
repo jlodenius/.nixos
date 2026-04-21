@@ -21,11 +21,16 @@ let
       ["viewer/dev/swagger" "https://api-dev.standard.sis.se/swagger/index.html"]
 
       # Mol
-      ["mol" "https://mol-dev.sis.se"]
-      ["mol-admin" "https://mol-admin-dev.sis.se"]
+      ["mol/local" "https://mol-dev.sis.se"]
+      ["mol-admin/local" "https://mol-admin-dev.sis.se"]
 
       # SD
       ["sd/local" "https://sd-api.dev.sis.se:7138/swagger/index.html"]
+
+      # Portal
+      ["portal/confluence" "https://sisswe.atlassian.net/wiki/spaces/A/pages/95289345/API-portal"]
+      ["portal/jira" "https://sisswe.atlassian.net/jira/software/c/projects/API/boards/953/backlog"]
+      ["portal/repos" "https://dev.azure.com/swedishinstituteforstandards/API-portal/_git/SIS.Portal.Api"]
     ];
 
     caesari = [
