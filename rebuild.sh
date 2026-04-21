@@ -23,10 +23,10 @@ echo "Formatting..."
 alejandra . &>/dev/null || (alejandra . ; echo "Formatting failed!" && exit 1)
 
 # 5. Check for changes
-if git diff --quiet HEAD; then
-    echo "No changes detected, exiting."
-    exit 0
-fi
+# if git diff --quiet HEAD; then
+#     echo "No changes detected, exiting."
+#     exit 0
+# fi
 
 echo "NixOS Rebuilding for $TARGET_HOST..."
 
