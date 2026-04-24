@@ -136,7 +136,7 @@
           pkg-config
           openssl
           protobuf
-          bruno
+          unstable.bruno
 
           # CA
           nssTools
