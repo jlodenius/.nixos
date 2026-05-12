@@ -31,6 +31,14 @@ let
       ["portal/confluence" "https://sisswe.atlassian.net/wiki/spaces/A/pages/95289345/API-portal"]
       ["portal/jira" "https://sisswe.atlassian.net/jira/software/c/projects/API/boards/953/backlog"]
       ["portal/repos" "https://dev.azure.com/swedishinstituteforstandards/API-portal/_git/SIS.Portal.Api"]
+
+      # Portal local
+      ["portal/local/delivery" "https://localhost:7013/scalar"]
+      ["portal/local/ingestion" "https://localhost:7014/scalar"]
+
+      # Portal dev
+      ["portal/dev/delivery" "https://ca-portal-sis-dev.livelydesert-c9709af9.swedencentral.azurecontainerapps.io/scalar"]
+      ["portal/dev/ingestion" "https://ca-integration-sis-dev.livelydesert-c9709af9.swedencentral.azurecontainerapps.io/scalar"]
     ];
 
     caesari = [
