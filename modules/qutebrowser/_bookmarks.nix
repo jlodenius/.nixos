@@ -61,7 +61,7 @@ in {
     cal = "https://calendar.google.com";
     maps = "https://www.google.com/maps";
     gh = "https://github.com/jlodenius";
-    ai = "https://gemini.google.com";
+    ai = "https://claude.ai/new";
     rd = "https://www.reddit.com";
     ch = "https://www.chess.com";
   };
