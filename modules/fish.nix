@@ -9,6 +9,7 @@
     home-manager.users.jacob = {pkgs, ...}: {
       home.sessionPath = [
         "$HOME/.local/bin"
+        "$HOME/.cargo/bin"
       ];
 
       programs.fish = {
