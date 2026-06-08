@@ -9,13 +9,6 @@
       flags = [
         "--ozone-platform-hint=auto"
       ];
-
-      # Chromium enterprise policies. Reference:
-      # https://cloud.google.com/docs/chrome-enterprise/policies/
-      policies = {
-        # The one bit of chrome a policy can actually remove.
-        BookmarkBarEnabled = false;
-      };
     };
   };
 }
