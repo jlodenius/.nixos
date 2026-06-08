@@ -18,6 +18,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    helium = {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stockfin = {
       url = "github:jlodenius/stockfin";
       inputs.nixpkgs.follows = "nixpkgs";
