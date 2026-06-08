@@ -38,6 +38,7 @@ in {
       self.nixosModules.tmux
       self.nixosModules.waybar
       self.nixosModules.qutebrowser
+      self.nixosModules.helium
 
       # Unstable overlay
       ({...}: {nixpkgs.overlays = [overlay-unstable];})
