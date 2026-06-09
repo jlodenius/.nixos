@@ -9,6 +9,12 @@
       flags = [
         "--ozone-platform-hint=auto"
       ];
+
+      # Chromium enterprise policies. Reference:
+      # https://cloud.google.com/docs/chrome-enterprise/policies/
+      policies = {
+        BookmarkBarEnabled = false;
+      };
     };
   };
 }
