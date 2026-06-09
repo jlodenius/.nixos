@@ -7,21 +7,22 @@
 # picker is a standalone fuzzel window, so no web page or browser shortcut can
 # ever hijack it. No daemon, no extension, no native messaging.
 #
-# Scope (v1, intentionally minimal): bookmarks only, new tab only. History and
-# current-tab opening can be layered on later.
+# Scope (v1, intentionally minimal): quickmarks + bookmarks, new tab only.
+# History and current-tab opening can be layered on later.
 set -euo pipefail
 
 BOOKMARKS="$HOME/.config/net.imput.helium/Default/Bookmarks"
+QUICKMARKS="$HOME/.config/helium-palette/quickmarks"
 FUZZEL_CONF="$HOME/.config/niri/scripts/palette-fuzzel.ini"
 
-# Nothing to pick from until Helium has written a bookmarks file.
-[ -r "$BOOKMARKS" ] || exit 0
-
-# Flatten the bookmark tree to "name<TAB>url" lines (recursive over all folders),
-# let fuzzel filter/select, then open the chosen URL in a new tab.
+# Build the candidate list as "name<TAB>url" lines: quickmarks first (Nix-managed,
+# qutebrowser-style), then the full bookmark tree. fuzzel filters/selects; the
+# chosen URL (the field after the tab) opens in a new tab.
 choice=$(
-  jq -r '.roots | .. | objects | select(.type == "url") | "\(.name)\t\(.url)"' "$BOOKMARKS" \
-    | fuzzel --dmenu --config "$FUZZEL_CONF"
+  {
+    [ -r "$QUICKMARKS" ] && cat "$QUICKMARKS"
+    [ -r "$BOOKMARKS" ] && jq -r '.roots | .. | objects | select(.type == "url") | "\(.name)\t\(.url)"' "$BOOKMARKS"
+  } | fuzzel --dmenu --config "$FUZZEL_CONF"
 ) || exit 0
 
 [ -n "$choice" ] || exit 0
