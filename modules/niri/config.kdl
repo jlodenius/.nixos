@@ -70,11 +70,11 @@ binds {
     // Programs & Navigation
     Mod+Space { spawn "vicinae" "toggle"; }
     Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
-    Mod+O hotkey-overlay-title="Helium bookmark palette" { spawn "sh" "-c" "~/.config/niri/scripts/helium-palette.sh"; }
+    Mod+O hotkey-overlay-title="Helium launcher" { spawn "sh" "-c" "~/.config/niri/scripts/helium-launcher.sh"; }
     Mod+T { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh com.mitchellh.ghostty ghostty"; }
     Mod+Shift+T { spawn "ghostty"; }
-    Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh org.qutebrowser.qutebrowser qutebrowser"; }
-    Mod+Shift+B { spawn "qutebrowser"; }
+    Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh helium helium"; }
+    Mod+Shift+B { spawn "helium"; }
     Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh Spotify spotify"; }
     Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh discord discord"; }
     Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh Slack slack"; }

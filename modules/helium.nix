@@ -9,13 +9,14 @@
     rd = "https://www.reddit.com";
     yt = "https://www.youtube.com";
     z = "https://mail.zoho.eu/zm/#mail/folder/inbox";
+    bm = "helium://bookmarks";
   };
 in {
   flake.nixosModules.helium = {lib, ...}: {
     imports = [inputs.helium.nixosModules.default];
 
     # Render quickmarks to ~/.config/helium-palette/quickmarks as "name<TAB>url"
-    # lines; the helium-palette.sh script prepends these above bookmarks.
+    # lines; the helium-launcher.sh script prepends these above bookmarks.
     home-manager.users.jacob.xdg.configFile."helium-palette/quickmarks".text =
       lib.concatStringsSep "\n"
       (lib.mapAttrsToList (name: url: "${name}\t${url}") quickmarks)
