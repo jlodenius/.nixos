@@ -1,27 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BOOKMARKS="$HOME/.config/net.imput.helium/Default/Bookmarks"
 QUICKMARKS="$HOME/.config/helium-palette/quickmarks"
+NIX_BOOKMARKS="$HOME/.config/helium-palette/bookmarks"
 FUZZEL_CONF="$HOME/.config/niri/scripts/palette-fuzzel.ini"
 
-# Walk the bookmark tree, prefixing each entry with its lowercased folder path
-# (e.g. "food/grill/Some Recipe"). Root containers (Bookmarks bar, Other) are
-# not included in the path. Output is "label<TAB>url".
-bookmarks_jq='
-  def walk($prefix):
-    (.children // [])[] as $c
-    | if $c.type == "folder"
-      then ($c | walk($prefix + ($c.name | ascii_downcase) + "/"))
-      else "\($prefix)\($c.name)\t\($c.url)"
-      end;
-  .roots[] | walk("")
-'
-
+# Candidate list ("name<TAB>url" lines): Nix-managed quickmarks + bookmarks only.
+# Helium's native bookmark store is intentionally ignored.
 choice=$(
   {
     [ -r "$QUICKMARKS" ] && cat "$QUICKMARKS"
-    [ -r "$BOOKMARKS" ] && jq -r "$bookmarks_jq" "$BOOKMARKS"
+    [ -r "$NIX_BOOKMARKS" ] && cat "$NIX_BOOKMARKS"
   } | fuzzel --dmenu --config "$FUZZEL_CONF"
 ) || exit 0
 

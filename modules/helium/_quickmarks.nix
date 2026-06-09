@@ -1,0 +1,11 @@
+{
+  ai = "https://claude.ai/new";
+  cal = "https://calendar.google.com";
+  ch = "https://www.chess.com";
+  gh = "https://github.com/jlodenius";
+  gm = "https://mail.google.com/mail/u/0/#inbox";
+  maps = "https://www.google.com/maps";
+  rd = "https://www.reddit.com";
+  yt = "https://www.youtube.com";
+  z = "https://mail.zoho.eu/zm/#mail/folder/inbox";
+}

@@ -1,0 +1,40 @@
+{
+  # SIS
+  "sis/repos" = "https://dev.azure.com/swedishinstituteforstandards/_git/sis-frontend";
+  "sis/teams" = "https://teams.cloud.microsoft";
+  "sis/jira" = "https://sisswe.atlassian.net/jira/software/c/projects/SU/boards/24/backlog";
+  "sis/azure" = "https://portal.azure.com/?feature.msaljs=true#browse/Microsoft.App%2FcontainerApps";
+  "sis/time" = "https://my355752-sso.sapbydesign.com/sap/ap/ui/repository/SAP_UI/HTMLOBERON5/client.html";
+  "sis/timereport" = "https://my.kleer.se/web2/time-reporting/month";
+
+  # SIS – Viewer
+  "sis/viewer/local" = "https://dev-viewer.standard.sis.se";
+  "sis/viewer/test" = "https://viewer-tst.standard.sis.se";
+  "sis/viewer/dev/swagger" = "https://api-dev.standard.sis.se/swagger/index.html";
+
+  # SIS – Mol
+  "sis/mol/local" = "https://mol-dev.sis.se";
+  "sis/mol-admin/local" = "https://mol-admin-dev.sis.se";
+
+  # SIS – SD
+  "sis/sd/local" = "https://sd-api.dev.sis.se:7138/swagger/index.html";
+
+  # SIS – Portal
+  "sis/portal/confluence" = "https://sisswe.atlassian.net/wiki/spaces/A/pages/95289345/API-portal";
+  "sis/portal/jira" = "https://sisswe.atlassian.net/jira/software/c/projects/API/boards/953/backlog";
+  "sis/portal/repos" = "https://dev.azure.com/swedishinstituteforstandards/API-portal/_git/SIS.Portal.Api";
+
+  "sis/portal/local/delivery" = "https://localhost:7013/scalar";
+  "sis/portal/local/ingestion" = "https://localhost:7014/scalar";
+
+  "sis/portal/dev/delivery" = "https://ca-portal-sis-dev.livelydesert-c9709af9.swedencentral.azurecontainerapps.io/scalar";
+  "sis/portal/dev/ingestion" = "https://ca-integration-sis-dev.livelydesert-c9709af9.swedencentral.azurecontainerapps.io/scalar";
+
+  # Caesari
+  "caesari/gh" = "https://github.com/caesariab/caesari2/pulls";
+
+  # Personal
+  "sports" = "http://www.fawanews.sc";
+  "fantasy" = "https://fantasy.allsvenskan.se/my-team";
+  "food" = "https://www.cookwell.com/discover";
+}
