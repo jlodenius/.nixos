@@ -14,6 +14,7 @@
       # https://cloud.google.com/docs/chrome-enterprise/policies/
       policies = {
         BookmarkBarEnabled = false;
+        SearchSuggestEnabled = false;
       };
     };
   };
