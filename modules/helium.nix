@@ -9,7 +9,6 @@
     rd = "https://www.reddit.com";
     yt = "https://www.youtube.com";
     z = "https://mail.zoho.eu/zm/#mail/folder/inbox";
-    bm = "helium://bookmarks";
   };
 in {
   flake.nixosModules.helium = {lib, ...}: {
