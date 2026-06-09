@@ -157,6 +157,7 @@
         jq
         wl-clipboard
         wofi
+        fuzzel
         keyutils
         unzip
 

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# helium-palette — a slim, always-reliable "vomnibar".
+#
+# niri Mod+G -> this script -> fuzzel picker over Helium's bookmarks -> open the
+# pick in a new Helium tab. It is bulletproof for the same reason daphen's heavy
+# Rust/WebKit palette is: the trigger is a niri (compositor) keybind and the
+# picker is a standalone fuzzel window, so no web page or browser shortcut can
+# ever hijack it. No daemon, no extension, no native messaging.
+#
+# Scope (v1, intentionally minimal): bookmarks only, new tab only. History and
+# current-tab opening can be layered on later.
+set -euo pipefail
+
+BOOKMARKS="$HOME/.config/net.imput.helium/Default/Bookmarks"
+FUZZEL_CONF="$HOME/.config/niri/scripts/palette-fuzzel.ini"
+
+# Nothing to pick from until Helium has written a bookmarks file.
+[ -r "$BOOKMARKS" ] || exit 0
+
+# Flatten the bookmark tree to "name<TAB>url" lines (recursive over all folders),
+# let fuzzel filter/select, then open the chosen URL in a new tab.
+choice=$(
+  jq -r '.roots | .. | objects | select(.type == "url") | "\(.name)\t\(.url)"' "$BOOKMARKS" \
+    | fuzzel --dmenu --config "$FUZZEL_CONF"
+) || exit 0
+
+[ -n "$choice" ] || exit 0
+
+url=${choice##*$'\t'}
+exec helium "$url"
