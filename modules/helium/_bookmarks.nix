@@ -37,4 +37,6 @@
   "sports" = "http://www.fawanews.sc";
   "fantasy" = "https://fantasy.allsvenskan.se/my-team";
   "food" = "https://www.cookwell.com/discover";
+  "avanza" = "https://www.avanza.se";
+  "seb" = "https://www.seb.se";
 }
