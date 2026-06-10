@@ -90,6 +90,8 @@
         enable = true;
         defaultApplications = {
           "text/html" = "helium.desktop";
+          "application/pdf" = "helium.desktop";
+          "application/xhtml+xml" = "helium.desktop";
           "x-scheme-handler/http" = "helium.desktop";
           "x-scheme-handler/https" = "helium.desktop";
           "x-scheme-handler/about" = "helium.desktop";
@@ -165,8 +167,6 @@
 
         # Applications
         inputs.stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
-        inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-        google-chrome
         discord
         slack
         teams-for-linux
