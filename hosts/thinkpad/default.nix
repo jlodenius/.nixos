@@ -32,6 +32,7 @@ in {
       self.nixosModules.hyprland
       self.nixosModules.niri
       self.nixosModules.colours
+      self.nixosModules.fuzzel
       self.nixosModules.mako
       self.nixosModules.ghostty
       self.nixosModules.yazi

@@ -3,7 +3,7 @@ set -euo pipefail
 
 QUICKMARKS="$HOME/.config/helium-launcher/quickmarks"
 NIX_BOOKMARKS="$HOME/.config/helium-launcher/bookmarks"
-FUZZEL_CONF="$HOME/.config/niri/scripts/helium-launcher-fuzzel.ini"
+FUZZEL_CONF="$HOME/.config/fuzzel/helium-launcher.ini"
 
 # Candidate list ("name<TAB>url" lines): Nix-managed quickmarks + bookmarks only.
 # Helium's native bookmark store is intentionally ignored.
