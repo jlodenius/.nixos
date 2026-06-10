@@ -10,10 +10,10 @@ in {
     imports = [inputs.helium.nixosModules.default];
 
     # Quickmarks + bookmarks for the Helium launcher (helium-launcher.sh),
-    # rendered to ~/.config/helium-palette/{quickmarks,bookmarks}.
+    # rendered to ~/.config/helium-launcher/{quickmarks,bookmarks}.
     home-manager.users.jacob.xdg.configFile = {
-      "helium-palette/quickmarks".text = toTsv quickmarks;
-      "helium-palette/bookmarks".text = toTsv bookmarks;
+      "helium-launcher/quickmarks".text = toTsv quickmarks;
+      "helium-launcher/bookmarks".text = toTsv bookmarks;
     };
 
     programs.helium = {

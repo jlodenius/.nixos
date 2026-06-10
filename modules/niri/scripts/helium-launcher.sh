@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-QUICKMARKS="$HOME/.config/helium-palette/quickmarks"
-NIX_BOOKMARKS="$HOME/.config/helium-palette/bookmarks"
-FUZZEL_CONF="$HOME/.config/niri/scripts/palette-fuzzel.ini"
+QUICKMARKS="$HOME/.config/helium-launcher/quickmarks"
+NIX_BOOKMARKS="$HOME/.config/helium-launcher/bookmarks"
+FUZZEL_CONF="$HOME/.config/niri/scripts/helium-launcher-fuzzel.ini"
 
 # Candidate list ("name<TAB>url" lines): Nix-managed quickmarks + bookmarks only.
 # Helium's native bookmark store is intentionally ignored.
@@ -32,8 +32,7 @@ else
 fi
 
 # Open the URL (sent to the running instance, or launches Helium), then focus
-# Helium. A running instance won't raise its own window, so selecting a page you
-# already have open would otherwise look like nothing happened.
+# Helium.
 niri msg action spawn -- helium "$target"
 
 for _ in 1 2 3 4 5; do

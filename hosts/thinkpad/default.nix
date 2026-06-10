@@ -37,7 +37,6 @@ in {
       self.nixosModules.yazi
       self.nixosModules.tmux
       self.nixosModules.waybar
-      self.nixosModules.qutebrowser
       self.nixosModules.helium
 
       # Unstable overlay
