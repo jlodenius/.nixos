@@ -5,12 +5,29 @@ QUICKMARKS="$HOME/.config/helium-launcher/quickmarks"
 NIX_BOOKMARKS="$HOME/.config/helium-launcher/bookmarks"
 FUZZEL_CONF="$HOME/.config/fuzzel/helium-launcher.ini"
 
-# Candidate list ("name<TAB>url" lines): Nix-managed quickmarks + bookmarks only.
-# Helium's native bookmark store is intentionally ignored.
+# Candidate list: Nix-managed quickmarks + bookmarks only (Helium's native
+# bookmark store is intentionally ignored). Source files are authored as
+# "<label> <url>" per line, with blank lines and '#' comments allowed for
+# grouping. format() drops those and emits "label<TAB>url" — the tab is a
+# sentinel that distinguishes a picked entry from raw typed input below.
+format() {
+  [ -r "$1" ] || return 0
+  awk '
+    /^[[:space:]]*#/ { next }   # comment line
+    /^[[:space:]]*$/ { next }   # blank line
+    {
+      url = $NF                 # URL is the last whitespace-separated field
+      $NF = ""                  # remainder (collapsed) is the label
+      sub(/[[:space:]]+$/, "")
+      printf "%s\t%s\n", $0, url
+    }
+  ' "$1"
+}
+
 choice=$(
   {
-    [ -r "$QUICKMARKS" ] && cat "$QUICKMARKS"
-    [ -r "$NIX_BOOKMARKS" ] && cat "$NIX_BOOKMARKS"
+    format "$QUICKMARKS"
+    format "$NIX_BOOKMARKS"
   } | fuzzel --dmenu --config "$FUZZEL_CONF"
 ) || exit 0
 

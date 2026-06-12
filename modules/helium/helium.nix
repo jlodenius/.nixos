@@ -1,16 +1,20 @@
-{inputs, ...}: let
-  quickmarks = import ./_quickmarks.nix;
-  bookmarks = import ./_bookmarks.nix;
-in {
-  flake.nixosModules.helium = {lib, ...}: let
-    # Render an attrset to "name<TAB>url" lines
-    toTsv = set: lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}\t${v}") set) + "\n";
-  in {
+{inputs, ...}: {
+  flake.nixosModules.helium = {...}: {
     imports = [inputs.helium.nixosModules.default];
 
-    home-manager.users.jacob.xdg.configFile = {
-      "helium-launcher/quickmarks".text = toTsv quickmarks;
-      "helium-launcher/bookmarks".text = toTsv bookmarks;
+    # Point the launcher's quickmarks/bookmarks at mutable files in this repo
+    # via out-of-store symlinks, so edits take effect immediately — no rebuild.
+    # Format is "<label> <url>" per line; blank lines and '#' comments are
+    # allowed (the launcher script strips them). See helium-launcher.sh.
+    home-manager.users.jacob = {config, ...}: {
+      xdg.configFile = {
+        "helium-launcher/quickmarks".source =
+          config.lib.file.mkOutOfStoreSymlink
+          "${config.home.homeDirectory}/.nixos/modules/helium/quickmarks";
+        "helium-launcher/bookmarks".source =
+          config.lib.file.mkOutOfStoreSymlink
+          "${config.home.homeDirectory}/.nixos/modules/helium/bookmarks";
+      };
     };
 
     programs.helium = {
