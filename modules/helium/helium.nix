@@ -10,10 +10,10 @@
       xdg.configFile = {
         "helium-launcher/quickmarks".source =
           config.lib.file.mkOutOfStoreSymlink
-          "${config.home.homeDirectory}/.nixos/modules/helium/quickmarks";
+          "${config.home.homeDirectory}/.nixos/modules/helium/_quickmarks";
         "helium-launcher/bookmarks".source =
           config.lib.file.mkOutOfStoreSymlink
-          "${config.home.homeDirectory}/.nixos/modules/helium/bookmarks";
+          "${config.home.homeDirectory}/.nixos/modules/helium/_bookmarks";
       };
     };
 
