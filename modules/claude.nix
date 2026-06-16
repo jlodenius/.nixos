@@ -3,6 +3,7 @@
     home-manager.users.jacob = {pkgs, ...}: {
       programs.claude-code = {
         enable = true;
+        package = pkgs.unstable.claude-code;
         settings = {
           alwaysThinkingEnabled = true;
           hooks = {

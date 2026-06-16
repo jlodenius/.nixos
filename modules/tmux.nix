@@ -30,7 +30,8 @@
           })
         ];
         extraConfig = ''
-          set-option -sa terminal-features ',xterm-256color:RGB'
+          # sync = synchronized output, stops TUI flicker (Claude Code, nvim)
+          set-option -sa terminal-features '*:RGB:sync'
           set-option -g focus-events on
 
           # Bind å to enter copy-mode
