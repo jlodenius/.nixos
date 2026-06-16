@@ -10,6 +10,13 @@
 
     nixpkgs.config.allowUnfree = true;
 
+    # bitwarden-desktop (26.05) pins electron-39, which is currently EOL.
+    # No non-EOL build exists upstream yet (unstable pins it too), so allow it
+    # explicitly until bitwarden bumps electron.
+    nixpkgs.config.permittedInsecurePackages = [
+      "electron-39.8.10"
+    ];
+
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"

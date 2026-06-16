@@ -5,6 +5,8 @@
     home-manager.users.jacob = {
       programs.yazi = {
         enable = true;
+        # 26.05 default: launch wrapper is `y` (was `yy`)
+        shellWrapperName = "y";
 
         settings = {
           opener.edit = [

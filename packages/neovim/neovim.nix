@@ -59,7 +59,7 @@
       settings.dont_link = config.binName != "nvim";
 
       # ── Extra packages (LSPs, formatters, linters) ─────────────────────
-      extraPackages =
+      runtimePkgs =
         (with pkgs; [
           # LSP
           rust-analyzer
@@ -70,10 +70,10 @@
           bash-language-server
           tailwindcss-language-server
           emmet-ls
-          nodePackages.vscode-langservers-extracted # cssls, html, eslint
-          nodePackages.typescript-language-server
-          nodePackages.svelte-language-server
-          nodePackages.graphql-language-service-cli
+          vscode-langservers-extracted # cssls, html, eslint
+          typescript-language-server
+          svelte-language-server
+          graphql-language-service-cli
         ])
         ++ self.lib.lintAndFormat pkgs;
 

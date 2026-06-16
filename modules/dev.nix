@@ -10,16 +10,16 @@
     # 1. AWS auth with playwright
     programs.nix-ld.enable = true;
     programs.nix-ld.libraries = with pkgs; [
-      xorg.libX11
-      xorg.libXcomposite
-      xorg.libXcursor
-      xorg.libXdamage
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXi
-      xorg.libXrender
-      xorg.libXtst
-      xorg.libXrandr
+      libx11
+      libxcomposite
+      libxcursor
+      libxdamage
+      libxext
+      libxfixes
+      libxi
+      libxrender
+      libxtst
+      libxrandr
 
       nss
       nspr

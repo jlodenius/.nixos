@@ -112,6 +112,8 @@
         };
         gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
         gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+        # 26.05 default: gtk4 apps no longer inherit gtk.theme (rely on prefer-dark)
+        gtk4.theme = null;
       };
 
       qt = {
@@ -130,6 +132,8 @@
       xdg.userDirs = {
         enable = true;
         createDirectories = true;
+        # 26.05 default: don't export XDG_*_DIR as session variables
+        setSessionVariables = false;
 
         download = "${config.home.homeDirectory}/Downloads";
         documents = "${config.home.homeDirectory}/Documents";
