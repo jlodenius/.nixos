@@ -215,11 +215,11 @@
                 fg = c.green;
               }
               {
-                name = "*";
+                url = "*";
                 fg = c.foreground;
               }
               {
-                name = "*/";
+                url = "*/";
                 fg = c.cyan;
               }
             ];
