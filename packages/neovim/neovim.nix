@@ -96,6 +96,7 @@
           p.plenary-nvim
           p.nvim-web-devicons
           p.nvim-treesitter.withAllGrammars
+          p.nvim-ts-autotag
           p.vim-tmux-navigator
 
           # Colorscheme + transparency
