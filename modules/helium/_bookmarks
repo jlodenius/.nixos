@@ -14,8 +14,12 @@ sis/viewer/local        https://dev-viewer.standard.sis.se
 sis/viewer/test         https://viewer-tst.standard.sis.se
 
 # SIS - CD
-sis/cd/dev/swagger  https://api-dev.standard.sis.se/swagger/index.html
+sis/cd/dev/swagger   https://api-dev.standard.sis.se/swagger/index.html
 sis/cd/dev/hangfire  https://api-dev.standard.sis.se/hangfire
+
+sis/cd/tst/swagger   https://api-test.standard.sis.se/swagger/index.html
+sis/cd/tst/hangfire  https://api-test.standard.sis.se/hangfire
+
 
 # SIS - Mol
 sis/mol/local        https://mol-dev.sis.se

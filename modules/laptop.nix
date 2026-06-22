@@ -14,6 +14,9 @@
     services.logind.settings.Login.HandlePowerKey = "suspend-then-hibernate";
     services.logind.settings.Login.HandlePowerKeyLongPress = "poweroff";
 
+    # Thunderbolt device manager (boltctl + auto-authorization)
+    services.hardware.bolt.enable = true;
+
     environment.systemPackages = with pkgs; [
       brightnessctl
     ];
