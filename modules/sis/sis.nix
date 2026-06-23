@@ -14,7 +14,7 @@
 
     # Run Roslyn LSP through system dotnet so it inherits the correct DOTNET_ROOT
     # and can find the SDK. The nixpkgs wrapper resolves paths incorrectly on NixOS.
-    roslyn-ls-wrapped = pkgs.writeShellScriptBin "roslyn" ''
+    roslyn-ls-wrapped = pkgs.writeShellScriptBin "roslyn-language-server" ''
       exec "${dotnet-wrapped}/bin/dotnet" "${pkgs.unstable.roslyn-ls}/lib/roslyn-ls/Microsoft.CodeAnalysis.LanguageServer.dll" "$@"
     '';
   in {
