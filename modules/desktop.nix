@@ -162,10 +162,7 @@
         fd
         jq
         wl-clipboard
-        wofi
-        # unstable: 1.14.0+ reverts selection to the first match when typing
-        # (stable 25.11 ships 1.13.1, which keeps the old index).
-        unstable.fuzzel
+        fuzzel
         keyutils
         unzip
 
