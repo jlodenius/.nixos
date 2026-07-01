@@ -166,6 +166,11 @@
         keyutils
         unzip
 
+        # VPN
+        openresolv
+        wireguard-tools
+        wgnord
+
         # Applications
         inputs.stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
         discord
