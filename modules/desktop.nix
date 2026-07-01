@@ -165,8 +165,6 @@
         fuzzel
         keyutils
         unzip
-        wgnord
-        wireguard-tools
 
         # Applications
         inputs.stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
