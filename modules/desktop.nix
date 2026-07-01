@@ -165,6 +165,7 @@
         fuzzel
         keyutils
         unzip
+        wgnord
 
         # Applications
         inputs.stockfin.packages.${pkgs.stdenv.hostPlatform.system}.default
