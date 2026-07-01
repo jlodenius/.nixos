@@ -28,6 +28,7 @@ in {
       self.nixosModules.fish
       self.nixosModules.xkb
       self.nixosModules.desktop
+      self.nixosModules.nordvpn
       self.nixosModules.gaming
       self.nixosModules.hyprland
       self.nixosModules.niri
