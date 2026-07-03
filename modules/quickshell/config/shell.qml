@@ -18,4 +18,5 @@ ShellRoot {
     NotificationOverlay {}
 
     NotificationJumpPicker {}
+    HeliumPicker {}
 }

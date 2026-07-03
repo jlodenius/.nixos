@@ -3,8 +3,7 @@ import Quickshell
 import Quickshell.Services.UPower
 import "."
 
-// waybar battery: charging " {capacity}%", discharging "{icon} {capacity}%",
-// warning ≤30 yellow, critical ≤15 red.
+// Battery percentage; warning ≤30 yellow, critical ≤15 red.
 Item {
     id: root
 
@@ -32,29 +31,19 @@ Item {
         anchors.centerIn: parent
         spacing: 6
 
-        Text {
+        BarText {
             text: {
-                if (root.charging) return ""
-                const buckets = ["", "", "", "", ""]
+                if (root.charging) return ""
+                const buckets = ["", "", "", "", ""]
                 const idx = Math.min(4, Math.max(0, Math.floor(root.percentage / 20)))
                 return buckets[idx]
             }
             color: root.stateColor
-            font.family: Theme.iconFontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
-        Text {
+        BarText {
             text: Math.round(root.percentage) + "%"
             color: root.stateColor
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
     }

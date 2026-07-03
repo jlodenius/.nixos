@@ -162,7 +162,6 @@
         fd
         jq
         wl-clipboard
-        fuzzel
         keyutils
         unzip
 

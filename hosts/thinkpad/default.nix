@@ -32,7 +32,6 @@ in {
       self.nixosModules.gaming
       self.nixosModules.niri
       self.nixosModules.colours
-      self.nixosModules.fuzzel
       self.nixosModules.quickshell
       self.nixosModules.ghostty
       self.nixosModules.yazi

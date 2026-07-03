@@ -3,8 +3,7 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import "."
 
-// waybar pulseaudio: "{icon} {volume}%", muted red, click → pavucontrol,
-// scroll adjusts volume by 1%.
+// Default sink volume; muted red, click → pavucontrol, scroll ±1%.
 Item {
     id: root
 
@@ -34,6 +33,7 @@ Item {
         onClicked: Quickshell.execDetached(["pavucontrol"])
         onWheel: wheel => {
             if (!root.sink || !root.sink.audio) return
+            if (wheel.angleDelta.y === 0) return   // ignore horizontal scroll
             const step = wheel.angleDelta.y > 0 ? 0.01 : -0.01
             root.sink.audio.volume = Math.max(0, Math.min(1, root.sink.audio.volume + step))
         }
@@ -44,28 +44,18 @@ Item {
         anchors.centerIn: parent
         spacing: 6
 
-        Text {
+        BarText {
             text: {
-                if (muted) return ""
-                if (headphones) return ""
-                return volume > 0.5 ? "" : ""
+                if (muted) return ""
+                if (headphones) return ""
+                return volume > 0.5 ? "" : ""
             }
             color: muted ? Theme.red : Theme.barFg
-            font.family: Theme.iconFontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
-        Text {
+        BarText {
             text: Math.round(volume * 100) + "%"
             color: muted ? Theme.red : Theme.barFg
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
     }

@@ -69,7 +69,7 @@ binds {
     // Programs & Navigation
     Mod+Space { spawn "vicinae" "toggle"; }
     Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
-    Mod+O hotkey-overlay-title="Helium launcher" { spawn "sh" "-c" "~/.config/niri/scripts/helium-launcher.sh"; }
+    Mod+O hotkey-overlay-title="Helium launcher" { spawn "qs" "ipc" "call" "--" "helium-picker" "toggle"; }
     Mod+T { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh com.mitchellh.ghostty ghostty"; }
     Mod+Shift+T { spawn "ghostty"; }
     Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh helium helium"; }

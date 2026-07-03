@@ -1,20 +1,21 @@
 import QtQuick
 import "."
 
-// One thin bar per window, grouped by workspace (gaps between); the focused
-// window is taller and accent-colored, other workspaces' active windows white.
+// Horizontal overview of the active workspace only: one thin bar per window
+// column, the focused window taller and accent-colored. The vertical
+// (workspace) axis is covered by the Workspaces numbers next to it.
 Item {
     id: root
 
     property string output: ""
-    readonly property int maxSlots: 64
+    readonly property int maxSlots: 32
 
-    implicitWidth: Math.max(row.implicitWidth + Theme.modulePadH * 2, 60)
+    implicitWidth: row.implicitWidth + Theme.modulePadH * 2
     implicitHeight: parent ? parent.height : Theme.barHeight
 
     readonly property var entries: {
         const _ = NiriState.version
-        return NiriState.minimapEntries(root.output)
+        return NiriState.activeWorkspaceWindows(root.output)
     }
 
     Row {
@@ -31,28 +32,18 @@ Item {
                 readonly property var entry: index < root.entries.length ? root.entries[index] : null
                 visible: entry !== null
 
-                readonly property string kind: entry ? entry.kind : "gap"
-                readonly property bool isBar: kind === "bar"
-                readonly property bool isFocused: isBar && entry.focused === true
-                readonly property bool isWsActive: isBar && entry.wsActive === true
+                readonly property bool isFocused: entry ? entry.focused === true : false
 
-                width: kind === "gap" ? 12 : 3
+                width: 3
                 height: root.height - 6
                 anchors.verticalCenter: parent.verticalCenter
 
                 Rectangle {
-                    visible: cell.isBar
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    color: cell.isFocused ? Theme.accent
-                         : cell.isWsActive ? Theme.barFg
-                         : Theme.dimmedFg
+                    color: cell.isFocused ? Theme.accent : Theme.dimmedFg
                     width: cell.isFocused ? 3 : 2
-                    height: {
-                        if (cell.isFocused) return 18
-                        if (cell.isWsActive) return 14
-                        return 11
-                    }
+                    height: cell.isFocused ? 18 : 11
                     radius: 1
                     Behavior on width {
                         NumberAnimation {
@@ -69,15 +60,6 @@ Item {
                         }
                     }
                     Behavior on color { ColorAnimation { duration: 110 } }
-                }
-
-                Rectangle {
-                    visible: cell.kind === "dot"
-                    anchors.centerIn: parent
-                    width: 3
-                    height: 3
-                    radius: 1.5
-                    color: Theme.barFg
                 }
             }
         }

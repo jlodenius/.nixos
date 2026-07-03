@@ -36,12 +36,11 @@ Singleton {
         return !!root.seenIds[id]
     }
 
-    // A toast flashes only for a genuinely NEW notification — one delivered via
-    // onNotification, which marks it live below. Notifications restored across
-    // a reload (keepOnReload) never enter liveIds, so their toast stays
-    // collapsed while they still show in the Mod+i history.
+    // Only ids delivered via onNotification are "live"; notifications restored
+    // across a reload (keepOnReload) never enter liveIds, so isSeenId treats
+    // them as seen and their toast stays collapsed while they still show in
+    // the Mod+i history.
     property var liveIds: ({})
-    function isLive(n) { return !!(n && root.liveIds[n.id]) }
 
     // Backstop: suppress every toast entrance for a short settle window after
     // launch, in case a restore re-fires onNotification.
@@ -67,14 +66,22 @@ Singleton {
         root.retainedGen++
     }
 
-    // Normalise a notification appName or a niri app_id to a chat-app key.
-    // Slack desktop notifies as "Slack" (app_id "Slack"), Discord as "discord",
-    // teams-for-linux as "teams-for-linux" or "Microsoft Teams".
+    // Chat-app registry: the single source for name matching (notification
+    // appNames and niri app_ids, matched exactly, lowercased), badge glyphs,
+    // display names, and the niri-spawn-or-focus target. Consumed by Inbox
+    // and NotificationJumpPicker.
+    readonly property var chatApps: ({
+        slack:   { names: ["slack"],
+                   glyph: "󰒱", pretty: "Slack", appId: "Slack", cmd: "slack" },
+        discord: { names: ["discord", "vesktop"],
+                   glyph: "󰙯", pretty: "Discord", appId: "discord", cmd: "discord" },
+        teams:   { names: ["teams-for-linux", "microsoft teams", "teams"],
+                   glyph: "󰊻", pretty: "Teams", appId: "teams-for-linux", cmd: "teams-for-linux" }
+    })
     function appKey(name) {
         const a = (name || "").toLowerCase()
-        if (a.indexOf("slack") !== -1) return "slack"
-        if (a.indexOf("discord") !== -1 || a.indexOf("vesktop") !== -1) return "discord"
-        if (a.indexOf("teams") !== -1) return "teams"
+        for (const key in root.chatApps)
+            if (root.chatApps[key].names.indexOf(a) !== -1) return key
         return ""
     }
     // Only chat-app notifications persist in the Mod+i center. Everything else
@@ -82,16 +89,6 @@ Singleton {
     // — then drops.
     function isMessageApp(n) {
         return !!(n && root.appKey(n.appName))
-    }
-    function isMessageAppName(app) {
-        return !!root.appKey(app)
-    }
-    function isTrayApp(n) {
-        return root.isMessageApp(n)
-    }
-
-    function clearOne(n) {
-        if (n) { delete root.seenIds[n.id]; n.dismiss() }
     }
 
     // Which notification ids are showing as toasts right now, reported by the
@@ -104,11 +101,11 @@ Singleton {
         if (vis) m[id] = true; else delete m[id]
         root.visibleToastIds = m
     }
-    function visibleTrayToasts() {
+    function visibleMessageToasts() {
         const out = []
         const all = notifServer.trackedNotifications.values
         for (let i = 0; i < all.length; i++)
-            if (root.visibleToastIds[all[i].id] && root.isTrayApp(all[i])) out.push(all[i])
+            if (root.visibleToastIds[all[i].id] && root.isMessageApp(all[i])) out.push(all[i])
         return out
     }
 

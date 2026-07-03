@@ -3,6 +3,7 @@ singleton NiriState 1.0 NiriState.qml
 singleton Notifications 1.0 Notifications.qml
 singleton NotificationJumpPickerState 1.0 NotificationJumpPickerState.qml
 Bar 1.0 Bar.qml
+BarText 1.0 BarText.qml
 Workspaces 1.0 Workspaces.qml
 Minimap 1.0 Minimap.qml
 Inbox 1.0 Inbox.qml
@@ -10,6 +11,8 @@ Toast 1.0 Toast.qml
 NotificationOverlay 1.0 NotificationOverlay.qml
 Picker 1.0 Picker.qml
 NotificationJumpPicker 1.0 NotificationJumpPicker.qml
+singleton HeliumPickerState 1.0 HeliumPickerState.qml
+HeliumPicker 1.0 HeliumPicker.qml
 Stockfin 1.0 Stockfin.qml
 Network 1.0 Network.qml
 Audio 1.0 Audio.qml

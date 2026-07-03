@@ -25,9 +25,11 @@ PanelWindow {
     margins.top: 8
     margins.right: Theme.toastMargin
 
-    // Gated only on having notifications, NOT on the focused output — flipping
+    // Gated on rendered toast content, NOT on the focused output — flipping
     // visibility per-screen on focus changes churns the layer-shell window.
-    visible: Notifications.tracked.values.length > 0
+    // Collapsed history-only state hides the window entirely so it can't
+    // swallow clicks as an invisible strip.
+    visible: toastColumn.implicitHeight > 0
 
     implicitWidth: 380
     implicitHeight: Math.max(toastColumn.implicitHeight + 16, 1)

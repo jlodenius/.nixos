@@ -14,13 +14,16 @@ Picker {
     open: NotificationJumpPickerState.open
     onCloseRequested: NotificationJumpPickerState.open = false
 
-    placeholder: "notification"
+    placeholder: ""
     glyphField: "glyph"
     glyphColorField: "glyphColor"
     subtitleField: "sub"
 
-    items: buildItems(Notifications.tracked, Notifications.seenGen,
-                      Notifications.retained, Notifications.retainedGen)
+    // Only build the list while the picker is (becoming) visible — every
+    // message/seen change would otherwise rebuild it on a hidden window.
+    items: active ? buildItems(Notifications.tracked, Notifications.seenGen,
+                               Notifications.retained, Notifications.retainedGen)
+                  : []
 
     // NOTE: named openItem, NOT activate — Picker has its own activate() that
     // its Enter handling calls; shadowing it breaks Enter inside the picker.
@@ -31,18 +34,11 @@ Picker {
     Connections {
         target: NotificationJumpPickerState
         function onJumpRequested() {
-            const vis = Notifications.visibleTrayToasts()
+            const vis = Notifications.visibleMessageToasts()
             if (vis.length === 1) root.openItem(root.mkItemLive(vis[0]))
             else NotificationJumpPickerState.open = true
         }
     }
-
-    // niri-spawn-or-focus.sh arguments per chat app: [app_id, command].
-    readonly property var focusTargets: ({
-        "slack":   ["Slack", "slack"],
-        "discord": ["discord", "discord"],
-        "teams":   ["teams-for-linux", "teams-for-linux"]
-    })
 
     function openItem(item) {
         if (!item || item.divider) return
@@ -60,46 +56,35 @@ Picker {
                 if (acts[i].identifier === "default") { acts[i].invoke(); break }
             }
         }
-        // Focus the app's window (or launch it).
-        const target = focusTargets[Notifications.appKey(item.app)]
-        if (target) {
+        // Focus the app's window (or launch it) — unless it's already focused:
+        // spawn-or-focus would then cycle to the app's NEXT window, moving
+        // focus away from the thread the default action just opened.
+        const key = Notifications.appKey(item.app)
+        const app = Notifications.chatApps[key]
+        if (app && Notifications.appKey(NiriState.focusedAppId()) !== key) {
             Quickshell.execDetached(["sh", "-c",
                 Quickshell.env("HOME") + "/.config/niri/scripts/niri-spawn-or-focus.sh "
-                + target[0] + " " + target[1]])
+                + app.appId + " " + app.cmd])
         }
     }
 
-    function _glyph(appName) {
-        const key = Notifications.appKey(appName)
-        if (key === "slack") return "󰒱"
-        if (key === "discord") return "󰙯"
-        if (key === "teams") return "󰊻"
-        return ""
-    }
-
-    function _pretty(appName) {
-        const key = Notifications.appKey(appName)
-        if (key === "slack") return "Slack"
-        if (key === "discord") return "Discord"
-        if (key === "teams") return "Teams"
-        return appName || ""
-    }
-
     function mkItemLive(n) {
+        const app = Notifications.chatApps[Notifications.appKey(n.appName)]
         return {
             id: n.id, notif: n, app: n.appName || "", summary: n.summary || "",
             label: n.summary || n.appName || "notification",
-            glyph: _glyph(n.appName), glyphColor: Theme.accent,
-            sub: _pretty(n.appName),
+            glyph: app ? app.glyph : "", glyphColor: Theme.accent,
+            sub: app ? app.pretty : (n.appName || ""),
         }
     }
 
     function mkItemRetained(e) {
+        const app = Notifications.chatApps[Notifications.appKey(e.app)]
         return {
             id: e.id, notif: null, app: e.app, summary: e.summary,
             label: e.summary || e.app || "notification",
-            glyph: _glyph(e.app), glyphColor: Theme.accent,
-            sub: _pretty(e.app),
+            glyph: app ? app.glyph : "", glyphColor: Theme.accent,
+            sub: app ? app.pretty : e.app,
         }
     }
 
@@ -107,10 +92,10 @@ Picker {
         // Center contents = live tracked chat notifications ∪ retained
         // (messages whose live notification was deleted when opened).
         const live = (tracked && tracked.values) ? tracked.values.slice() : []
-        const liveTray = live.filter(n => Notifications.isTrayApp(n))
+        const liveMsgs = live.filter(n => Notifications.isMessageApp(n))
         const liveIds = {}
         const items = []
-        for (let i = 0; i < liveTray.length; i++) { liveIds[liveTray[i].id] = true; items.push(mkItemLive(liveTray[i])) }
+        for (let i = 0; i < liveMsgs.length; i++) { liveIds[liveMsgs[i].id] = true; items.push(mkItemLive(liveMsgs[i])) }
         const ret = retained || []
         for (let i = 0; i < ret.length; i++) if (!liveIds[ret[i].id]) items.push(mkItemRetained(ret[i]))
         items.sort((a, b) => (b.id || 0) - (a.id || 0))   // newest first

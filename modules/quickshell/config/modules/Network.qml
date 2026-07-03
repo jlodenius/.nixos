@@ -3,7 +3,7 @@ import Quickshell
 import Quickshell.Io
 import "."
 
-// waybar network: " {essid}" / "󰈀 eth" / "⚠ Disconnected" (red).
+// Wifi SSID / wired / disconnected (red).
 Item {
     id: root
 
@@ -40,11 +40,21 @@ Item {
         }
     }
 
-    Timer {
-        interval: 5000
-        repeat: true
+    // Requery on NetworkManager events instead of polling every few seconds.
+    Process {
+        id: monitor
+        command: ["nmcli", "monitor"]
         running: true
-        onTriggered: proc.running = true
+        stdout: SplitParser {
+            splitMarker: "\n"
+            onRead: () => { proc.running = true }
+        }
+        onExited: monitorRestart.start()
+    }
+    Timer {
+        id: monitorRestart
+        interval: 5000
+        onTriggered: monitor.running = true
     }
 
     Row {
@@ -52,26 +62,16 @@ Item {
         anchors.centerIn: parent
         spacing: 6
 
-        Text {
-            text: root.kind === "wifi" ? ""
+        BarText {
+            text: root.kind === "wifi" ? ""
                 : root.kind === "eth" ? "󰈀"
                 : "⚠"
             color: root.kind === "disconnected" ? Theme.red : Theme.barFg
-            font.family: Theme.iconFontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
-        Text {
+        BarText {
             text: root.label
             color: root.kind === "disconnected" ? Theme.red : Theme.barFg
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
     }

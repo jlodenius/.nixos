@@ -25,13 +25,17 @@ Rectangle {
 
     // Never animate height: it propagates to the PanelWindow's
     // implicitHeight, and per-frame layer-shell resizes render at ~10fps.
-    // Fade first, snap the height once fully invisible.
+    // Fade first, snap the height once fully invisible. Fully-collapsed
+    // toasts also go invisible so the overlay window can hide (it would
+    // otherwise sit as a transparent strip swallowing clicks).
     height: (collapsed && opacity === 0) ? 0 : implicitHeight
+    visible: !(collapsed && opacity === 0)
     clip: true
 
     // Never flash a toast for one that's already seen (arrived while focused on
-    // its source) or restored across a quickshell reload.
-    Component.onCompleted: { notifId = notification ? (notification.id || 0) : 0; shown = true; if (Notifications.isSeen(notification) || !Notifications.isLive(notification) || !Notifications.startupSettled) collapsed = true }
+    // its source) or restored across a quickshell reload (isSeen covers the
+    // restored case: ids absent from liveIds count as seen).
+    Component.onCompleted: { notifId = notification ? (notification.id || 0) : 0; shown = true; if (Notifications.isSeen(notification) || !Notifications.startupSettled) collapsed = true }
 
     Connections {
         target: Notifications
@@ -57,7 +61,8 @@ Rectangle {
         if (!notification) return Theme.toastTimeout
         if (isCritical) return 30000
         const t = notification.expireTimeout
-        if (t <= 0) return Theme.toastTimeout
+        if (t === 0) return 0   // spec: explicit never-expire
+        if (t < 0) return Theme.toastTimeout
         return t
     }
 
@@ -79,12 +84,16 @@ Rectangle {
         }
         spacing: 10
 
-        // Sender avatar from the image hint, hidden unless it actually loads.
+        // Sender avatar from the image hint, else the app's themed icon;
+        // hidden unless something actually loads.
         ClippingRectangle {
             id: avatar
             readonly property string src: {
-                const p = root.notification ? (root.notification.image || "") : ""
-                return p.startsWith("/") ? "file://" + p : p
+                const n = root.notification
+                if (!n) return ""
+                const p = n.image || ""
+                if (p) return p.startsWith("/") ? "file://" + p : p
+                return n.appIcon ? Quickshell.iconPath(n.appIcon, true) : ""
             }
             visible: avatarImg.status === Image.Ready
             width: visible ? 40 : 0
@@ -139,7 +148,9 @@ Rectangle {
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSize - 2
                 renderType: Text.NativeRendering
-                textFormat: Text.MarkdownText
+                // Notification body-markup is HTML-ish (<b>, <i>, <a>) —
+                // StyledText renders it; Markdown would show raw tags.
+                textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 elide: Text.ElideRight
                 maximumLineCount: 5
@@ -160,7 +171,7 @@ Rectangle {
         // Mod+i center keeps them as history. Everything else drops once its
         // toast times out.
         onTriggered: {
-            if (Notifications.isTrayApp(root.notification)) root.collapsed = true
+            if (Notifications.isMessageApp(root.notification)) root.collapsed = true
             else root.beginDismiss()
         }
     }

@@ -2,35 +2,58 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 
-// Melange palette — keep in sync with modules/colours.nix.
-// Bar metrics/style mirror the old waybar config; toast style mirrors mako.
 Singleton {
     id: theme
 
-    // Base UI
-    readonly property color bg: "#292522"
-    readonly property color surface: "#34302C"
-    readonly property color selection: "#403A36"
-    readonly property color subtle: "#867462"
-    readonly property color comment: "#C1A78E"
-    readonly property color fg: "#ECE1D7"
+    // Palette single-source: modules/colours.nix, exported to JSON by
+    // quickshell.nix. watchChanges reflows the shell when a rebuild changes
+    // the palette; a broken file logs a parse error and keeps the last state.
+    FileView {
+        path: Quickshell.env("HOME") + "/.local/share/quickshell/colours.json"
+        blockLoading: true
+        watchChanges: true
+        onFileChanged: reload()
 
-    // Accents
-    readonly property color red: "#D47766"
-    readonly property color yellow: "#EBC06D"
-    readonly property color green: "#85B695"
-    readonly property color cyan: "#89B3B6"
-    readonly property color blue: "#A3A9CE"
-    readonly property color magenta: "#CF9BC2"
+        adapter: JsonAdapter {
+            id: c
+            property color background
+            property color surface
+            property color selection
+            property color subtle
+            property color comment
+            property color foreground
+            property color red
+            property color yellow
+            property color green
+            property color cyan
+            property color blue
+            property color magenta
+            property var muted
+            property var dark
+        }
+    }
+
+    readonly property color bg: c.background
+    readonly property color surface: c.surface
+    readonly property color selection: c.selection
+    readonly property color fg: c.foreground
+    readonly property color fg_muted: c.comment
+    readonly property color fg_subtle: c.subtle
+
+    readonly property color red: c.red
+    readonly property color yellow: c.yellow
+    readonly property color green: c.green
+    readonly property color cyan: c.cyan
+    readonly property color blue: c.blue
+    readonly property color magenta: c.magenta
 
     readonly property color accent: yellow
-    readonly property color fg_muted: comment
-    readonly property color fg_subtle: subtle
     readonly property color hairline: Qt.rgba(fg.r, fg.g, fg.b, 0.15)
     readonly property color dimmedFg: Qt.rgba(fg.r, fg.g, fg.b, 0.55)
 
-    // Bar (waybar: height 30, margin 5, radius 4, rgba(0,0,0,0.5), white text)
+    // Bar
     readonly property int barHeight: 30
     readonly property int barMargin: 5
     readonly property int barRadius: 4
@@ -38,13 +61,12 @@ Singleton {
     readonly property color barFg: "#FFFFFF"
     readonly property int modulePadH: 12
 
-    readonly property string fontFamily: "Geist Mono Nerd Font Propo"
-    readonly property string iconFontFamily: "Geist Mono Nerd Font Propo"
+    // Exact fontconfig family name — Qt does not fuzzy-match.
+    readonly property string fontFamily: "GeistMono Nerd Font Propo"
     readonly property int fontSize: 15
-    readonly property int fontWeight: 600
+    readonly property int fontWeight: 400
 
-    // Toasts (mako: bg background, border surface, radius 12, padding 14,
-    // margin 18, default-timeout 5000, critical border red)
+    // Toasts
     readonly property int toastRadius: 12
     readonly property int toastPadding: 14
     readonly property int toastMargin: 18

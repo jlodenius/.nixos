@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import "."
 
-// niri workspaces on this output; active one white, rest subtle (waybar style).
+// niri workspaces on this output; active one white, rest subtle.
 Item {
     id: root
 
@@ -33,25 +33,23 @@ Item {
                 width: label.implicitWidth + 10
                 height: root.height
 
-                Text {
+                BarText {
                     id: label
                     anchors.centerIn: parent
                     text: ws.name || ws.idx
                     color: parent.isActive ? Theme.barFg
                          : ws.is_urgent ? Theme.red
                          : Theme.fg_subtle
-                    font.family: Theme.fontFamily
-                    font.pixelSize: Theme.fontSize
-                    font.weight: Theme.fontWeight
-                    font.hintingPreference: Font.PreferFullHinting
-                    renderType: Text.NativeRendering
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: Quickshell.execDetached(
-                        ["niri", "msg", "action", "focus-workspace", String(parent.ws.idx)])
+                    // focus-workspace resolves the index against the focused
+                    // monitor, so focus this bar's monitor first.
+                    onClicked: Quickshell.execDetached(["sh", "-c",
+                        (root.output ? "niri msg action focus-monitor '" + root.output + "' && " : "")
+                        + "niri msg action focus-workspace " + parent.ws.idx])
                 }
             }
         }

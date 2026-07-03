@@ -1,63 +1,52 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import "."
 
+// Generic bottom-notch fuzzy picker. Consumers set `items` ({label, ...},
+// or {divider: true, label} section headers) and handle onEnter; optional
+// glyph/subtitle fields decorate the rows. Set onEnterText to accept raw
+// typed input: Shift+Enter always submits it, plain Enter submits it when
+// freeText is true (e.g. nothing matched).
 PanelWindow {
     id: root
 
     property bool open: false
     signal closeRequested()
-    property string placeholder: "Search…"
+    property string placeholder: ""
     property var items: []
     property string subtitleField: ""
-    property string highlightField: ""
-    // Optional per-item field holding an image source; renders a theme-tinted
-    // monochrome icon at the right of the row.
-    property string iconField: ""
-    property var onEnter: function(item) {}
-    property var onEnterText: function(text) {}
-    property bool freeText: false
-    property var onAltAction: null
-    property string altLabel: ""
-    property int altKey: Qt.Key_W
-    // Set by pickers whose items arrive asynchronously: shows a loading
-    // indicator, and the list fades in once loading clears.
-    property bool loading: false
-    // Optional per-item colored status glyph (a Nerd Font char) at the row's
-    // left; its color comes from glyphColorField (a color value on the item).
+    // Per-item colored status glyph (a Nerd Font char) at the row's left;
+    // its color comes from glyphColorField (a color value on the item).
     property string glyphField: ""
     property string glyphColorField: ""
-    // When true, Ctrl+Enter fires the alt action instead of the primary one.
-    property bool ctrlEnterAlt: false
-    // Opt-in tab bar: labels shown under the search field, Tab/Shift+Tab cycles.
-    property var tabs: []
-    property int tab: 0
-    onTabChanged: selectedIndex = firstSelectable()
-    // Opt-in Ctrl+Y: called with the focused item (yank/copy semantics).
-    property var onYank: null
+    property var onEnter: function(item) {}
+    property var onEnterText: null
+    property bool freeText: false
 
     property string query: search ? search.text : ""
     property int selectedIndex: 0
 
+    // `active` keeps the window alive through the close animation.
     property bool active: false
     visible: active
 
     onOpenChanged: {
-        if (open) { closeDelay.stop(); active = true }
-        else closeDelay.restart()
-    }
-    Timer { id: closeDelay; interval: 300; onTriggered: root.active = false }
-
-    onActiveChanged: {
-        if (active && search) {
+        if (open) {
+            closeDelay.stop()
+            active = true
+            // Reset here, not in onActiveChanged: reopening during the close
+            // animation leaves `active` true, which would keep a stale query.
             search.text = ""
             selectedIndex = firstSelectable()
             search.forceActiveFocus()
+        } else {
+            closeDelay.restart()
         }
     }
+    Timer { id: closeDelay; interval: 300; onTriggered: root.active = false }
+
     onQueryChanged: selectedIndex = firstSelectable()
 
     // First non-divider row — so selection never starts on a section header.
@@ -93,13 +82,7 @@ PanelWindow {
     }
 
     function activate() {
-        if (freeText) {
-            const text = query.trim()
-            if (text.length === 0) return
-            onEnterText(text)
-            closeRequested()
-            return
-        }
+        if (freeText) { submitText(); return }
         if (filtered.length === 0) return
         const idx = Math.max(0, Math.min(selectedIndex, filtered.length - 1))
         const item = filtered[idx]
@@ -108,10 +91,12 @@ PanelWindow {
         closeRequested()
     }
 
-    function altActivate() {
-        if (!onAltAction || filtered.length === 0) return
-        const idx = Math.max(0, Math.min(selectedIndex, filtered.length - 1))
-        onAltAction(filtered[idx])
+    function submitText() {
+        if (!onEnterText) return
+        const text = query.trim()
+        if (text.length === 0) return
+        onEnterText(text)
+        closeRequested()
     }
 
     anchors {
@@ -204,96 +189,46 @@ PanelWindow {
                     renderType: Text.NativeRendering
                 }
 
-            TextField {
-                id: search
-                anchors.left: searchIcon.right
-                anchors.leftMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-                placeholderText: root.placeholder
-                color: Theme.fg
-                placeholderTextColor: Qt.rgba(Theme.fg.r, Theme.fg.g, Theme.fg.b, 0.5)
-                font.family: notch.sans
-                font.pixelSize: 16
-                background: null
-                padding: 8
-                Keys.onPressed: event => {
-                    if (event.key === Qt.Key_Escape) {
-                        root.closeRequested()
-                        event.accepted = true
-                    } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                        if (root.ctrlEnterAlt && (event.modifiers & Qt.ControlModifier)) root.altActivate()
-                        else root.activate()
-                        event.accepted = true
-                    } else if (event.key === Qt.Key_Down
-                            || (event.key === Qt.Key_J && (event.modifiers & Qt.ControlModifier))) {
-                        root.step(1)
-                        event.accepted = true
-                    } else if (event.key === Qt.Key_Up
-                            || (event.key === Qt.Key_K && (event.modifiers & Qt.ControlModifier))) {
-                        root.step(-1)
-                        event.accepted = true
-                    } else if (event.key === root.altKey && (event.modifiers & Qt.ControlModifier)) {
-                        root.altActivate()
-                        event.accepted = true
-                    } else if (event.key === Qt.Key_Y && (event.modifiers & Qt.ControlModifier) && root.onYank) {
-                        const idx = Math.max(0, Math.min(root.selectedIndex, root.filtered.length - 1))
-                        if (root.filtered.length > 0 && !root.filtered[idx].divider) root.onYank(root.filtered[idx])
-                        event.accepted = true
-                    } else if (root.tabs.length > 1
-                            && (event.key === Qt.Key_Tab || event.key === Qt.Key_Backtab
-                                || ((event.key === Qt.Key_H || event.key === Qt.Key_L) && (event.modifiers & Qt.ControlModifier)))) {
-                        const dir = (event.key === Qt.Key_Backtab
-                                     || (event.key === Qt.Key_H && (event.modifiers & Qt.ControlModifier))) ? -1 : 1
-                        root.tab = (root.tab + dir + root.tabs.length) % root.tabs.length
-                        event.accepted = true
-                    }
-                }
-            }
-
-                Rectangle {
-                    anchors.bottom: parent.bottom
-                    width: parent.width
-                    height: 1
-                    color: Theme.hairline
-                }
-            }
-
-            Item {
-                id: tabsRow
-                visible: root.tabs.length > 1
-                width: parent.width
-                height: visible ? 41 : 0
-
-                Row {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
+                TextField {
+                    id: search
+                    anchors.left: searchIcon.right
+                    anchors.leftMargin: 10
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: 4
-                    Repeater {
-                        model: root.tabs
-                        Rectangle {
-                            required property var modelData
-                            required property int index
-                            readonly property bool isActive: index === root.tab
-                            width: tabLabel.implicitWidth + 20
-                            height: tabLabel.implicitHeight + 12
-                            radius: 6
-                            color: isActive ? Theme.selection
-                                 : tabHover.hovered ? Theme.surface : "transparent"
-                            Text {
-                                id: tabLabel
-                                anchors.centerIn: parent
-                                text: String(parent.modelData)
-                                color: parent.isActive ? Theme.fg : Theme.fg_muted
-                                font.family: notch.sans
-                                font.pixelSize: 13
-                                font.weight: 500
-                                renderType: Text.NativeRendering
-                            }
-                            HoverHandler { id: tabHover }
-                            TapHandler { onTapped: root.tab = parent.index }
+                    placeholderText: root.placeholder
+                    color: Theme.fg
+                    placeholderTextColor: Qt.rgba(Theme.fg.r, Theme.fg.g, Theme.fg.b, 0.5)
+                    font.family: notch.sans
+                    font.pixelSize: 16
+                    background: null
+                    padding: 8
+                    Keys.onPressed: event => {
+                        if (event.key === Qt.Key_Escape) {
+                            root.closeRequested()
+                            event.accepted = true
+                        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                            if (event.modifiers & Qt.ShiftModifier) root.submitText()
+                            else root.activate()
+                            event.accepted = true
+                        } else if (event.key === Qt.Key_Down
+                                || (event.key === Qt.Key_J && (event.modifiers & Qt.ControlModifier))) {
+                            root.step(1)
+                            event.accepted = true
+                        } else if (event.key === Qt.Key_Up
+                                || (event.key === Qt.Key_K && (event.modifiers & Qt.ControlModifier))) {
+                            root.step(-1)
+                            event.accepted = true
+                        } else if (event.key === Qt.Key_W && (event.modifiers & Qt.ControlModifier)) {
+                            // Delete word before cursor (vim style).
+                            const pos = search.cursorPosition
+                            const t = search.text
+                            let i = pos
+                            while (i > 0 && /\s/.test(t[i - 1])) i--
+                            while (i > 0 && !/\s/.test(t[i - 1])) i--
+                            search.text = t.slice(0, i) + t.slice(pos)
+                            search.cursorPosition = i
+                            event.accepted = true
                         }
                     }
                 }
@@ -306,23 +241,16 @@ PanelWindow {
                 }
             }
 
-            Item {
-                id: listSlot
-                width: parent.width
-                height: parent.height - inputWrap.height - tabsRow.height
-                        - (footer.visible ? footer.height : 0)
-
             ListView {
                 id: list
-                anchors.fill: parent
+                width: parent.width
+                height: parent.height - inputWrap.height
                 clip: true
                 model: root.filtered
                 currentIndex: root.selectedIndex
                 spacing: 2
                 topMargin: 10
                 bottomMargin: 10
-                opacity: root.loading ? 0 : 1
-                Behavior on opacity { NumberAnimation { duration: 220; easing.type: Easing.OutCubic } }
                 add: Transition {
                     NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200; easing.type: Easing.OutCubic }
                 }
@@ -367,30 +295,6 @@ PanelWindow {
                         renderType: Text.NativeRendering
                     }
 
-                    Image {
-                        id: rowIcon
-                        readonly property bool active: !rowItem.isDivider && root.iconField.length > 0
-                            && rowItem.modelData
-                            && String(rowItem.modelData[root.iconField] || "").length > 0
-                        visible: false   // drawn by the MultiEffect below
-                        source: active ? rowItem.modelData[root.iconField] : ""
-                        width: 16
-                        height: 16
-                        sourceSize.width: 32
-                        sourceSize.height: 32
-                        fillMode: Image.PreserveAspectFit
-                        anchors.right: parent.right
-                        anchors.rightMargin: 22
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    MultiEffect {
-                        visible: rowIcon.active
-                        source: rowIcon
-                        anchors.fill: rowIcon
-                        colorization: 1.0
-                        colorizationColor: Theme.fg_muted
-                    }
-
                     Text {
                         id: rowGlyph
                         readonly property bool active: !rowItem.isDivider && root.glyphField.length > 0
@@ -407,24 +311,11 @@ PanelWindow {
                         renderType: Text.NativeRendering
                     }
 
-                    // Highlighted row: a small accent dot instead of
-                    // recoloring the whole label.
-                    Rectangle {
-                        id: hlDot
-                        visible: !rowItem.isDivider && root.highlightField.length > 0
-                            && rowItem.modelData && rowItem.modelData[root.highlightField] === true
-                        width: 6; height: 6; radius: 3
-                        color: Theme.accent
-                        anchors.left: parent.left
-                        anchors.leftMargin: 22
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
                     Text {
                         visible: !rowItem.isDivider
-                        anchors.left: rowGlyph.active ? rowGlyph.right : (hlDot.visible ? hlDot.left : parent.left)
-                        anchors.leftMargin: rowGlyph.active ? 10 : (hlDot.visible ? 16 : 22)
-                        anchors.right: rowIcon.active ? rowIcon.left : subtitleText.left
+                        anchors.left: rowGlyph.active ? rowGlyph.right : parent.left
+                        anchors.leftMargin: rowGlyph.active ? 10 : 22
+                        anchors.right: subtitleText.left
                         anchors.rightMargin: 12
                         anchors.verticalCenter: parent.verticalCenter
                         text: rowItem.modelData ? String(rowItem.modelData.label || "?") : "?"
@@ -443,6 +334,10 @@ PanelWindow {
                         font.family: notch.sans
                         font.pixelSize: 12
                         renderType: Text.NativeRendering
+                        // Cap long subtitles (e.g. URLs) so they can't crowd
+                        // out the label.
+                        width: Math.min(implicitWidth, rowItem.width * 0.5)
+                        elide: Text.ElideRight
                         anchors.right: parent.right
                         anchors.rightMargin: 22
                         anchors.verticalCenter: parent.verticalCenter
@@ -461,60 +356,6 @@ PanelWindow {
 
                 onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
             }
-
-            Item {
-                anchors.fill: parent
-                opacity: root.loading ? 1 : 0
-                visible: opacity > 0
-                Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
-                Row {
-                    anchors.centerIn: parent
-                    spacing: 6
-                    Repeater {
-                        model: 3
-                        Rectangle {
-                            required property int index
-                            width: 7; height: 7; radius: 3.5
-                            color: Theme.fg_muted
-                            opacity: 0.25
-                            SequentialAnimation on opacity {
-                                running: root.loading
-                                loops: Animation.Infinite
-                                PauseAnimation { duration: index * 150 }
-                                NumberAnimation { to: 1.0; duration: 300; easing.type: Easing.InOutQuad }
-                                NumberAnimation { to: 0.25; duration: 300; easing.type: Easing.InOutQuad }
-                                PauseAnimation { duration: (2 - index) * 150 }
-                            }
-                        }
-                    }
-                }
-            }
-            }
-
-            Item {
-                id: footer
-                width: parent.width
-                visible: root.altLabel.length > 0
-                height: visible ? 34 : 0
-                Rectangle {
-                    anchors.top: parent.top
-                    width: parent.width
-                    height: 1
-                    color: Theme.hairline
-                }
-                Text {
-                    anchors.centerIn: parent
-                    width: parent.width - 32
-                    text: root.altLabel
-                    color: Theme.fg_muted
-                    font.family: notch.sans
-                    font.pixelSize: 12
-                    renderType: Text.NativeRendering
-                    horizontalAlignment: Text.AlignHCenter
-                    elide: Text.ElideRight
-                }
-            }
         }
     }
-
 }

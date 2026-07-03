@@ -5,7 +5,7 @@
     # Point the launcher's quickmarks/bookmarks at mutable files in this repo
     # via out-of-store symlinks, so edits take effect immediately — no rebuild.
     # Format is "<label> <url>" per line; blank lines and '#' comments are
-    # allowed (the launcher script strips them). See helium-launcher.sh.
+    # allowed. Consumed by quickshell's HeliumPicker (Mod+O).
     home-manager.users.jacob = {
       config,
       pkgs,

@@ -25,6 +25,7 @@ Singleton {
         "WindowClosed",
         "WindowFocusChanged",
         "WindowLayoutsChanged",
+        "WorkspaceUrgencyChanged",
     ]
 
     Process {
@@ -107,32 +108,36 @@ Singleton {
                 const wid = change[0], layout = change[1]
                 if (windows[wid]) windows[wid].layout = layout
             }
+        } else if (name === "WorkspaceUrgencyChanged") {
+            if (workspaces[data.id]) workspaces[data.id].is_urgent = data.urgent
         }
     }
 
-    function minimapEntries(output) {
+    // Windows of the active workspace on `output`, in scrolling-layout order.
+    function activeWorkspaceWindows(output) {
         const _ = version
-        const out = []
-        const groups = visibleWorkspaces(output)
-        for (let g = 0; g < groups.length; g++) {
-            if (g > 0) out.push({ kind: "gap" })
-            const ws = groups[g].ws
-            const wins = groups[g].windows
-            const activeId = ws.active_window_id
-            const wsFocused = ws.is_focused || false
-            if (wins.length === 0 && (wsFocused || ws.is_active === true)) {
-                out.push({ kind: "dot" })
-                continue
-            }
-            for (const w of wins) {
-                out.push({
-                    kind: "bar",
-                    focused: w.is_focused === true,
-                    wsActive: !wsFocused && w.id === activeId,
-                })
-            }
+        let active = null
+        for (const id in workspaces) {
+            const ws = workspaces[id]
+            if (ws.is_active === true && (!output || ws.output === output)) { active = ws; break }
         }
-        return out
+        if (!active) return []
+        const wins = []
+        for (const id in windows) {
+            if (windows[id].workspace_id === active.id) wins.push(windows[id])
+        }
+        wins.sort((a, b) => {
+            const ap = (a.layout || {}).pos_in_scrolling_layout
+            const bp = (b.layout || {}).pos_in_scrolling_layout
+            if (ap && bp) {
+                if (ap[0] !== bp[0]) return ap[0] - bp[0]
+                if (ap[1] !== bp[1]) return ap[1] - bp[1]
+            }
+            if (ap && !bp) return -1
+            if (!ap && bp) return 1
+            return a.id - b.id
+        })
+        return wins.map(w => ({ focused: w.is_focused === true }))
     }
 
     function focusedAppId() {

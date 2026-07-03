@@ -3,8 +3,8 @@ import Quickshell
 import Quickshell.Io
 import "."
 
-// Mirrors waybar's custom/stockfin: polls the stockfin D-Bus StatusJson
-// property, colors by bullish/bearish class, click activates.
+// Polls the stockfin D-Bus StatusJson property, colors by bullish/bearish
+// class, click activates.
 Item {
     id: root
 
@@ -58,28 +58,18 @@ Item {
         anchors.centerIn: parent
         spacing: 6
 
-        Text {
-            text: ""
+        BarText {
+            text: ""
             color: root.cls === "bullish" ? Theme.green
                  : root.cls === "bearish" ? Theme.red
                  : Theme.barFg
-            font.family: Theme.iconFontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
-        Text {
+        BarText {
             text: root.label
             color: root.cls === "bullish" ? Theme.green
                  : root.cls === "bearish" ? Theme.red
                  : Theme.barFg
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
     }

@@ -3,7 +3,7 @@ import Quickshell
 import Quickshell.Io
 import "."
 
-// waybar disk: " {percentage_used}%" for /home, every 30s.
+// /home usage percentage.
 Item {
     id: root
 
@@ -33,24 +33,12 @@ Item {
         anchors.centerIn: parent
         spacing: 6
 
-        Text {
-            text: ""
-            color: Theme.barFg
-            font.family: Theme.iconFontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
+        BarText {
+            text: "\ued75"
             anchors.verticalCenter: parent.verticalCenter
         }
-        Text {
+        BarText {
             text: root.pct
-            color: Theme.barFg
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.weight: Theme.fontWeight
-            font.hintingPreference: Font.PreferFullHinting
-            renderType: Text.NativeRendering
             anchors.verticalCenter: parent.verticalCenter
         }
     }

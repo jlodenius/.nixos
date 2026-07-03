@@ -2,8 +2,7 @@ import QtQuick
 import Quickshell
 import "."
 
-// Same layout as the old waybar: workspaces + minimap left, chat inbox
-// center, system widgets right.
+// Workspaces + minimap + chat inbox left, system widgets right.
 PanelWindow {
     id: bar
 
@@ -35,17 +34,6 @@ PanelWindow {
 
             Workspaces { output: bar.screen ? bar.screen.name : "" }
             Minimap { output: bar.screen ? bar.screen.name : "" }
-        }
-
-        Row {
-            id: centerGroup
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                top: parent.top
-                bottom: parent.bottom
-            }
-            spacing: 0
-
             Inbox {}
         }
 
