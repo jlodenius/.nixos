@@ -6,7 +6,11 @@
     # via out-of-store symlinks, so edits take effect immediately — no rebuild.
     # Format is "<label> <url>" per line; blank lines and '#' comments are
     # allowed (the launcher script strips them). See helium-launcher.sh.
-    home-manager.users.jacob = {config, ...}: {
+    home-manager.users.jacob = {
+      config,
+      pkgs,
+      ...
+    }: {
       xdg.configFile = {
         "helium-launcher/quickmarks".source =
           config.lib.file.mkOutOfStoreSymlink
@@ -14,6 +18,14 @@
         "helium-launcher/bookmarks".source =
           config.lib.file.mkOutOfStoreSymlink
           "${config.home.homeDirectory}/.nixos/modules/helium/_bookmarks";
+
+        # Widevine DRM (Netflix, Spotify, etc.). Helium is ungoogled-Chromium
+        # based, so no CDM ships and auto-download is disabled — provide it in
+        # the component layout Helium reads from its user-data dir.
+        "net.imput.helium/WidevineCdm/${pkgs.widevine-cdm.version}".source = "${pkgs.widevine-cdm}/share/google/chrome/WidevineCdm";
+        "net.imput.helium/WidevineCdm/latest-component-updated-widevine-cdm".text = builtins.toJSON {
+          Path = "${config.xdg.configHome}/net.imput.helium/WidevineCdm/${pkgs.widevine-cdm.version}";
+        };
       };
     };
 
