@@ -39,8 +39,7 @@ output "Dell Inc. DELL U2725QE 8JM6C34" {
 }
 
 spawn-at-startup "sh" "-c" "swaybg -i ~/.nixos/wallpapers/pixel_1.png -m fill"
-spawn-at-startup "waybar"
-spawn-at-startup "mako"
+spawn-at-startup "qs"
 spawn-at-startup "hyprpolkitagent"
 spawn-at-startup "vicinae" "server"
 spawn-at-startup "stockfin"
@@ -79,6 +78,10 @@ binds {
     Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh discord discord"; }
     Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh Slack slack"; }
     Mod+Backslash { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh teams-for-linux teams-for-linux"; }
+
+    // Notifications: one toast on screen jumps straight to it, else opens
+    // the quickshell notification picker.
+    Mod+I { spawn "qs" "ipc" "call" "--" "notification-jump" "showOrJump"; }
 
     // Window management
     Mod+Shift+Q { close-window; }

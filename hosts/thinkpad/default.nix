@@ -30,15 +30,13 @@ in {
       self.nixosModules.desktop
       self.nixosModules.nordvpn
       self.nixosModules.gaming
-      self.nixosModules.hyprland
       self.nixosModules.niri
       self.nixosModules.colours
       self.nixosModules.fuzzel
-      self.nixosModules.mako
+      self.nixosModules.quickshell
       self.nixosModules.ghostty
       self.nixosModules.yazi
       self.nixosModules.tmux
-      self.nixosModules.waybar
       self.nixosModules.helium
 
       # Unstable overlay
