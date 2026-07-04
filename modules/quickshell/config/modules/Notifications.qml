@@ -51,32 +51,46 @@ Singleton {
         onTriggered: root.startupSettled = true
     }
 
+    // Ids that arrived during DND: tracked as usual but their toast never shows.
+    property var mutedIds: ({})
+
     // Opening a message fires its default action, and quickshell deletes a
     // notification the instant its action is invoked. To keep the Mod+i center
     // a real history, retain its display data at that moment; the picker shows
     // tracked (live) ∪ retained.
-    property var retained: []      // newest-first: {id, app, summary}
+    property var retained: []      // newest-first: {id, app, summary, windowId}
     property int retainedGen: 0
-    function retain(id, app, summary) {
+    function retain(id, app, summary, windowId) {
         if (id === undefined) return
         root.retained = root.retained.filter(e => e.id !== id)
-        root.retained.unshift({ id: id, app: app || "", summary: summary || "" })
+        root.retained.unshift({ id: id, app: app || "", summary: summary || "", windowId: windowId || "" })
         if (root.retained.length > root.messageMax)
             root.retained = root.retained.slice(0, root.messageMax)
         root.retainedGen++
+    }
+
+    // The niri window a notification came from (set by the Claude Code hook
+    // as an int:niri-window hint); "" when absent.
+    function windowHint(n) {
+        const h = n && n.hints ? n.hints : ({})
+        return h["niri-window"] !== undefined ? String(h["niri-window"]) : ""
     }
 
     // Chat-app registry: the single source for name matching (notification
     // appNames and niri app_ids, matched exactly, lowercased), badge glyphs,
     // display names, and the niri-spawn-or-focus target. Consumed by Inbox
     // and NotificationJumpPicker.
+    // `transient` (Claude): one prompt per source window, cleared the moment
+    // you focus or jump to that window — never kept as history.
     readonly property var chatApps: ({
         slack:   { names: ["slack"],
                    glyph: "󰒱", pretty: "Slack", appId: "Slack", cmd: "slack" },
         discord: { names: ["discord", "vesktop"],
                    glyph: "󰙯", pretty: "Discord", appId: "discord", cmd: "discord" },
         teams:   { names: ["teams-for-linux", "microsoft teams", "teams"],
-                   glyph: "󰊻", pretty: "Teams", appId: "teams-for-linux", cmd: "teams-for-linux" }
+                   glyph: "󰊻", pretty: "Teams", appId: "teams-for-linux", cmd: "teams-for-linux" },
+        claude:  { names: ["claude code", "claude"],
+                   glyph: "󰚩", pretty: "Claude", transient: true }
     })
     function appKey(name) {
         const a = (name || "").toLowerCase()
@@ -91,10 +105,14 @@ Singleton {
         return !!(n && root.appKey(n.appName))
     }
 
-    // Conversation key: the desktop apps put the channel/sender in the summary,
+    // Conversation key: the chat apps put the channel/sender in the summary,
     // so app + summary identifies a conversation well enough for collapsing.
-    function _convKey(app, summary) {
-        return root.appKey(app) + "|" + (summary || "")
+    // Claude prompts are one-per-source-window instead.
+    function _convKey(app, summary, windowId) {
+        const key = root.appKey(app)
+        const a = root.chatApps[key]
+        if (a && a.transient) return key + "|" + (windowId || "")
+        return key + "|" + (summary || "")
     }
 
     // One entry per conversation: a new message supersedes earlier ones with
@@ -102,18 +120,18 @@ Singleton {
     // (already-opened) entry, so the center shows the latest line only.
     function _collapseConversation(n) {
         if (!n) return
-        const key = root._convKey(n.appName, n.summary)
+        const key = root._convKey(n.appName, n.summary, root.windowHint(n))
         const all = notifServer.trackedNotifications.values.slice()
         for (let i = 0; i < all.length; i++) {
             const o = all[i]
             if (!o || o.id === n.id) continue
-            if (root.isMessageApp(o) && root._convKey(o.appName, o.summary) === key) {
+            if (root.isMessageApp(o) && root._convKey(o.appName, o.summary, root.windowHint(o)) === key) {
                 delete root.seenIds[o.id]
                 o.dismiss()
             }
         }
         const before = root.retained.length
-        root.retained = root.retained.filter(e => root._convKey(e.app, e.summary) !== key)
+        root.retained = root.retained.filter(e => root._convKey(e.app, e.summary, e.windowId) !== key)
         if (root.retained.length !== before) root.retainedGen++
     }
 
@@ -133,19 +151,30 @@ Singleton {
         const _ = NiriState.version
         return NiriState.focusedAppId()
     }
+    // Includes the window id so moving between Claude terminals (even on the
+    // same workspace) re-runs the clear pass below.
     readonly property string focusedKey: {
         const _ = NiriState.version
-        return focusedApp + " " + NiriState.focusedWorkspaceName()
+        return focusedApp + " " + NiriState.focusedWorkspaceName() + " " + NiriState.focusedWindowId()
     }
 
     // Focusing a chat app's window marks its notifications read (they survive
-    // as history in the "earlier" group; only the badge clears).
+    // as history in the "earlier" group; only the badge clears). Focusing the
+    // window a Claude prompt came from clears that prompt entirely.
     onFocusedKeyChanged: {
-        const key = root.appKey(focusedApp)
-        if (!key) return
+        const fKey = root.appKey(focusedApp)
+        const fWin = String(NiriState.focusedWindowId())
         const all = notifServer.trackedNotifications.values.slice()
         for (let i = 0; i < all.length; i++) {
-            if (root.appKey(all[i].appName) === key) root.markSeen(all[i])
+            const n = all[i]
+            const key = root.appKey(n.appName)
+            if (!key) continue
+            if (root.chatApps[key].transient) {
+                const hint = root.windowHint(n)
+                if (hint && hint === fWin) { delete root.seenIds[n.id]; n.dismiss() }
+            } else if (key === fKey) {
+                root.markSeen(n)
+            }
         }
     }
 
@@ -160,6 +189,15 @@ Singleton {
         actionsSupported: true
 
         onNotification: notification => {
+            // DND: non-critical chat notifications track silently (badge +
+            // history, no toast — see mutedIds); everything else drops.
+            if (DndState.active && notification.urgency !== NotificationUrgency.Critical) {
+                if (!root.isMessageApp(notification)) {
+                    notification.dismiss()
+                    return
+                }
+                root.mutedIds[notification.id] = true
+            }
             delete root.seenIds[notification.id]
             root.liveIds[notification.id] = true
             notification.tracked = true

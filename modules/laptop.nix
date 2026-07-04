@@ -1,7 +1,8 @@
 {...}: {
   flake.nixosModules.laptop = {pkgs, ...}: {
-    # Don't suspend just because I closed the lid
-    services.logind.settings.Login.HandleLidSwitch = "ignore";
+    # Lid close suspends (swayidle locks first via before-sleep); with an
+    # external monitor attached, logind's HandleLidSwitchDocked=ignore applies.
+    services.logind.settings.Login.HandleLidSwitch = "suspend";
 
     # Battery management
     services.upower = {

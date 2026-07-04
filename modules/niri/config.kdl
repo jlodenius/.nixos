@@ -39,6 +39,7 @@ output "Dell Inc. DELL U2725QE 8JM6C34" {
 }
 
 spawn-at-startup "qs"
+spawn-at-startup "swayidle" "-w" "timeout" "600" "qs ipc call -- lock lock" "before-sleep" "qs ipc call -- lock lock" "lock" "qs ipc call -- lock lock"
 spawn-at-startup "hyprpolkitagent"
 spawn-at-startup "vicinae" "server"
 spawn-at-startup "stockfin"
@@ -158,6 +159,9 @@ binds {
 
     // Lock screen
     Mod+Escape { spawn "qs" "ipc" "call" "--" "lock" "lock"; }
+
+    // Do not disturb
+    Mod+Shift+D { spawn "qs" "ipc" "call" "--" "dnd" "toggle"; }
 
     // Media
     XF86AudioNext { spawn "playerctl" "next"; }

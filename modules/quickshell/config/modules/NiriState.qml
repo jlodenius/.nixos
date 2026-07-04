@@ -148,6 +148,14 @@ Singleton {
         return ""
     }
 
+    function focusedWindowId() {
+        const _ = version
+        for (const id in windows) {
+            if (windows[id].is_focused) return windows[id].id
+        }
+        return -1
+    }
+
     function focusedWorkspaceName() {
         const _ = version
         for (const id in workspaces) {

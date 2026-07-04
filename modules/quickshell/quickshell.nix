@@ -9,6 +9,7 @@
     environment.systemPackages = with pkgs; [
       quickshell
       libnotify # notify-send; the daemon is quickshell's NotificationServer
+      swayidle # drives the quickshell lock (idle timeout + before-sleep)
     ];
 
     # Auth backend for the quickshell lock screen (LockScreen.qml).

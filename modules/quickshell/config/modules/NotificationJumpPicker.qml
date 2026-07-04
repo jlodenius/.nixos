@@ -48,9 +48,18 @@ Picker {
         if (!item || item.divider) return
         NotificationJumpPickerState.open = false
         const n = item.notif   // live Notification, or null for a retained entry
+        const key = Notifications.appKey(item.app)
+        const app = Notifications.chatApps[key]
+        // Claude prompts clear on interact: jump to the source window, done.
+        if (app && app.transient) {
+            if (n) n.dismiss()
+            if (item.windowId)
+                Quickshell.execDetached(["niri", "msg", "action", "focus-window", "--id", item.windowId])
+            return
+        }
         // The open action deletes the live notification, so retain its display
         // data first (and mark it read) — it stays in the center as history.
-        Notifications.retain(item.id, item.app, item.summary)
+        Notifications.retain(item.id, item.app, item.summary, item.windowId)
         Notifications.markSeenById(item.id)
         // Fire the live default action if the app attached one (usually opens
         // the exact channel/thread). Only present while still live.
@@ -63,9 +72,7 @@ Picker {
         // Focus the app's window (or launch it) — unless it's already focused:
         // spawn-or-focus would then cycle to the app's NEXT window, moving
         // focus away from the thread the default action just opened.
-        const key = Notifications.appKey(item.app)
-        const app = Notifications.chatApps[key]
-        if (app && Notifications.appKey(NiriState.focusedAppId()) !== key) {
+        if (app && app.appId && Notifications.appKey(NiriState.focusedAppId()) !== key) {
             Quickshell.execDetached(["sh", "-c",
                 Quickshell.env("HOME") + "/.config/niri/scripts/niri-spawn-or-focus.sh "
                 + app.appId + " " + app.cmd])
@@ -76,6 +83,7 @@ Picker {
         const app = Notifications.chatApps[Notifications.appKey(n.appName)]
         return {
             id: n.id, notif: n, app: n.appName || "", summary: n.summary || "",
+            windowId: Notifications.windowHint(n),
             label: n.summary || n.appName || "notification",
             glyph: app ? app.glyph : "", glyphColor: Theme.accent,
             sub: app ? app.pretty : (n.appName || ""),
@@ -86,6 +94,7 @@ Picker {
         const app = Notifications.chatApps[Notifications.appKey(e.app)]
         return {
             id: e.id, notif: null, app: e.app, summary: e.summary,
+            windowId: e.windowId || "",
             label: e.summary || e.app || "notification",
             glyph: app ? app.glyph : "", glyphColor: Theme.accent,
             sub: app ? app.pretty : e.app,

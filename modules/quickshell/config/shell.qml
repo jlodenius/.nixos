@@ -29,4 +29,5 @@ ShellRoot {
     HeliumPicker {}
     Osd {}
     LockScreen {}
+    BatteryAlert {}
 }

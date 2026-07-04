@@ -47,6 +47,7 @@ PanelWindow {
             }
             spacing: 0
 
+            Dnd {}
             Stockfin {}
             Network {}
             Audio {}

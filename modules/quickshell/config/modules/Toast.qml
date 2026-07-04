@@ -28,7 +28,7 @@ Rectangle {
     // Never flash a toast for one that's already seen (arrived while focused on
     // its source) or restored across a quickshell reload (isSeen covers the
     // restored case: ids absent from liveIds count as seen).
-    Component.onCompleted: { shown = true; if (Notifications.isSeen(notification) || !Notifications.startupSettled) collapsed = true }
+    Component.onCompleted: { shown = true; if (Notifications.isSeen(notification) || !Notifications.startupSettled || (notification && Notifications.mutedIds[notification.id])) collapsed = true }
 
     Connections {
         target: Notifications
