@@ -18,9 +18,14 @@
                         *permission*)
                           # Walk up the process tree to the ancestor that owns a
                           # niri window (the terminal), so quickshell can jump to
-                          # and auto-clear this prompt per session.
+                          # and auto-clear this prompt per session. Inside tmux
+                          # the ancestry dead-ends at the server, so start from
+                          # the attached client instead — it lives in the terminal.
                           win=""
                           pid=$$
+                          if [ -n "$TMUX" ]; then
+                            pid=$(${pkgs.tmux}/bin/tmux display-message -p '#{client_pid}' 2>/dev/null || echo $$)
+                          fi
                           while [ -n "$pid" ] && [ "$pid" -gt 1 ]; do
                             win=$(${pkgs.niri}/bin/niri msg -j windows 2>/dev/null \
                               | ${pkgs.jq}/bin/jq -r --argjson p "$pid" '[.[] | select(.pid == $p)][0].id // empty')

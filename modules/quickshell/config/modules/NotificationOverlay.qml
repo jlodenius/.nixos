@@ -25,11 +25,12 @@ PanelWindow {
     margins.top: 8
     margins.right: Theme.toastMargin
 
-    // Gated on rendered toast content, NOT on the focused output — flipping
-    // visibility per-screen on focus changes churns the layer-shell window.
-    // Collapsed history-only state hides the window entirely so it can't
-    // swallow clicks as an invisible strip.
-    visible: toastColumn.implicitHeight > 0
+    // Gated on tracked notifications, NOT on the column's rendered height —
+    // a hidden window never runs layout, so height-gated visibility deadlocks
+    // at zero. Input is masked to the toast column instead: with everything
+    // collapsed the window is mapped but fully click-through.
+    visible: Notifications.tracked.values.length > 0
+    mask: Region { item: toastColumn }
 
     implicitWidth: 380
     implicitHeight: Math.max(toastColumn.implicitHeight + 16, 1)
