@@ -5,7 +5,15 @@ import "modules"
 ShellRoot {
     id: root
 
-    // One bar per monitor; Variants reconciles when monitors come and go.
+    // One wallpaper + bar per monitor; Variants reconciles when monitors
+    // come and go.
+    Variants {
+        model: Quickshell.screens
+        Wallpaper {
+            required property var modelData
+            screen: modelData
+        }
+    }
     Variants {
         model: Quickshell.screens
         Bar {
@@ -19,4 +27,6 @@ ShellRoot {
 
     NotificationJumpPicker {}
     HeliumPicker {}
+    Osd {}
+    LockScreen {}
 }

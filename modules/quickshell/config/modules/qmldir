@@ -13,6 +13,10 @@ Picker 1.0 Picker.qml
 NotificationJumpPicker 1.0 NotificationJumpPicker.qml
 singleton HeliumPickerState 1.0 HeliumPickerState.qml
 HeliumPicker 1.0 HeliumPicker.qml
+singleton LockState 1.0 LockState.qml
+LockScreen 1.0 LockScreen.qml
+Wallpaper 1.0 Wallpaper.qml
+Osd 1.0 Osd.qml
 Stockfin 1.0 Stockfin.qml
 Network 1.0 Network.qml
 Audio 1.0 Audio.qml

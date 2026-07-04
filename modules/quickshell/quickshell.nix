@@ -11,6 +11,9 @@
       libnotify # notify-send; the daemon is quickshell's NotificationServer
     ];
 
+    # Auth backend for the quickshell lock screen (LockScreen.qml).
+    security.pam.services.quickshell = {};
+
     home-manager.users.jacob = {config, ...}: {
       xdg.configFile."quickshell".source =
         config.lib.file.mkOutOfStoreSymlink

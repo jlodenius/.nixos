@@ -38,7 +38,6 @@ output "Dell Inc. DELL U2725QE 8JM6C34" {
     scale 1
 }
 
-spawn-at-startup "sh" "-c" "swaybg -i ~/.nixos/wallpapers/pixel_1.png -m fill"
 spawn-at-startup "qs"
 spawn-at-startup "hyprpolkitagent"
 spawn-at-startup "vicinae" "server"
@@ -153,9 +152,12 @@ binds {
     XF86AudioMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-    // Brightness
-    XF86MonBrightnessUp { spawn "brightnessctl" "s" "10%+"; }
-    XF86MonBrightnessDown { spawn "brightnessctl" "s" "10%-"; }
+    // Brightness (via quickshell so the OSD shows the new level)
+    XF86MonBrightnessUp { spawn "qs" "ipc" "call" "--" "osd" "brightness" "10%+"; }
+    XF86MonBrightnessDown { spawn "qs" "ipc" "call" "--" "osd" "brightness" "10%-"; }
+
+    // Lock screen
+    Mod+Escape { spawn "qs" "ipc" "call" "--" "lock" "lock"; }
 
     // Media
     XF86AudioNext { spawn "playerctl" "next"; }

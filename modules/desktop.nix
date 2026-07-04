@@ -63,7 +63,6 @@
     # Security for GUI session
     services.gnome.gnome-keyring.enable = true;
     security.polkit.enable = true;
-    security.pam.services.swaylock = {};
 
     # Enable kernel keyring for login sessions (needed for bitwarden CLI session caching)
     security.pam.services.login.enableGnomeKeyring = true;
@@ -155,8 +154,6 @@
         grim
         slurp
         hyprpolkitagent
-        swaybg
-        swaylock
 
         # CLI utils
         fd

@@ -61,6 +61,8 @@ Singleton {
     readonly property color barFg: "#FFFFFF"
     readonly property int modulePadH: 12
 
+    readonly property string wallpaper: Quickshell.env("HOME") + "/.nixos/wallpapers/pixel_1.png"
+
     // Exact fontconfig family name — Qt does not fuzzy-match.
     readonly property string fontFamily: "GeistMono Nerd Font Propo"
     readonly property int fontSize: 15
