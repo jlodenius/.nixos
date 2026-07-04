@@ -91,24 +91,6 @@ Singleton {
         return !!(n && root.appKey(n.appName))
     }
 
-    // Which notification ids are showing as toasts right now, reported by the
-    // Toast delegates. Lets Mod+i jump straight to a lone on-screen toast.
-    property var visibleToastIds: ({})
-    function setToastVisible(id, vis) {
-        if (id === undefined || id === null || id === 0) return
-        const m = root.visibleToastIds
-        if (!!m[id] === !!vis) return
-        if (vis) m[id] = true; else delete m[id]
-        root.visibleToastIds = m
-    }
-    function visibleMessageToasts() {
-        const out = []
-        const all = notifServer.trackedNotifications.values
-        for (let i = 0; i < all.length; i++)
-            if (root.visibleToastIds[all[i].id] && root.isMessageApp(all[i])) out.push(all[i])
-        return out
-    }
-
     // Conversation key: the desktop apps put the channel/sender in the summary,
     // so app + summary identifies a conversation well enough for collapsing.
     function _convKey(app, summary) {

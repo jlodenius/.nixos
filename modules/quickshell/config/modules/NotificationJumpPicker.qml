@@ -29,13 +29,17 @@ Picker {
     // its Enter handling calls; shadowing it breaks Enter inside the picker.
     onEnter: item => root.openItem(item)
 
-    // Mod+i (showOrJump): exactly one toast on screen → act on it directly,
-    // no picker round-trip; zero or several → the picker as usual.
+    // Mod+i (showOrJump): exactly one unread notification → act on it
+    // directly, no picker round-trip; zero or several → the picker as usual.
     Connections {
         target: NotificationJumpPickerState
         function onJumpRequested() {
-            const vis = Notifications.visibleMessageToasts()
-            if (vis.length === 1) root.openItem(root.mkItemLive(vis[0]))
+            const all = Notifications.tracked.values
+            const unseen = []
+            for (let i = 0; i < all.length; i++)
+                if (Notifications.isMessageApp(all[i]) && !Notifications.isSeenId(all[i].id))
+                    unseen.push(all[i])
+            if (unseen.length === 1) root.openItem(root.mkItemLive(unseen[0]))
             else NotificationJumpPickerState.open = true
         }
     }

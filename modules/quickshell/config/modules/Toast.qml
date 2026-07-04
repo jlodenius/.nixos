@@ -13,13 +13,6 @@ Rectangle {
     property bool dismissing: false
     property bool collapsed: false
 
-    // Report on-screen state (for Mod+i's jump-to-lone-toast). The id is
-    // captured up front — the Notification object may be gone at destruction.
-    property int notifId: 0
-    readonly property bool onScreen: shown && !dismissing && !collapsed
-    onOnScreenChanged: Notifications.setToastVisible(notifId, onScreen)
-    Component.onDestruction: Notifications.setToastVisible(notifId, false)
-
     opacity: (shown && !dismissing && !collapsed) ? 1 : 0
     Behavior on opacity { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
 
@@ -35,7 +28,7 @@ Rectangle {
     // Never flash a toast for one that's already seen (arrived while focused on
     // its source) or restored across a quickshell reload (isSeen covers the
     // restored case: ids absent from liveIds count as seen).
-    Component.onCompleted: { notifId = notification ? (notification.id || 0) : 0; shown = true; if (Notifications.isSeen(notification) || !Notifications.startupSettled) collapsed = true }
+    Component.onCompleted: { shown = true; if (Notifications.isSeen(notification) || !Notifications.startupSettled) collapsed = true }
 
     Connections {
         target: Notifications
