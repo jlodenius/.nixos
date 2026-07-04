@@ -100,6 +100,19 @@ WlSessionLock {
                         color: Theme.fg
                         opacity: 0.7
                     }
+                    Keys.onPressed: event => {
+                        if (event.key === Qt.Key_W && (event.modifiers & Qt.ControlModifier)) {
+                            // Delete word before cursor (vim style).
+                            const pos = password.cursorPosition
+                            const t = password.text
+                            let i = pos
+                            while (i > 0 && /\s/.test(t[i - 1])) i--
+                            while (i > 0 && !/\s/.test(t[i - 1])) i--
+                            password.text = t.slice(0, i) + t.slice(pos)
+                            password.cursorPosition = i
+                            event.accepted = true
+                        }
+                    }
                     onTextEdited: surface.failed = false
                     onAccepted: pam.start()
                 }
