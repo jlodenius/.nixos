@@ -1,5 +1,5 @@
 import QtQuick
-import "."
+import ".."
 
 // Bell-off indicator while do-not-disturb is active; click toggles it off.
 Item {

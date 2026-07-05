@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
-import "."
+import ".."
 
 // Default sink volume; muted red, click → pavucontrol, scroll ±1%.
 Item {

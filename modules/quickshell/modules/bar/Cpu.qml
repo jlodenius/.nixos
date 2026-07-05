@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import "."
+import ".."
 
 // CPU usage; warning ≥70 yellow, critical ≥90 red.
 Item {

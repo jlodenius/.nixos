@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import "."
+import ".."
 
 // Polls the stockfin D-Bus StatusJson property, colors by bullish/bearish
 // class, click activates.

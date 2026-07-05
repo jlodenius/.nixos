@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
-import "."
+import ".."
 
 // Battery percentage; warning ≤30 yellow, critical ≤15 red.
 Item {

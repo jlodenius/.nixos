@@ -18,7 +18,7 @@
     home-manager.users.jacob = {config, ...}: {
       xdg.configFile."quickshell".source =
         config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/.nixos/modules/quickshell/config";
+        "${config.home.homeDirectory}/.nixos/modules/quickshell";
 
       # Palette single-source: colours.nix → JSON consumed by Theme.qml.
       xdg.dataFile."quickshell/colours.json".text = builtins.toJSON colours;

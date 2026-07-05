@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import "."
+import ".."
 
 // Wifi SSID / wired / disconnected (red).
 Item {

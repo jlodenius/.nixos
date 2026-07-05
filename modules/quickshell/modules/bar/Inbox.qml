@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import "."
+import ".."
 
 // Unseen chat notification badges, ordered by arrival; apps without unseen
 // notifications take no space, and the app you're focused on is suppressed.

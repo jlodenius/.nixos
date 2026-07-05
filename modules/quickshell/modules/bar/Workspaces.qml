@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import "."
+import ".."
 
 // niri workspaces on this output; active one white, rest subtle.
 Item {

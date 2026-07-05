@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import "."
+import ".."
 
 // CPU temperature; critical ≥80 red.
 Item {

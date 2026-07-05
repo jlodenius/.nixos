@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import "."
+import ".."
 
 // Workspaces + minimap + chat inbox left, system widgets right.
 PanelWindow {

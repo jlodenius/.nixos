@@ -1,5 +1,5 @@
 import QtQuick
-import "."
+import ".."
 
 // Shared text style for bar modules; override color/size per use.
 Text {

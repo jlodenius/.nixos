@@ -60,16 +60,20 @@ PanelWindow {
         const q = query.trim().toLowerCase()
         if (q.length === 0) return items
         // While searching, drop section dividers — they're only meaningful
-        // in the unfiltered, grouped view.
-        const out = []
+        // in the unfiltered, grouped view. Rank: label prefix > label
+        // substring > subtitle (URL) substring, so a label match always
+        // beats an incidental URL match.
+        const pre = [], mid = [], sub = []
         for (let i = 0; i < items.length; i++) {
             const it = items[i]
             if (it.divider) continue
             const label = String(it.label || "").toLowerCase()
-            const sub = subtitleField && it[subtitleField] ? String(it[subtitleField]).toLowerCase() : ""
-            if (label.indexOf(q) >= 0 || (sub && sub.indexOf(q) >= 0)) out.push(it)
+            const subText = subtitleField && it[subtitleField] ? String(it[subtitleField]).toLowerCase() : ""
+            if (label.startsWith(q)) pre.push(it)
+            else if (label.indexOf(q) >= 0) mid.push(it)
+            else if (subText && subText.indexOf(q) >= 0) sub.push(it)
         }
-        return out
+        return pre.concat(mid, sub)
     }
 
     // Move selection by `dir`, skipping non-selectable divider rows.

@@ -1,5 +1,5 @@
 import QtQuick
-import "."
+import ".."
 
 // Horizontal overview of the active workspace only: one thin bar per window
 // column, the focused window taller and accent-colored. The vertical
