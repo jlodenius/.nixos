@@ -3,6 +3,7 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Pam
+import Quickshell.Services.UPower
 import "."
 
 // Session lock (ext-session-lock): blurred wallpaper, clock, and a minimal
@@ -128,6 +129,41 @@ WlSessionLock {
                     radius: 1
                     color: Theme.red
                 }
+            }
+        }
+
+        Row {
+            id: batteryRow
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 36
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 8
+            visible: UPower.displayDevice && UPower.displayDevice.isPresent
+
+            readonly property real pct: UPower.displayDevice ? UPower.displayDevice.percentage * 100 : 0
+            readonly property bool charging: UPower.displayDevice
+                && (UPower.displayDevice.state === UPowerDeviceState.Charging
+                    || UPower.displayDevice.state === UPowerDeviceState.FullyCharged)
+
+            Text {
+                text: {
+                    if (batteryRow.charging) return ""
+                    const buckets = ["", "", "", "", ""]
+                    return buckets[Math.min(4, Math.max(0, Math.floor(batteryRow.pct / 20)))]
+                }
+                color: !batteryRow.charging && batteryRow.pct <= 15 ? Theme.red : Theme.fg_muted
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.fontSize - 1
+                renderType: Text.NativeRendering
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Text {
+                text: Math.round(batteryRow.pct) + "%"
+                color: Theme.fg_muted
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.fontSize - 1
+                renderType: Text.NativeRendering
+                anchors.verticalCenter: parent.verticalCenter
             }
         }
 
