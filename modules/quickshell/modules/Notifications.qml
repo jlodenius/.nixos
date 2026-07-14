@@ -89,6 +89,8 @@ Singleton {
                    glyph: "󰙯", pretty: "Discord", appId: "discord", cmd: "discord" },
         teams:   { names: ["teams-for-linux", "microsoft teams", "teams"],
                    glyph: "󰊻", pretty: "Teams", appId: "teams-for-linux", cmd: "teams-for-linux" },
+        mlqs:    { names: ["mlqs", "org.quickshell"],
+                   glyph: "󰇮", pretty: "Mail", appId: "org.quickshell", cmd: "mlqs-client" },
         claude:  { names: ["claude code", "claude"],
                    glyph: "󰚩", pretty: "Claude", transient: true }
     })

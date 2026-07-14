@@ -23,6 +23,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    mlqs = {
+      url = "github:daphen/mlqs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
