@@ -20,16 +20,18 @@
   #        → Credentials → OAuth client ID → Desktop app → download JSON
   #      See the upstream README section "Google OAuth" for the full walkthrough.
   #
-  #   2. Authorize the account (opens a browser consent tab):
-  #        mlqs auth gmail
-  #      Writes ~/.local/share/mlqs/tokens/gmail.json. The daemon refreshes
-  #      and rewrites this file at runtime — that's why it can't be nix-managed.
+  #   2. Authorize each account (opens a browser consent tab):
+  #        mlqs auth gmail        # Gmail  (needs google.json from step 1)
+  #        mlqs auth sis          # Outlook (client_id is in accounts.json — no
+  #                               #  google.json; the SIS app reg is "jacob-test")
+  #      Writes ~/.local/share/mlqs/tokens/<name>.json. The daemon refreshes
+  #      and rewrites these at runtime — that's why they can't be nix-managed.
   #
   # ── Pure runtime, ignore (regenerable cache) ─────────────────────────
   #   ~/.local/share/mlqs/cache.db*   ~/.cache/mlqs/*
   #
   # ── New-machine bootstrap, in order ──────────────────────────────────
-  #   rebuild  →  drop in google.json (step 1)  →  `mlqs auth gmail`  →  done
+  #   rebuild  →  google.json (step 1)  →  `mlqs auth gmail` + `mlqs auth sis`
   flake.nixosModules.mlqs = {pkgs, ...}: {
     environment.systemPackages = let
       inherit (pkgs.stdenv.hostPlatform) system;
@@ -46,6 +48,14 @@
             vendor = "gmail";
             email = "jacoblodenius@gmail.com";
             credentials_file = "${config.home.homeDirectory}/.config/mlqs/google.json";
+          }
+          {
+            # Outlook uses a public PKCE client_id (not a secret) — safe to keep
+            # here in plaintext. App registration "jacob-test" in the SIS tenant.
+            name = "sis";
+            vendor = "outlook";
+            email = "jacob.lodenius@sis.se";
+            client_id = "122131d3-4fe7-4ca7-9853-c920caf4a60f";
           }
         ];
       };
