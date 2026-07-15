@@ -70,14 +70,14 @@ binds {
     Mod+Space { spawn "vicinae" "toggle"; }
     Mod+E { spawn "ghostty" "--class=yazi-term" "-e" "yazi"; }
     Mod+O hotkey-overlay-title="Helium launcher" { spawn "qs" "ipc" "call" "--" "helium-picker" "toggle"; }
-    Mod+T { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh com.mitchellh.ghostty ghostty"; }
+    Mod+T { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh com.mitchellh.ghostty ghostty"; }
     Mod+Shift+T { spawn "ghostty"; }
-    Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh helium helium"; }
+    Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh helium helium"; }
     Mod+Shift+B { spawn "helium"; }
-    Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh org.quickshell mlqs-client"; }
-    Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh discord discord"; }
-    Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh Slack slack"; }
-    Mod+Backslash { spawn "sh" "-c" "~/.config/niri/scripts/niri-spawn-or-focus.sh teams-for-linux teams-for-linux"; }
+    Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh title:mail-client mlqs-client"; }
+    Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh discord discord"; }
+    Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh Slack slack"; }
+    Mod+Backslash { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh teams-for-linux teams-for-linux"; }
 
     // Notifications: one toast on screen jumps straight to it, else opens
     // the quickshell notification picker.

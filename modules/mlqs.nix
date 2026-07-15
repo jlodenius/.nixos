@@ -56,6 +56,9 @@
             vendor = "outlook";
             email = "jacob.lodenius@sis.se";
             client_id = "122131d3-4fe7-4ca7-9853-c920caf4a60f";
+            # Pin auth to the SIS tenant so sign-in can never route to the
+            # consumer/personal-account flow.
+            tenant = "59176df8-78c5-4eb6-aa88-4f0778ef5cb0";
           }
         ];
       };

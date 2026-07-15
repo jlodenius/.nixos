@@ -78,7 +78,7 @@ Singleton {
 
     // Chat-app registry: the single source for name matching (notification
     // appNames and niri app_ids, matched exactly, lowercased), badge glyphs,
-    // display names, and the niri-spawn-or-focus target. Consumed by Inbox
+    // display names, and the niri-jump-or-exec target. Consumed by Inbox
     // and NotificationJumpPicker.
     // `transient` (Claude): one prompt per source window, cleared the moment
     // you focus or jump to that window — never kept as history.
@@ -90,7 +90,10 @@ Singleton {
         teams:   { names: ["teams-for-linux", "microsoft teams", "teams"],
                    glyph: "󰊻", pretty: "Teams", appId: "teams-for-linux", cmd: "teams-for-linux" },
         mlqs:    { names: ["mlqs", "org.quickshell"],
-                   glyph: "󰇮", pretty: "Mail", appId: "org.quickshell", cmd: "mlqs-client" },
+                   glyph: "󰇮", pretty: "Mail", appId: "org.quickshell",
+                   // mlqs shares the org.quickshell app_id with the bar/pickers,
+                   // so focus by its unique window title instead of the app_id.
+                   jump: "title:mail-client", cmd: "mlqs-client" },
         claude:  { names: ["claude code", "claude"],
                    glyph: "󰚩", pretty: "Claude", transient: true }
     })

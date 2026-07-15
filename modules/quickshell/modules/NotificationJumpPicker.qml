@@ -73,9 +73,11 @@ Picker {
         // spawn-or-focus would then cycle to the app's NEXT window, moving
         // focus away from the thread the default action just opened.
         if (app && app.appId && Notifications.appKey(NiriState.focusedAppId()) !== key) {
-            Quickshell.execDetached(["sh", "-c",
-                Quickshell.env("HOME") + "/.config/niri/scripts/niri-spawn-or-focus.sh "
-                + app.appId + " " + app.cmd])
+            const scripts = Quickshell.env("HOME") + "/.config/niri/scripts/"
+            // mlqs shares the org.quickshell app_id, so it matches by window
+            // title (app.jump); the rest match app_id directly.
+            const matcher = app.jump || app.appId
+            Quickshell.execDetached(["sh", "-c", scripts + "niri-jump-or-exec.sh " + matcher + " " + app.cmd])
         }
     }
 
