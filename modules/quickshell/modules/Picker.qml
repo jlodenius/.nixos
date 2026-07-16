@@ -22,8 +22,7 @@ PanelWindow {
     property string glyphField: ""
     property string glyphColorField: ""
     property var onEnter: function(item) {}
-    // Optional Ctrl+R handler for the selected row; picker stays open so you
-    // can act on several in a row.
+    // Optional Ctrl+R handler for the selected row; picker stays open.
     property var onCtrlR: null
     property var onEnterText: null
     property bool freeText: false

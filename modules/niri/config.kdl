@@ -65,6 +65,11 @@ window-rule {
     clip-to-geometry true
 }
 
+window-rule {
+    match title="^mail-client$"
+    open-floating true
+}
+
 binds {
     // Programs & Navigation
     Mod+Space { spawn "vicinae" "toggle"; }
@@ -146,6 +151,10 @@ binds {
     // Screenshots
     Mod+P { spawn "sh" "-c" "path=~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png; grim \"$path\" && cat \"$path\" | wl-copy"; }
     Mod+Shift+P { spawn "sh" "-c" "geom=\"$(slurp -w 0)\"; path=~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png; grim -g \"$geom\" \"$path\" && cat \"$path\" | wl-copy"; }
+
+    // Screen recording (same key stops)
+    Mod+Shift+R { spawn "sh" "-c" "~/.config/niri/scripts/record-toggle.sh region"; }
+    Mod+Ctrl+Shift+R { spawn "sh" "-c" "~/.config/niri/scripts/record-toggle.sh screen"; }
 
     // Volume
     XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+"; }

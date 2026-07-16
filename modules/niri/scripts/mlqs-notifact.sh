@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Re-dispatch a mail notification's action over the mlqs daemon socket, for
-# history entries whose live D-Bus notification is already gone. The daemon
-# keeps each notification's deep-link keyed by server id.
+# history entries whose live D-Bus notification is gone.
 # usage: mlqs-notifact.sh <notification-id> [default|read]
 [ -n "$1" ] || exit 1
 python3 - "$1" "${2:-default}" << 'EOF'

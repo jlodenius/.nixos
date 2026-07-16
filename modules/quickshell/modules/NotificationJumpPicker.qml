@@ -29,17 +29,14 @@ Picker {
     // its Enter handling calls; shadowing it breaks Enter inside the picker.
     onEnter: item => root.openItem(item)
 
-    // Ctrl+R: clear a notification without visiting the app. Mail also fires
-    // the daemon's server-side "read" action (the live action, or over the
-    // socket for history entries whose notification is gone), so the email is
-    // marked read in mlqs too. Picker stays open — mark several in a row.
+    // Ctrl+R: mark read without visiting; mail also fires the daemon's
+    // server-side read action (live, or over the socket for history entries).
     onCtrlR: item => root.markRead(item)
     function markRead(item) {
         if (!item || item.divider) return
         const n = item.notif
         if (Notifications.appKey(item.app) === "mlqs") {
-            // Firing the read action deletes the live notification, so snapshot
-            // it first — it stays in the center under "earlier", same as a jump.
+            // read action deletes the live notification — snapshot it first.
             Notifications.retain(item.id, item.app, item.summary, item.windowId)
             let fired = false
             if (n && n.actions) {
@@ -54,8 +51,7 @@ Picker {
         Notifications.markSeenById(item.id)
     }
 
-    // Mod+i always opens the picker — even for a single notification — so you
-    // choose whether to jump now (which clears it) or leave it for later.
+    // Mod+i always opens the picker, even for a single notification.
     Connections {
         target: NotificationJumpPickerState
         function onJumpRequested() { NotificationJumpPickerState.open = true }

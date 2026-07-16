@@ -153,6 +153,7 @@
         bluetuith
         grim
         slurp
+        wf-recorder
         hyprpolkitagent
 
         # CLI utils
