@@ -84,7 +84,7 @@ Singleton {
     // you focus or jump to that window — never kept as history.
     readonly property var chatApps: ({
         slack:   { names: ["slack"],
-                   glyph: "󰒱", pretty: "Slack", appId: "Slack", cmd: "slack" },
+                   glyph: "󰒱", pretty: "Slack", appId: "slack", cmd: "slack" },
         discord: { names: ["discord", "vesktop"],
                    glyph: "󰙯", pretty: "Discord", appId: "discord", cmd: "discord" },
         teams:   { names: ["teams-for-linux", "microsoft teams", "teams"],

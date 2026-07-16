@@ -22,6 +22,9 @@ PanelWindow {
     property string glyphField: ""
     property string glyphColorField: ""
     property var onEnter: function(item) {}
+    // Optional Ctrl+R handler for the selected row; picker stays open so you
+    // can act on several in a row.
+    property var onCtrlR: null
     property var onEnterText: null
     property bool freeText: false
 
@@ -93,6 +96,14 @@ PanelWindow {
         if (item && item.divider) return
         onEnter(item)
         closeRequested()
+    }
+
+    function ctrlR() {
+        if (!onCtrlR || filtered.length === 0) return
+        const idx = Math.max(0, Math.min(selectedIndex, filtered.length - 1))
+        const item = filtered[idx]
+        if (item && item.divider) return
+        onCtrlR(item)
     }
 
     function submitText() {
@@ -222,6 +233,9 @@ PanelWindow {
                         } else if (event.key === Qt.Key_Up
                                 || (event.key === Qt.Key_K && (event.modifiers & Qt.ControlModifier))) {
                             root.step(-1)
+                            event.accepted = true
+                        } else if (event.key === Qt.Key_R && (event.modifiers & Qt.ControlModifier)) {
+                            root.ctrlR()
                             event.accepted = true
                         } else if (event.key === Qt.Key_W && (event.modifiers & Qt.ControlModifier)) {
                             // Delete word before cursor (vim style).
