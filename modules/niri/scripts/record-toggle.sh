@@ -15,8 +15,8 @@ if pgrep -x wf-recorder >/dev/null; then
     sleep 0.3
     latest=$(ls -t "$OUT_DIR"/*.mp4 2>/dev/null | head -1)
     if [ -n "$latest" ]; then
-        printf '%s' "$latest" | wl-copy
-        notify-send -a "screen-recorder" "Recording stopped" "$latest (path copied)"
+        wl-copy -t text/uri-list "file://$latest"
+        notify-send -a "screen-recorder" "Recording stopped" "$latest (file copied)"
     else
         notify-send -a "screen-recorder" "Recording stopped"
     fi
