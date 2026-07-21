@@ -181,6 +181,13 @@ Singleton {
                 root.markSeen(n)
             }
         }
+        // Retained entries have no live notification to walk above — mark the
+        // focused app's snapshots seen too (Teams retracts early, see retain).
+        if (fKey) {
+            for (let i = 0; i < root.retained.length; i++)
+                if (root.appKey(root.retained[i].app) === fKey)
+                    root.markSeenById(root.retained[i].id)
+        }
     }
 
     NotificationServer {
@@ -210,8 +217,16 @@ Singleton {
             // re-fired by keepOnReload, not genuinely new — mark them seen so
             // they land in "earlier"/off the badge.
             if (!root.startupSettled) root.markSeenById(notification.id)
-            if (root.isMessageApp(notification))
+            if (root.isMessageApp(notification)) {
                 root._collapseConversation(notification)
+                // Snapshot at arrival: some apps (Teams) retract their own
+                // notification seconds later; the retained copy keeps it in
+                // the center. Transient (Claude) prompts are never history.
+                const key = root.appKey(notification.appName)
+                if (!root.chatApps[key].transient)
+                    root.retain(notification.id, notification.appName,
+                                notification.summary, root.windowHint(notification))
+            }
             root.enforceCap()
         }
     }
@@ -269,7 +284,10 @@ Singleton {
         function dismissAll(): string {
             const all = notifServer.trackedNotifications.values.slice()
             for (let i = 0; i < all.length; i++) all[i].dismiss()
-            return "dismissed " + all.length
+            const count = all.length + root.retained.length
+            root.retained = []
+            root.retainedGen++
+            return "dismissed " + count
         }
     }
 }
