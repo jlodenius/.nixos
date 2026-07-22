@@ -6,6 +6,12 @@
         package = pkgs.unstable.claude-code;
         settings = {
           alwaysThinkingEnabled = true;
+          statusLine = {
+            type = "command";
+            command = ''
+              ${pkgs.jq}/bin/jq -r '"\(.model.display_name)  \(.workspace.current_dir | sub("^"+env.HOME;"~"))  ctx \((.context_window.total_input_tokens // 0) / 1000 | floor)k"'
+            '';
+          };
           hooks = {
             Notification = [
               {
