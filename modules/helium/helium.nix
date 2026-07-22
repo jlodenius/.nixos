@@ -23,8 +23,13 @@
         # based, so no CDM ships and auto-download is disabled — provide it in
         # the component layout Helium reads from its user-data dir.
         "net.imput.helium/WidevineCdm/${pkgs.widevine-cdm.version}".source = "${pkgs.widevine-cdm}/share/google/chrome/WidevineCdm";
-        "net.imput.helium/WidevineCdm/latest-component-updated-widevine-cdm".text = builtins.toJSON {
-          Path = "${config.xdg.configHome}/net.imput.helium/WidevineCdm/${pkgs.widevine-cdm.version}";
+        "net.imput.helium/WidevineCdm/latest-component-updated-widevine-cdm" = {
+          # Helium rewrites this at runtime; without force the backup collides
+          # with itself on the second clobber and activation fails.
+          force = true;
+          text = builtins.toJSON {
+            Path = "${config.xdg.configHome}/net.imput.helium/WidevineCdm/${pkgs.widevine-cdm.version}";
+          };
         };
       };
     };

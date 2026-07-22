@@ -48,6 +48,13 @@
           This is a NixOS system. LSPs are managed declaratively through Nix and
           bundled into the neovim wrapper. Do NOT suggest installing language servers
           — they are already available in the editor.
+
+          # Comments
+          Default to writing NO comments. Never comment self-explanatory code —
+          if the line already says what it does, the comment is bloat. Only
+          write one when it genuinely adds value: non-obvious rationale, a
+          workaround, a subtle constraint that isn't visible in the code. When
+          in doubt, leave it out.
         '';
       };
     };
