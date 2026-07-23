@@ -1,5 +1,8 @@
 {...}: {
-  flake.nixosModules.claude = {...}: {
+  flake.nixosModules.claude = {config, ...}: let
+    y = config.colours.yellow;
+    hexBytes = "0x${builtins.substring 1 2 y} 0x${builtins.substring 3 2 y} 0x${builtins.substring 5 2 y}";
+  in {
     home-manager.users.jacob = {pkgs, ...}: {
       programs.claude-code = {
         enable = true;
@@ -9,7 +12,8 @@
           statusLine = {
             type = "command";
             command = ''
-              ${pkgs.jq}/bin/jq -r '"\(.model.display_name)  \(.workspace.current_dir | sub("^"+env.HOME;"~"))  ctx \((.context_window.total_input_tokens // 0) / 1000 | floor)k"'
+              rgb=$(printf '%d;%d;%d' ${hexBytes})
+              ${pkgs.jq}/bin/jq -r --arg rgb "$rgb" '"\u001b[38;2;\($rgb)m\(.model.display_name)  \(.workspace.current_dir | sub("^"+env.HOME;"~"))  ctx: \((.context_window.total_input_tokens // 0) / 1000 | floor)k\u001b[0m"'
             '';
           };
           hooks = {
