@@ -9,6 +9,7 @@
         package = pkgs.unstable.claude-code;
         settings = {
           alwaysThinkingEnabled = true;
+          permissions.defaultMode = "auto";
           statusLine = {
             type = "command";
             command = ''
