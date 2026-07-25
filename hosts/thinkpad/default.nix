@@ -24,6 +24,7 @@ in {
       self.nixosModules.laptop
       self.nixosModules.dev
       self.nixosModules.claude
+      self.nixosModules.pi
       self.nixosModules.sis
       self.nixosModules.fish
       self.nixosModules.xkb
