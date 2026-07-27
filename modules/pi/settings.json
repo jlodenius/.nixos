@@ -1,7 +1,10 @@
 {
   "theme": "colours",
-  "enabledModels": ["openai-codex/*"],
+  "enabledModels": [
+    "openai-codex/*"
+  ],
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
-  "defaultThinkingLevel": "medium"
+  "defaultThinkingLevel": "medium",
+  "lastChangelogVersion": "0.81.1"
 }

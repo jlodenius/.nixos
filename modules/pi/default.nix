@@ -89,7 +89,7 @@
       #  - stats/model line uses the `warning` role (our yellow) instead of `dim`;
       #    the pwd line keeps `dim`.
       #  - context shown as used/total tokens instead of percent/total.
-      #  - hide the cumulative ↑input/↓output token counts (neuter their guards);
+      #  - hide cumulative input/output/cache-read counts and cache hit rate;
       #    cost, context, and model remain.
       # --replace-fail means a future pi version that renames these lines fails the
       # build loudly rather than silently reverting the styling.
@@ -102,7 +102,9 @@
               --replace-fail 'theme.fg("dim", remainder)' 'theme.fg("warning", remainder)' \
               --replace-fail '`''${contextPercent}%/''${formatTokens(contextWindow)}''${autoIndicator}`' '`''${formatTokens(Math.round(contextPercentValue / 100 * contextWindow))}/''${formatTokens(contextWindow)}''${autoIndicator}`' \
               --replace-fail 'if (usageTotals.input)' 'if (false)' \
-              --replace-fail 'if (usageTotals.output)' 'if (false)'
+              --replace-fail 'if (usageTotals.output)' 'if (false)' \
+              --replace-fail 'if (usageTotals.cacheRead)' 'if (false)' \
+              --replace-fail 'if ((usageTotals.cacheRead > 0 || usageTotals.cacheWrite > 0) && latestCacheHitRate !== undefined)' 'if (false)'
           '';
       });
     in {
