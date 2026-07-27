@@ -2,8 +2,6 @@
   flake.nixosModules.pi = {config, ...}: let
     c = config.colours;
 
-    # pi's theme, generated from the global colours palette (single source of
-    # truth). Roles mirror pi's built-in dark theme; only the values differ.
     theme = {
       "$schema" = "https://raw.githubusercontent.com/earendil-works/pi/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json";
       name = "colours";
@@ -82,11 +80,17 @@
       };
     };
   in {
-    home-manager.users.jacob = {pkgs, ...}: let
+    home-manager.users.jacob = {
+      pkgs,
+      config,
+      ...
+    }: let
       # pi's footer is hardcoded in compiled JS with no config knob, so patch it:
       #  - stats/model line uses the `warning` role (our yellow) instead of `dim`;
       #    the pwd line keeps `dim`.
       #  - context shown as used/total tokens instead of percent/total.
+      #  - hide the cumulative ↑input/↓output token counts (neuter their guards);
+      #    cost, context, and model remain.
       # --replace-fail means a future pi version that renames these lines fails the
       # build loudly rather than silently reverting the styling.
       pi = pkgs.unstable.pi-coding-agent.overrideAttrs (old: {
@@ -96,19 +100,19 @@
             substituteInPlace $out/lib/node_modules/pi-monorepo/dist/modes/interactive/components/footer.js \
               --replace-fail 'theme.fg("dim", statsLeft)' 'theme.fg("warning", statsLeft)' \
               --replace-fail 'theme.fg("dim", remainder)' 'theme.fg("warning", remainder)' \
-              --replace-fail '`''${contextPercent}%/''${formatTokens(contextWindow)}''${autoIndicator}`' '`''${formatTokens(Math.round(contextPercentValue / 100 * contextWindow))}/''${formatTokens(contextWindow)}''${autoIndicator}`'
+              --replace-fail '`''${contextPercent}%/''${formatTokens(contextWindow)}''${autoIndicator}`' '`''${formatTokens(Math.round(contextPercentValue / 100 * contextWindow))}/''${formatTokens(contextWindow)}''${autoIndicator}`' \
+              --replace-fail 'if (usageTotals.input)' 'if (false)' \
+              --replace-fail 'if (usageTotals.output)' 'if (false)'
           '';
       });
     in {
       home.packages = [pi];
 
-      # Appended to pi's built-in system prompt (does not replace it).
       home.file.".pi/agent/APPEND_SYSTEM.md".source = ./APPEND_SYSTEM.md;
-
       home.file.".pi/agent/themes/colours.json".source =
         (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
-
-      home.file.".pi/agent/settings.json".source = ./settings.json;
+      home.file.".pi/agent/settings.json".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/settings.json";
     };
   };
 }

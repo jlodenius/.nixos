@@ -34,6 +34,10 @@
           set-option -sa terminal-features '*:RGB:sync'
           set-option -g focus-events on
 
+          # Extended keys: lets modified Enter (e.g. pi's Shift/Alt+Enter) reach apps
+          set-option -sa terminal-features '*:extkeys'
+          set-option -g extended-keys on
+
           # Bind å to enter copy-mode
           unbind [
           bind-key å copy-mode
