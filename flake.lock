@@ -195,6 +195,26 @@
         "type": "github"
       }
     },
+    "paj": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785171454,
+        "narHash": "sha256-6wIRH1+zmmw92MePQQe1xzvLos/fa8lTeT4eKn6YP4s=",
+        "owner": "jlodenius",
+        "repo": "paj",
+        "rev": "1cad4071395a292f3edb281e1680b483619ddc80",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jlodenius",
+        "repo": "paj",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -205,6 +225,7 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "paj": "paj",
         "stockfin": "stockfin",
         "wrapper-modules": "wrapper-modules"
       }

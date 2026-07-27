@@ -1,4 +1,4 @@
-{...}: {
+{inputs, ...}: {
   flake.nixosModules.pi = {config, ...}: let
     c = config.colours;
 
@@ -108,7 +108,10 @@
           '';
       });
     in {
-      home.packages = [pi];
+      home.packages = [
+        pi
+        inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
 
       home.file.".pi/agent/settings.json".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/settings.json";
@@ -116,8 +119,7 @@
       home.file.".pi/agent/APPEND_SYSTEM.md".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/APPEND_SYSTEM.md";
 
-      home.file.".pi/agent/extensions/paj".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Development/paj/extensions/paj";
+      home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
 
       home.file.".pi/agent/prompts".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
