@@ -182,6 +182,12 @@
 
             # AI
             (pkgs.vimUtils.buildVimPlugin {
+              pname = "paj.nvim";
+              version = "unstable";
+              src = inputs.paj-nvim;
+              doCheck = false;
+            })
+            (pkgs.vimUtils.buildVimPlugin {
               pname = "99";
               version = "unstable";
               src = pkgs.fetchFromGitHub {

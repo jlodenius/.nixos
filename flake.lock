@@ -215,6 +215,22 @@
         "type": "github"
       }
     },
+    "paj-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785188084,
+        "narHash": "sha256-T7B6eqcTKCNpXk8EAUj6ujVPatKkIqOiGmHQa9yJuzw=",
+        "owner": "jlodenius",
+        "repo": "paj.nvim",
+        "rev": "16aba693ed1b2309b2c7a9919c78c434bf351053",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jlodenius",
+        "repo": "paj.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -226,6 +242,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "paj": "paj",
+        "paj-nvim": "paj-nvim",
         "stockfin": "stockfin",
         "wrapper-modules": "wrapper-modules"
       }
