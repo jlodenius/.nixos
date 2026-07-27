@@ -124,6 +124,8 @@
       home.file.".pi/agent/prompts".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
 
+      home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
+
       home.file.".pi/agent/themes/colours.json".source =
         (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
     };

@@ -202,11 +202,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785175251,
-        "narHash": "sha256-/Z4CzMEEAjTnMskfNZ5ubMQAKl2KZsy2uTvLO0dZrqU=",
+        "lastModified": 1785176044,
+        "narHash": "sha256-spGbWH7Tpau3AqpJT1GTTXTbBKxSbDY4Oc4uDhwBqb8=",
         "owner": "jlodenius",
         "repo": "paj",
-        "rev": "9d1d4f11bb715acc49c895af044ed95b6fd9ddb9",
+        "rev": "6e8ecbd0c3bc659270ee38a1c91eacca58f572ca",
         "type": "github"
       },
       "original": {
