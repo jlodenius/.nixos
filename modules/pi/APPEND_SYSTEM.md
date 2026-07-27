@@ -8,3 +8,9 @@ Read only small targeted ranges. Skip sourcemaps, generated files, vendored deps
 # Comments
 Default to writing NO comments. Never comment self-explanatory code.
 Only comment non-obvious rationale, workarounds, or subtle constraints.
+
+# Git workflow
+- Unless the user explicitly says otherwise, create new feature work on a new branch.
+- Never discard, overwrite, or include unrelated working-tree changes.
+- Commit related changes together in coherent, independently understandable chunks.
+- Never add AI attribution or AI co-author trailers to commits.

@@ -111,6 +111,8 @@
       home.packages = [pi];
 
       home.file.".pi/agent/APPEND_SYSTEM.md".source = ./APPEND_SYSTEM.md;
+      home.file.".pi/agent/prompts/commit.md".source = ./prompts/commit.md;
+      home.file.".pi/agent/skills/commit".source = ./skills/commit;
       home.file.".pi/agent/themes/colours.json".source =
         (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
       home.file.".pi/agent/settings.json".source =
