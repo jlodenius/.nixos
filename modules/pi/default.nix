@@ -110,14 +110,17 @@
     in {
       home.packages = [pi];
 
-      home.file.".pi/agent/APPEND_SYSTEM.md".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/APPEND_SYSTEM.md";
-      home.file.".pi/agent/prompts".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
-      home.file.".pi/agent/themes/colours.json".source =
-        (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
       home.file.".pi/agent/settings.json".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/settings.json";
+
+      home.file.".pi/agent/APPEND_SYSTEM.md".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/APPEND_SYSTEM.md";
+
+      home.file.".pi/agent/prompts".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
+
+      home.file.".pi/agent/themes/colours.json".source =
+        (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
     };
   };
 }
