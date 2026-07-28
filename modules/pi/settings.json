@@ -1,5 +1,8 @@
 {
   "theme": "colours",
+  "skills": [
+    "~/.pi/agent/local-skills"
+  ],
   "enabledModels": [
     "openai-codex/*"
   ],

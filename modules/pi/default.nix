@@ -122,6 +122,9 @@
       home.file.".pi/agent/prompts".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
 
+      home.file.".pi/agent/local-skills".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/skills";
+
       # Paj integration
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
