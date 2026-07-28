@@ -119,13 +119,14 @@
       home.file.".pi/agent/APPEND_SYSTEM.md".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/APPEND_SYSTEM.md";
 
-      home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
-
       home.file.".pi/agent/prompts".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
 
+      # Paj integration
+      home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
 
+      # Theme
       home.file.".pi/agent/themes/colours.json".source =
         (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
     };
