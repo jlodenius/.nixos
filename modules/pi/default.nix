@@ -107,28 +107,76 @@
               --replace-fail 'if ((usageTotals.cacheRead > 0 || usageTotals.cacheWrite > 0) && latestCacheHitRate !== undefined)' 'if (false)'
           '';
       });
+
+      expectedSkills = [
+        {
+          name = "brave-search";
+          source = inputs.pi-skills;
+          node = true;
+          postInstall = ''
+            substituteInPlace "$out/SKILL.md" \
+              --replace-fail '5. Install dependencies (run once):
+               ```bash
+               cd {baseDir}
+               npm install
+               ```' '5. Dependencies are installed declaratively by Nix.'
+          '';
+        }
+      ];
+
+      buildSkill = skill: let
+        src = "${skill.source}/${skill.directory or skill.name}";
+      in
+        if skill.node or false
+        then
+          pkgs.buildNpmPackage {
+            pname = "pi-skill-${skill.name}";
+            version = "unstable";
+            inherit src;
+
+            npmDeps = pkgs.importNpmLock {npmRoot = src;};
+            npmConfigHook = pkgs.importNpmLock.npmConfigHook;
+            dontNpmBuild = true;
+
+            installPhase = ''
+              runHook preInstall
+              cp -R . "$out"
+              patchShebangs "$out"
+              ${skill.postInstall or ""}
+              runHook postInstall
+            '';
+          }
+        else src;
+
+      skillFiles = builtins.listToAttrs (map (skill: {
+          name = ".pi/agent/skills/${skill.name}";
+          value.source = buildSkill skill;
+        })
+        expectedSkills);
     in {
       home.packages = [
         pi
         inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
-      home.file.".pi/agent/settings.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/settings.json";
+      home.file =
+        skillFiles
+        // {
+          ".pi/agent/settings.json".source =
+            config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/settings.json";
 
-      home.file.".pi/agent/APPEND_SYSTEM.md".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/APPEND_SYSTEM.md";
+          ".pi/agent/APPEND_SYSTEM.md".source =
+            config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/APPEND_SYSTEM.md";
 
-      home.file.".pi/agent/prompts".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
+          ".pi/agent/prompts".source =
+            config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/prompts";
 
-      # Paj integration
-      home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
-      home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
+          ".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
+          ".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
 
-      # Theme
-      home.file.".pi/agent/themes/colours.json".source =
-        (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
+          ".pi/agent/themes/colours.json".source =
+            (pkgs.formats.json {}).generate "pi-colours-theme.json" theme;
+        };
     };
   };
 }

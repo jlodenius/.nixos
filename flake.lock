@@ -247,6 +247,22 @@
         "type": "github"
       }
     },
+    "pi-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780777676,
+        "narHash": "sha256-NcaMKdbADZhlnEMTl3pQON9WayBdCjFRHH+dBNOJ+mk=",
+        "owner": "badlogic",
+        "repo": "pi-skills",
+        "rev": "90bb51cae36515a648515b633a81c0c6efc8c74d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "badlogic",
+        "repo": "pi-skills",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -260,6 +276,7 @@
         "nvim-99": "nvim-99",
         "paj": "paj",
         "paj-nvim": "paj-nvim",
+        "pi-skills": "pi-skills",
         "stockfin": "stockfin",
         "vgit-nvim": "vgit-nvim",
         "vim-maximizer": "vim-maximizer",
