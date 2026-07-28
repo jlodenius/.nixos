@@ -25,6 +25,7 @@ in {
       self.nixosModules.dev
       self.nixosModules.claude
       self.nixosModules.pi
+      self.nixosModules.ddgr
       self.nixosModules.sis
       self.nixosModules.fish
       self.nixosModules.xkb
