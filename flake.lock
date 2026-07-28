@@ -99,11 +99,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784727021,
-        "narHash": "sha256-M7EEPHFRws+mJ2ugEX7EhLS+03lOxUJjAH+ZL0HKI7s=",
+        "lastModified": 1785237087,
+        "narHash": "sha256-lSvcrypQ+uM5syLGmsaO89/Q7wnkdUzUtpHzQBx3eJY=",
         "owner": "daphen",
         "repo": "mlqs",
-        "rev": "22af98660942c49c5b3a099785011f7e9a635703",
+        "rev": "99c9057a38876ecdb2d17754b075a07b7829b73a",
         "type": "github"
       },
       "original": {
@@ -218,11 +218,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785249069,
-        "narHash": "sha256-9YC1o4eNWwDB4V3Utch7U8mGx+lQC8ExbQJ9ysDofmg=",
+        "lastModified": 1785268657,
+        "narHash": "sha256-KP1qoQa8OQNZIYy7laJ9o6GcI5E8f7JG01dtF0iIfYg=",
         "owner": "jlodenius",
         "repo": "paj",
-        "rev": "066171d6faf40b118973df6a2b411405d84a96b3",
+        "rev": "e599cc443141f879e4e68df106e0317ecab09ec5",
         "type": "github"
       },
       "original": {
@@ -234,11 +234,11 @@
     "paj-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1785249056,
-        "narHash": "sha256-5MyJ2LwbTLnSf6wTKid3lgj9i0OHrWzRS2h9BEF5jjo=",
+        "lastModified": 1785268416,
+        "narHash": "sha256-V75buFOX7GtGEDunY1O4X/kObAIlVQRpRXLGCRhrGBk=",
         "owner": "jlodenius",
         "repo": "paj.nvim",
-        "rev": "e730a28ad40b8d4ee4946ef0f40c1abb4a083947",
+        "rev": "39fb74a93db5f4d4afc6dbfff26862dd8f7e2c04",
         "type": "github"
       },
       "original": {
