@@ -38,11 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pi-skills = {
-      url = "github:badlogic/pi-skills";
-      flake = false;
-    };
-
     # Neovim plugin sources
     nvim-99 = {
       url = "github:ThePrimeagen/99";
