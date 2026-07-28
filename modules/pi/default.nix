@@ -110,6 +110,7 @@
     in {
       home.packages = [
         pi
+        pkgs.ddgr
         inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
