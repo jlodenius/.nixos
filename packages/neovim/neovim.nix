@@ -127,6 +127,16 @@
         # ── Plugins (lazy loaded) ──────────────────────────────────────────
         opt = let
           p = pkgs.vimPlugins;
+          pluginFromInput = {
+            input,
+            pname ? input,
+          }:
+            pkgs.vimUtils.buildVimPlugin {
+              inherit pname;
+              version = "unstable";
+              src = inputs.${input};
+              doCheck = false;
+            };
         in {
           lazy = true;
           data = [
@@ -141,33 +151,14 @@
             # Git
             p.vim-fugitive
             p.gitsigns-nvim
-            (pkgs.vimUtils.buildVimPlugin {
-              pname = "vgit-nvim";
-              version = "unstable";
-              src = pkgs.fetchFromGitHub {
-                owner = "tanvirtin";
-                repo = "vgit.nvim";
-                rev = "7e147e8cb2f160ae3c8d353005666f636d34acb2";
-                hash = "sha256-XDLylDFgWnZWt2W3yiH5a5LXxoTm5UanXMVeFqOa3Is=";
-              };
-              doCheck = false;
-            })
+            (pluginFromInput {input = "vgit-nvim";})
 
             # Editing
             p.comment-nvim
             p.nvim-autopairs
             p.mini-ai
             p.mini-surround
-            (pkgs.vimUtils.buildVimPlugin {
-              pname = "vim-maximizer";
-              version = "unstable";
-              src = pkgs.fetchFromGitHub {
-                owner = "szw";
-                repo = "vim-maximizer";
-                rev = "2e54952fe91e140a2e69f35f22131219fcd9c5f1";
-                hash = "sha256-+VPcMn4NuxLRpY1nXz7APaXlRQVZD3Y7SprB/hvNKww=";
-              };
-            })
+            (pluginFromInput {input = "vim-maximizer";})
 
             # UI
             p.dressing-nvim
@@ -181,22 +172,13 @@
             p.auto-session
 
             # AI
-            (pkgs.vimUtils.buildVimPlugin {
+            (pluginFromInput {
+              input = "paj-nvim";
               pname = "paj.nvim";
-              version = "unstable";
-              src = inputs.paj-nvim;
-              doCheck = false;
             })
-            (pkgs.vimUtils.buildVimPlugin {
+            (pluginFromInput {
+              input = "nvim-99";
               pname = "99";
-              version = "unstable";
-              src = pkgs.fetchFromGitHub {
-                owner = "ThePrimeagen";
-                repo = "99";
-                rev = "ec9872f7df7f4eb8b319719c1c253eb3ea8877ed";
-                hash = "sha256-z8hafm8EWS7dXoDXnZ/1ddvtpWKVUtJfvQmWT4zXIdg=";
-              };
-              doCheck = false;
             })
           ];
         };

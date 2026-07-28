@@ -33,8 +33,24 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Neovim plugin sources
+    nvim-99 = {
+      url = "github:ThePrimeagen/99";
+      flake = false;
+    };
+
     paj-nvim = {
       url = "github:jlodenius/paj.nvim";
+      flake = false;
+    };
+
+    vgit-nvim = {
+      url = "github:tanvirtin/vgit.nvim";
+      flake = false;
+    };
+
+    vim-maximizer = {
+      url = "github:szw/vim-maximizer";
       flake = false;
     };
 
