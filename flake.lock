@@ -195,22 +195,6 @@
         "type": "github"
       }
     },
-    "nvim-99": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772554340,
-        "narHash": "sha256-z8hafm8EWS7dXoDXnZ/1ddvtpWKVUtJfvQmWT4zXIdg=",
-        "owner": "ThePrimeagen",
-        "repo": "99",
-        "rev": "ec9872f7df7f4eb8b319719c1c253eb3ea8877ed",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ThePrimeagen",
-        "repo": "99",
-        "type": "github"
-      }
-    },
     "paj": {
       "inputs": {
         "nixpkgs": [
@@ -234,11 +218,11 @@
     "paj-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1785334529,
-        "narHash": "sha256-AqWjJsE4qWLtoYkXyz8kQtwPnIYmV2qrhIVGDSuLGV0=",
+        "lastModified": 1785338318,
+        "narHash": "sha256-HhHPRcjYLwzIxWoTl0b4C9Xir3X9wu5W20vuUven7DI=",
         "owner": "jlodenius",
         "repo": "paj.nvim",
-        "rev": "8a412cdd17054ac46cb4df60f8d13f0d6d148ad6",
+        "rev": "5f1ecead7dcb46367cffb5c67a1864ee77d4925e",
         "type": "github"
       },
       "original": {
@@ -257,7 +241,6 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nvim-99": "nvim-99",
         "paj": "paj",
         "paj-nvim": "paj-nvim",
         "stockfin": "stockfin",

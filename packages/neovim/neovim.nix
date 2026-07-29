@@ -176,10 +176,6 @@
               input = "paj-nvim";
               pname = "paj.nvim";
             })
-            (pluginFromInput {
-              input = "nvim-99";
-              pname = "99";
-            })
           ];
         };
       };

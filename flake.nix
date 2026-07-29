@@ -39,11 +39,6 @@
     };
 
     # Neovim plugin sources
-    nvim-99 = {
-      url = "github:ThePrimeagen/99";
-      flake = false;
-    };
-
     paj-nvim = {
       url = "github:jlodenius/paj.nvim";
       flake = false;
