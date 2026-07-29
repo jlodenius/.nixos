@@ -34,7 +34,7 @@ if [ "$desired" = "$current" ]; then
     echo "System is already up to date."
 else
     echo "NixOS Rebuilding for $TARGET_HOST..."
-    sudo nixos-rebuild switch --flake ".#$TARGET_HOST"
+    sudo nixos-rebuild switch --store-path "$desired"
 fi
 
 # 5. Commit staged changes
