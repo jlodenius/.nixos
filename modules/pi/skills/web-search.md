@@ -48,7 +48,7 @@ ddgr --noua --np --json -r wt-wt -n 8 "query" \
 7. Cross-check consequential claims with an independent source.
 8. Cite material claims inline. Include dates when relevant and label inference or conflicting evidence.
 
-Fetch only known public HTTPS URLs. Limit size and duration; avoid private addresses, secrets, and binary content. Prefer raw documentation or documented APIs over presentation HTML.
+Fetch raw documentation and APIs directly. For noisy HTML, load the `web-extract` skill.
 
 ## Failure handling
 

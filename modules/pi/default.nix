@@ -111,6 +111,7 @@
       home.packages = [
         pi
         pkgs.ddgr
+        pkgs.python3Packages.trafilatura
         inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
