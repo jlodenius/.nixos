@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type {
 	ExtensionAPI,
+	ExtensionContext,
 	SessionEntry,
 } from "@earendil-works/pi-coding-agent";
 
@@ -32,39 +33,46 @@ function lastResponse(entries: SessionEntry[]): string | undefined {
 	return undefined;
 }
 
+async function openLastResponse(pi: ExtensionAPI, ctx: ExtensionContext) {
+	if (!process.env.TMUX) {
+		ctx.ui.notify("Pi is not running inside tmux", "warning");
+		return;
+	}
+
+	const response = lastResponse(ctx.sessionManager.getBranch());
+	if (!response) {
+		ctx.ui.notify("No assistant response found", "warning");
+		return;
+	}
+
+	const directory = await mkdtemp(join(tmpdir(), "pi-last-response-"));
+	const file = join(directory, "response.md");
+	await writeFile(file, `${response}\n`, { mode: 0o600 });
+
+	const command = `trap 'rm -rf -- "${directory}"' EXIT HUP TERM; nvim -R -- '${file}'`;
+	const result = await pi.exec("tmux", [
+		"new-window",
+		"-n",
+		"pi-response",
+		command,
+	]);
+	if (result.code !== 0) {
+		await rm(directory, { recursive: true, force: true });
+		ctx.ui.notify(
+			result.stderr.trim() || "Failed to open tmux window",
+			"error",
+		);
+	}
+}
+
 export default function (pi: ExtensionAPI) {
 	pi.registerCommand("last", {
 		description: "Open the last response in Neovim in a new tmux window",
-		handler: async (_args, ctx) => {
-			if (!process.env.TMUX) {
-				ctx.ui.notify("Pi is not running inside tmux", "warning");
-				return;
-			}
+		handler: async (_args, ctx) => openLastResponse(pi, ctx),
+	});
 
-			const response = lastResponse(ctx.sessionManager.getBranch());
-			if (!response) {
-				ctx.ui.notify("No assistant response found", "warning");
-				return;
-			}
-
-			const directory = await mkdtemp(join(tmpdir(), "pi-last-response-"));
-			const file = join(directory, "response.md");
-			await writeFile(file, `${response}\n`, { mode: 0o600 });
-
-			const command = `trap 'rm -rf -- "${directory}"' EXIT HUP TERM; nvim -R -- '${file}'`;
-			const result = await pi.exec("tmux", [
-				"new-window",
-				"-n",
-				"pi-response",
-				command,
-			]);
-			if (result.code !== 0) {
-				await rm(directory, { recursive: true, force: true });
-				ctx.ui.notify(
-					result.stderr.trim() || "Failed to open tmux window",
-					"error",
-				);
-			}
-		},
+	pi.registerShortcut("ctrl+o", {
+		description: "Open the last response in Neovim",
+		handler: async (ctx) => openLastResponse(pi, ctx),
 	});
 }
