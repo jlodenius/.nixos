@@ -1,5 +1,8 @@
 {
   "theme": "colours",
+  "extensions": [
+    "~/.pi/agent/local-extensions"
+  ],
   "skills": [
     "~/.pi/agent/local-skills"
   ],

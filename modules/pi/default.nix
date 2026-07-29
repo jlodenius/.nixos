@@ -127,11 +127,8 @@
       home.file.".pi/agent/local-skills".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/skills";
 
-      # Extensions
-      home.file.".pi/agent/extensions/usage.ts".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/extensions/usage.ts";
-      home.file.".pi/agent/extensions/last-response.ts".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/extensions/last-response.ts";
+      home.file.".pi/agent/local-extensions".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/extensions";
 
       # Paj integration
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
