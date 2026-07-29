@@ -93,7 +93,7 @@ Singleton {
                    glyph: "󰇮", pretty: "Mail", appId: "org.quickshell",
                    // mlqs shares the org.quickshell app_id with the bar/pickers,
                    // so focus by its unique window title instead of the app_id.
-                   jump: "title:mail-client", cmd: "mlqs-client" },
+                   jump: "title:mlqs", cmd: "mlqs-client" },
         claude:  { names: ["claude code", "claude"],
                    glyph: "󰚩", pretty: "Claude", transient: true }
     })

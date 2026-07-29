@@ -67,7 +67,7 @@ window-rule {
 }
 
 window-rule {
-    match title="^mail-client$"
+    match title="^mlqs$"
     open-floating true
 }
 
@@ -80,7 +80,7 @@ binds {
     Mod+Shift+T { spawn "ghostty"; }
     Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh helium helium"; }
     Mod+Shift+B { spawn "helium"; }
-    Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh title:mail-client mlqs-client"; }
+    Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh title:mlqs mlqs-client"; }
     Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh discord discord"; }
     Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh Slack slack"; }
     Mod+Backslash { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh teams-for-linux teams-for-linux"; }
