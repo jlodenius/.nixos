@@ -35,7 +35,7 @@ if [ "$desired" = "$current" ]; then
     echo "System is already up to date."
 else
     echo "NixOS Rebuilding for $TARGET_HOST..."
-    sudo nixos-rebuild switch --store-path "$desired"
+    sudo nixos-rebuild switch --store-path "$desired" --no-reexec
     switched=true
 fi
 
