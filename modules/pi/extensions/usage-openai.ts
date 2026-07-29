@@ -20,26 +20,6 @@ interface RateLimit {
 	secondary_window?: UsageWindow | null;
 }
 
-interface Credits {
-	has_credits?: boolean;
-	unlimited?: boolean;
-	overage_limit_reached?: boolean;
-	balance?: string | null;
-	approx_local_messages?: Array<number | string> | null;
-	approx_cloud_messages?: Array<number | string> | null;
-}
-
-interface SpendControlLimit {
-	source?: string | null;
-	limit?: string;
-	used?: string;
-	remaining?: string;
-	used_percent?: number;
-	remaining_percent?: number;
-	reset_after_seconds?: number;
-	reset_at?: number;
-}
-
 interface UsageResponse {
 	plan_type?: string;
 	rate_limit?: RateLimit | null;
@@ -50,11 +30,6 @@ interface UsageResponse {
 		metered_feature?: string;
 		rate_limit?: RateLimit | null;
 	}> | null;
-	credits?: Credits | null;
-	spend_control?: {
-		reached?: boolean;
-		individual_limit?: SpendControlLimit | null;
-	} | null;
 	rate_limit_reached_type?: string | { type?: string; kind?: string } | null;
 	rate_limit_reset_credits?: {
 		available_count?: number;
@@ -156,9 +131,9 @@ function clampPercent(value: number): number {
 	return Math.min(100, Math.max(0, value));
 }
 
-function progressBar(percentRemaining: number): string {
+function progressBar(percentUsed: number): string {
 	const segments = 20;
-	const filled = Math.round((clampPercent(percentRemaining) / 100) * segments);
+	const filled = Math.round((clampPercent(percentUsed) / 100) * segments);
 	return `\`${"█".repeat(filled)}${"░".repeat(segments - filled)}\``;
 }
 
@@ -169,9 +144,7 @@ function formatWindow(position: string, window: UsageWindow): string[] {
 	if (window.used_percent !== undefined) {
 		const used = clampPercent(window.used_percent);
 		const remaining = 100 - used;
-		lines.push(
-			`${progressBar(remaining)} **${remaining}% left** · ${used}% used`,
-		);
+		lines.push(`${progressBar(used)} **${used}% used** · ${remaining}% left`);
 	} else {
 		lines.push("Usage percentage not reported");
 	}
@@ -190,13 +163,6 @@ function statusText(limit: RateLimit): string {
 	if (limit.limit_reached !== undefined)
 		values.push(limit.limit_reached ? "Limit reached" : "Limit not reached");
 	return values.join(" · ") || "Status not reported";
-}
-
-function formatMessageEstimate(values?: Array<number | string> | null): string {
-	if (!values || values.length === 0) return "Not reported";
-	return values
-		.map((value) => displayText(String(value)))
-		.join(values.length === 2 ? "–" : ", ");
 }
 
 function appendLimit(
@@ -269,77 +235,6 @@ function formatUsage(data: UsageResponse): string {
 			`Reason: **${displayText(labelText(reached))}**`,
 			"",
 		);
-	}
-
-	if (data.credits) {
-		const credits = data.credits;
-		const availability = credits.unlimited
-			? "Unlimited"
-			: credits.has_credits === true
-				? "Available"
-				: credits.has_credits === false
-					? "No credits"
-					: "Not reported";
-		lines.push("## Credits", "", `- Availability: **${availability}**`);
-		if (credits.has_credits !== undefined)
-			lines.push(
-				`- Has credit balance: **${credits.has_credits ? "Yes" : "No"}**`,
-			);
-		if (credits.unlimited !== undefined)
-			lines.push(`- Unlimited: **${credits.unlimited ? "Yes" : "No"}**`);
-		if (credits.balance !== undefined && credits.balance !== null)
-			lines.push(`- Balance: **${displayText(credits.balance)}**`);
-		if (credits.overage_limit_reached !== undefined)
-			lines.push(
-				`- Overage limit: **${credits.overage_limit_reached ? "Reached" : "Not reached"}**`,
-			);
-		if (credits.approx_local_messages !== undefined)
-			lines.push(
-				`- Approx. local messages: **${formatMessageEstimate(credits.approx_local_messages)}**`,
-			);
-		if (credits.approx_cloud_messages !== undefined)
-			lines.push(
-				`- Approx. cloud messages: **${formatMessageEstimate(credits.approx_cloud_messages)}**`,
-			);
-		lines.push("");
-	}
-
-	if (data.spend_control) {
-		const spend = data.spend_control;
-		const overall =
-			spend.reached === undefined
-				? "Not reported"
-				: spend.reached
-					? "Reached"
-					: "Within limit";
-		lines.push("## Spend controls", "", `Overall control: **${overall}**`, "");
-		const individual = spend.individual_limit;
-		if (!individual) {
-			lines.push("Individual limit: **Not configured**", "");
-		} else {
-			if (individual.source)
-				lines.push(`- Source: **${displayText(individual.source)}**`);
-			if (individual.limit !== undefined)
-				lines.push(`- Limit: **${displayText(individual.limit)}**`);
-			if (individual.used !== undefined)
-				lines.push(`- Used: **${displayText(individual.used)}**`);
-			if (individual.remaining !== undefined)
-				lines.push(`- Remaining: **${displayText(individual.remaining)}**`);
-			if (individual.used_percent !== undefined)
-				lines.push(`- Used percentage: **${individual.used_percent}%**`);
-			if (individual.remaining_percent !== undefined)
-				lines.push(
-					`- Remaining percentage: **${individual.remaining_percent}%**`,
-				);
-			if (
-				individual.reset_at !== undefined ||
-				individual.reset_after_seconds !== undefined
-			)
-				lines.push(
-					`- Reset: **${formatReset(individual.reset_at, individual.reset_after_seconds)}**`,
-				);
-			lines.push("");
-		}
 	}
 
 	if (data.rate_limit_reset_credits) {
