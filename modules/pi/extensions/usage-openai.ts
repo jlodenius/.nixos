@@ -175,7 +175,7 @@ async function showUsage(
 }
 
 export default function (pi: ExtensionAPI) {
-	pi.registerCommand("usage", {
+	pi.registerCommand("usage-openai", {
 		description: "Show OpenAI Codex usage limits",
 		handler: async (_args, ctx) => {
 			try {
