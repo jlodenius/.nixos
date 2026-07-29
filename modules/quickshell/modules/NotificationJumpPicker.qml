@@ -90,7 +90,16 @@ Picker {
             // mlqs shares the org.quickshell app_id, so it matches by window
             // title (app.jump); the rest match app_id directly.
             const matcher = app.jump || app.appId
-            Quickshell.execDetached(["sh", "-c", scripts + "niri-jump-or-exec.sh " + matcher + " " + app.cmd])
+            let command = [scripts + "niri-jump-or-exec.sh", matcher, app.cmd]
+            if (key === "mlqs") {
+                // A Quickshell process restarted by its crash handler carries
+                // these into execDetached children; another `qs` then restores
+                // the bar's config instead of honoring mlqs-client's -p path.
+                command = ["env", "-u", "__QUICKSHELL_CRASH_DUMP_PID",
+                           "-u", "__QUICKSHELL_CRASH_INFO_FD",
+                           "-u", "__QUICKSHELL_CRASH_SIGNAL"].concat(command)
+            }
+            Quickshell.execDetached(command)
         }
     }
 

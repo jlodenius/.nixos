@@ -124,9 +124,7 @@ Singleton {
         if (!active) return []
         const wins = []
         for (const id in windows) {
-            const win = windows[id]
-            const pos = (win.layout || {}).pos_in_scrolling_layout
-            if (win.workspace_id === active.id && pos) wins.push(win)
+            if (windows[id].workspace_id === active.id) wins.push(windows[id])
         }
         wins.sort((a, b) => {
             const ap = (a.layout || {}).pos_in_scrolling_layout
