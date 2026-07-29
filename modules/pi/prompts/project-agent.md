@@ -1,10 +1,10 @@
 ---
-name: project-agent
-description: Manually launch a Pi agent for a project under ~/Development.
-disable-model-invocation: true
+description: Launch a Pi agent for a project under ~/Development
+argument-hint: "<project> <task>"
 ---
+Interpret the following arguments as a natural-language task and project reference; ask if either is unclear:
 
-Interpret the arguments as a natural-language task and project reference; ask if either is unclear.
+$ARGUMENTS
 
 1. Resolve the referenced project strictly inside `~/Development`: use an existing relative path, otherwise search recursively for an exact directory name. Exclude `.git`, `node_modules`, and `.direnv`; ask if missing or ambiguous. Use its Git root when available.
 2. Use the Paj extension's `get_agent_name` tool to get this session's exact report recipient.
