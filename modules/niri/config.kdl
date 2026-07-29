@@ -139,7 +139,9 @@ binds {
     Mod+Shift+Comma { move-column-to-monitor-left; }
     Mod+Shift+Period { move-column-to-monitor-right; }
 
-    // Move workspace to monitor
+    // Move workspace
+    Mod+Shift+Ctrl+K { move-workspace-up; }
+    Mod+Shift+Ctrl+J { move-workspace-down; }
     Mod+Shift+Ctrl+Comma { move-workspace-to-monitor-left; }
     Mod+Shift+Ctrl+Period { move-workspace-to-monitor-right; }
 
