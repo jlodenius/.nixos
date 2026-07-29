@@ -15,36 +15,37 @@ fi
 
 echo "Targeting Host: $TARGET_HOST"
 
-# 3. Stage files
-git add -A
-
-# 4. Format
+# 3. Format and stage files
 echo "Formatting..."
-alejandra . &>/dev/null || (alejandra . ; echo "Formatting failed!" && exit 1)
-
-# 5. Check for changes
-if git diff --quiet HEAD; then
-    echo "No changes detected, exiting."
-    exit 0
-fi
-
-echo "NixOS Rebuilding for $TARGET_HOST..."
-
-# 6. The Build Command
-sudo nixos-rebuild switch --flake ".#$TARGET_HOST"
-BUILD_EXIT_CODE=$?
-
-# 7. Post-build Logic
-if [ $BUILD_EXIT_CODE -ne 0 ]; then
-    echo "Build failed!"
+if ! alejandra . &>/dev/null; then
+    echo "Formatting failed!"
+    alejandra .
     exit 1
 fi
+git add -A
 
-# 8. Commit
+# 4. Build and compare the desired system
+echo "Checking system closure..."
+desired=$(nix build ".#nixosConfigurations.${TARGET_HOST}.config.system.build.toplevel" --no-link --print-out-paths)
+desired=$(readlink -f "$desired")
+current=$(readlink -f /run/current-system)
+
+if [ "$desired" = "$current" ]; then
+    echo "System is already up to date."
+else
+    echo "NixOS Rebuilding for $TARGET_HOST..."
+    sudo nixos-rebuild switch --flake ".#$TARGET_HOST"
+fi
+
+# 5. Commit staged changes
 gen=$(sudo nix-env -p /nix/var/nix/profiles/system --list-generations | grep current | awk '{print $1}')
-msg="Host $TARGET_HOST | Gen $gen: $(date +'%Y-%m-%d %H:%M:%S')"
 
-echo "Committing: $msg"
-git commit -am "$msg"
+if ! git diff --cached --quiet; then
+    msg="Host $TARGET_HOST | Gen $gen: $(date +'%Y-%m-%d %H:%M:%S')"
+    echo "Committing: $msg"
+    git commit -m "$msg"
+else
+    echo "No changes to commit."
+fi
 
 echo "Done! $TARGET_HOST is now at generation $gen."
