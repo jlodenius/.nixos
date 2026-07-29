@@ -59,9 +59,6 @@
           bind -r h select-pane -L
           bind -r l select-pane -R
 
-          # Let Pi receive Ctrl+L instead of treating it as pane navigation
-          bind-key -n C-l if-shell "ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\S+/)?g?\.?(view|l?n?vim?x?|fzf|pi)(diff)?(-wrapped)?$'" "send-keys C-l" "select-pane -R"
-
           # Vim-like pane resizing
           bind -r C-k resize-pane -U 5
           bind -r C-j resize-pane -D 5

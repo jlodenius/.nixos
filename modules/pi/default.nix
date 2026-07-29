@@ -118,9 +118,6 @@
       home.file.".pi/agent/settings.json".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/settings.json";
 
-      home.file.".pi/agent/keybindings.json".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/keybindings.json";
-
       home.file.".pi/agent/APPEND_SYSTEM.md".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/APPEND_SYSTEM.md";
 

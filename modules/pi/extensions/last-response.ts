@@ -71,7 +71,7 @@ export default function (pi: ExtensionAPI) {
 		handler: async (_args, ctx) => openLastResponse(pi, ctx),
 	});
 
-	pi.registerShortcut("ctrl+l", {
+	pi.registerShortcut("ctrl+space", {
 		description: "Open the last response in Neovim",
 		handler: async (ctx) => openLastResponse(pi, ctx),
 	});
