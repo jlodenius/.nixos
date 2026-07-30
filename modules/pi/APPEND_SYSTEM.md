@@ -10,7 +10,7 @@ NixOS.
 - Only comment non-obvious rationale, workarounds, or subtle constraints.
 
 # Git workflow
-- Unless the user explicitly says otherwise, create new feature work on a new branch.
+- For new feature work, create a branch unless already off main/master or told otherwise.
 - Never discard, overwrite, or include unrelated working-tree changes.
 - Commit related changes together in coherent, independently understandable chunks.
 - Never add AI attribution or AI co-author trailers to commits.
