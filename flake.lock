@@ -218,11 +218,11 @@
     "paj-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1785420877,
-        "narHash": "sha256-h/ywnoDtabLECRXfiD65GeTy2qe8Nh9yRGRYNOA55ow=",
+        "lastModified": 1785421727,
+        "narHash": "sha256-qDJRto3Fd/sX7J+XRua0nz0eZrrfQqT8DnVQFNvZqr4=",
         "owner": "jlodenius",
         "repo": "paj.nvim",
-        "rev": "066ec7de6b61e1586822d48dd78a5a1b9f4f4c50",
+        "rev": "a0aabc34c4fbb13294f7bca747c3d7e70de3e533",
         "type": "github"
       },
       "original": {
