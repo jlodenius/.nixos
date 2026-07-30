@@ -1,7 +1,6 @@
 ---
 name: web-extract
 description: Extract readable Markdown from public web pages with Trafilatura. Use for a specific URL or after web search when raw HTML is noisy.
-compatibility: Requires trafilatura.
 ---
 
 # Web Extract
