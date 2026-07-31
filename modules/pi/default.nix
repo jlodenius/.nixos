@@ -108,8 +108,6 @@
           '';
       });
     in {
-      home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
-
       home.packages = [
         pi
         pkgs.ddgr
@@ -133,6 +131,7 @@
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/extensions";
 
       # Paj integration
+      home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
 
