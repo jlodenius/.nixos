@@ -16,6 +16,7 @@
         enable = true;
         shellAliases = {
           kc = "kubectl";
+          q = "pi --print --no-session --no-tools";
           vim = "nvim";
           bt = "bluetuith";
           lsa = "ls -a";
