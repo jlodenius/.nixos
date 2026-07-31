@@ -108,6 +108,8 @@
           '';
       });
     in {
+      home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
+
       home.packages = [
         pi
         pkgs.ddgr
