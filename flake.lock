@@ -202,11 +202,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785333178,
-        "narHash": "sha256-1Xrb7RpWUOr2Fm5SQsMJ0Ced3Oqf7ckXQMFTSb0KYlY=",
+        "lastModified": 1785485873,
+        "narHash": "sha256-ZGWYeCOvhdCb/Y6ANLSrhTRNvmfI/q27bVLeu0V4oMo=",
         "owner": "jlodenius",
         "repo": "paj",
-        "rev": "ec7bbce99590effa3425d55c8246125073a2229c",
+        "rev": "959e048d06c327382c5db3a4245cd5db006e67d0",
         "type": "github"
       },
       "original": {
@@ -218,11 +218,11 @@
     "paj-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1785423185,
-        "narHash": "sha256-Rm/+dP0UbsU/I9wMEyEVwhu0OSC7nQijELsUr60qy4o=",
+        "lastModified": 1785485603,
+        "narHash": "sha256-KRcimwbMf+B4CM7tMEYQKHcC8wO3AfGAApfqj/TDfpc=",
         "owner": "jlodenius",
         "repo": "paj.nvim",
-        "rev": "059a06e8f54b688563a921183d7a149b02ec00df",
+        "rev": "7e1f4ec59d6ab8e8a268231484eb6a469f53becf",
         "type": "github"
       },
       "original": {
