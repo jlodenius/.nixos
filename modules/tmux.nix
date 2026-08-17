@@ -25,7 +25,7 @@
               owner = "jlodenius";
               repo = "tmux-scrollback";
               rev = "master";
-              sha256 = "sha256-Z2vD/lEoHRgp7aCMaB44XeicgBb2SZ3b6YkAY/952u4=";
+              sha256 = "sha256-h9shW78P7X21dU0uZWNtK4gQCxuOx1umXwcISe1M3Fk=";
             };
           })
         ];

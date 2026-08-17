@@ -63,6 +63,7 @@
         ++ [
           ./flake-parts.nix
           ./hosts/thinkpad
+          ./hosts/framework
         ];
     };
 }
