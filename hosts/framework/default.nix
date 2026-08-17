@@ -52,8 +52,9 @@ in {
       }
 
       # Host-specific config
-      {
+      ({pkgs, ...}: {
         networking.hostName = "framework";
+        boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
         networking.firewall.enable = false;
@@ -63,7 +64,7 @@ in {
         # when NixOS/home-manager modules change defaults between releases.
         system.stateVersion = "26.05";
         home-manager.users.jacob.home.stateVersion = "26.05";
-      }
+      })
     ];
   };
 }
