@@ -1,4 +1,4 @@
 # Git
 
 - Never check out feature branches unless specifically told to do so.
-- Commit changes directly on master.
+- Commit changes directly on master when asked to commit.
