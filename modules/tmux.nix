@@ -37,6 +37,7 @@
           # Extended keys: lets modified Enter (e.g. pi's Shift/Alt+Enter) reach apps
           set-option -sa terminal-features '*:extkeys'
           set-option -g extended-keys on
+          set-option -g extended-keys-format csi-u
 
           # Bind å to enter copy-mode
           unbind [
