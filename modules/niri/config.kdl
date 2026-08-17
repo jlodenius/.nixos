@@ -40,7 +40,7 @@ output "Dell Inc. DELL U2725QE 8JM6C34" {
 
 spawn-at-startup "qs"
 spawn-at-startup "swayidle" "-w" "timeout" "600" "qs ipc call -- lock lock" "before-sleep" "qs ipc call -- lock lock" "lock" "qs ipc call -- lock lock"
-spawn-at-startup "hyprpolkitagent"
+spawn-at-startup "systemctl" "--user" "start" "hyprpolkitagent.service"
 spawn-at-startup "vicinae" "server"
 spawn-at-startup "stockfin"
 spawn-at-startup "mlqs"
