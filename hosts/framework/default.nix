@@ -55,6 +55,7 @@ in {
       ({pkgs, ...}: {
         networking.hostName = "framework";
         boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+        boot.extraModprobeConfig = "options iwlwifi disable_11be=1"; # Temporarily disable Wi-Fi 7 due to connection interruptions on the Deco mesh.
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
         networking.firewall.enable = false;
