@@ -18,6 +18,8 @@
     # Thunderbolt device manager (boltctl + auto-authorization)
     services.hardware.bolt.enable = true;
 
+    services.fprintd.enable = true;
+
     environment.systemPackages = with pkgs; [
       brightnessctl
     ];
