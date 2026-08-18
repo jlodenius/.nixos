@@ -1,6 +1,9 @@
 {...}: {
   flake.nixosModules.gaming = {pkgs, ...}: {
-    environment.systemPackages = [pkgs.lutris];
+    environment.systemPackages = with pkgs; [
+      instawow
+      lutris
+    ];
 
     programs.steam = {
       enable = true;
