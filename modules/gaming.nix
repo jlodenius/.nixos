@@ -1,5 +1,7 @@
 {...}: {
-  flake.nixosModules.gaming = {...}: {
+  flake.nixosModules.gaming = {pkgs, ...}: {
+    environment.systemPackages = [pkgs.lutris];
+
     programs.steam = {
       enable = true;
       gamescopeSession.enable = true;
