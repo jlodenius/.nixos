@@ -22,6 +22,8 @@
 
     services.fprintd.enable = true;
 
+    virtualisation.docker.enableOnBoot = false;
+
     environment.systemPackages = with pkgs; [
       brightnessctl
     ];
