@@ -28,6 +28,7 @@ ShellRoot {
 
     NotificationJumpPicker {}
     HeliumPicker {}
+    PowerProfilePicker {}
     Osd {}
     LockScreen {}
     BatteryAlert {}

@@ -151,8 +151,10 @@ binds {
     Mod+Ctrl+J { set-window-height "-5%"; }
     Mod+Ctrl+K { set-window-height "+5%"; }
 
+    // Power profile
+    Mod+P { spawn "qs" "ipc" "call" "--" "power-profile-picker" "toggle"; }
+
     // Screenshots
-    Mod+P { spawn "sh" "-c" "path=~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png; grim \"$path\" && cat \"$path\" | wl-copy"; }
     Mod+Shift+P { spawn "sh" "-c" "geom=\"$(slurp -w 0)\"; path=~/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png; grim -g \"$geom\" \"$path\" && cat \"$path\" | wl-copy"; }
 
     // Screen recording (same key stops)

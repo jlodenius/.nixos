@@ -26,6 +26,12 @@ Item {
         return Theme.barFg
     }
 
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        onClicked: PowerProfilePickerState.show()
+    }
+
     Row {
         id: row
         anchors.centerIn: parent
