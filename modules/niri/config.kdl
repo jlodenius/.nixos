@@ -44,7 +44,6 @@ spawn-at-startup "systemctl" "--user" "start" "hyprpolkitagent.service"
 spawn-at-startup "vicinae" "server"
 spawn-at-startup "stockfin"
 spawn-at-startup "mlqs"
-spawn-at-startup "xwayland-satellite"
 
 layout {
     gaps 10
