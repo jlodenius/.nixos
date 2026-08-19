@@ -17,6 +17,7 @@ in {
 
     modules = [
       # Hardware
+      inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series3
       ./hardware-configuration.nix
 
       # Features
@@ -55,6 +56,7 @@ in {
       ({pkgs, ...}: {
         networking.hostName = "framework";
         boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+        hardware.intelgpu.driver = "xe";
         boot.extraModprobeConfig = "options iwlwifi disable_11be=1"; # Temporarily disable Wi-Fi 7 due to connection interruptions on the Deco mesh.
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
