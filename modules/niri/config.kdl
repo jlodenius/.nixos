@@ -33,9 +33,17 @@ output "BOE 0x07DB Unknown" {
     position x=0 y=1080
 }
 
+// Framework
+output "China Star Optoelectronics Technology Co., Ltd MND508ZB1-1 Unknown" {
+    mode "2880x1920@120"
+    position x=0 y=480
+    scale 2
+    variable-refresh-rate
+}
+
 output "Dell Inc. DELL U2725QE 8JM6C34" {
     mode "2560x1440@119.998"
-    position x=1920 y=0
+    position x=1440 y=0
     scale 1
 }
 
