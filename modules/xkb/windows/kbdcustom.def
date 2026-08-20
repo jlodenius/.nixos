@@ -1,3 +1,0 @@
-LIBRARY KBDCUSTOM
-EXPORTS
-    KbdLayerDescriptor @1
