@@ -88,7 +88,7 @@ binds {
     Mod+Shift+T { spawn "ghostty"; }
     Mod+B { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh helium helium"; }
     Mod+Shift+B { spawn "helium"; }
-    Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh title:mlqs mlqs-client"; }
+    Mod+M { spawn "sh" "-c" "~/.config/niri/scripts/mlqs-toggle.sh"; }
     Mod+Minus { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh discord discord"; }
     Mod+Equal { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh Slack slack"; }
     Mod+Backslash { spawn "sh" "-c" "~/.config/niri/scripts/niri-jump-or-exec.sh teams-for-linux teams-for-linux"; }
