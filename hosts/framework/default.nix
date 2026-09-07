@@ -57,7 +57,12 @@ in {
         networking.hostName = "framework";
         boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
         hardware.intelgpu.driver = "xe";
-        services.xserver.videoDrivers = ["displaylink" "modesetting" "fbdev"];
+        services.xserver.videoDrivers = [
+          # Disabled until https://github.com/NixOS/nixpkgs/issues/281104 is fixed. Its sleep hook hangs without the dock.
+          # "displaylink"
+          "modesetting"
+          "fbdev"
+        ];
         boot.extraModprobeConfig = "options iwlwifi disable_11be=1"; # Temporarily disable Wi-Fi 7 due to connection interruptions on the Deco mesh.
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
