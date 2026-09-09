@@ -1,7 +1,7 @@
 # Quickmarks — short, frequently-used jumps.
 # Format: <label> <url>  (any spacing). Blank lines and '#' comments are ignored.
 
-ai      https://claude.ai/new
+ai      https://chatgpt.com
 cal     https://calendar.google.com
 ch      https://www.chess.com
 gh      https://github.com/jlodenius
