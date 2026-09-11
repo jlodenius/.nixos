@@ -1,5 +1,14 @@
 {...}: {
   flake.nixosModules.sis = {pkgs, ...}: let
+    vpn-routes = [
+      "172.16.0.0/16"
+      # Azure SQL Sweden Central gateways (Proxy policy); see README.md.
+      "51.12.46.32/27"
+      "51.12.96.32/29"
+      "51.12.224.32/29"
+      "51.12.232.32/29"
+    ];
+
     dotnet-wrapped = pkgs.symlinkJoin {
       name = "dotnet-sdk-wrapped";
       paths = [pkgs.dotnet-sdk_10];
@@ -29,6 +38,39 @@
       "sd-api.dev.sis.se"
     ];
 
+    environment.shellAliases.sisvpn = "sudo openfortivpn --saml-login";
+
+    environment.etc."openfortivpn/config" = {
+      mode = "0600";
+      text = ''
+        host = vpn-sis.it-total.se
+        set-routes = 0
+        pppd-ipparam = sis
+      '';
+    };
+
+    systemd.tmpfiles.rules = [
+      "d /etc/openfortivpn 0700 root root -"
+    ];
+
+    environment.etc."ppp/ip-up" = {
+      mode = "0755";
+      text = ''
+        #!${pkgs.runtimeShell}
+        set -eu
+        if [ "''${6-}" != "sis" ]; then
+          exit 0
+        fi
+        if [ -z "''${1-}" ]; then
+          exit 1
+        fi
+        routes=(${pkgs.lib.escapeShellArgs vpn-routes})
+        for route in "''${routes[@]}"; do
+          ${pkgs.iproute2}/bin/ip route add "$route" dev "$1"
+        done
+      '';
+    };
+
     environment.sessionVariables.DOTNET_ROOT = "${dotnet-wrapped}/share/dotnet";
 
     environment.systemPackages = [
@@ -37,6 +79,7 @@
       pkgs.libsecret
       pkgs.azure-cli
       pkgs.azuredatastudio
+      pkgs.openfortivpn
     ];
   };
 }
