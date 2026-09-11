@@ -116,7 +116,8 @@
 
       qt = {
         enable = true;
-        platformTheme.name = "gtk";
+        # GTK2 opens an X11 connection even in Wayland apps, making Xwayland failures fatal.
+        platformTheme.name = "qtct";
         style.name = "adwaita-dark";
       };
 
@@ -145,10 +146,15 @@
       };
       home.file."Pictures/screenshots/.keep".text = "";
 
+      programs.vicinae = {
+        enable = true;
+        systemd.enable = true;
+      };
+      systemd.user.services.vicinae.Service.Environment = ["QT_QPA_PLATFORM=wayland"];
+
       # User packages
       home.packages = with pkgs; [
         # System & UI
-        vicinae
         bluetuith
         grim
         slurp

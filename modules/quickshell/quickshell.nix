@@ -16,6 +16,18 @@
     security.pam.services.quickshell = {};
 
     home-manager.users.jacob = {config, ...}: {
+      programs.quickshell = {
+        enable = true;
+        systemd.enable = true;
+      };
+      systemd.user.services.quickshell = {
+        Unit.PartOf = ["graphical-session.target"];
+        Service = {
+          Environment = ["QT_QPA_PLATFORM=wayland"];
+          RestartSec = 2;
+        };
+      };
+
       xdg.configFile."quickshell".source =
         config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.nixos/modules/quickshell";

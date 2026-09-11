@@ -11,7 +11,9 @@ sis/timereport  https://my.kleer.se/web2/time-reporting/month
 
 # SIS - Viewer
 sis/viewer/local        https://dev-viewer.standard.sis.se
+sis/viewer/dev          https://viewer-dev.standard.sis.se
 sis/viewer/test         https://viewer-tst.standard.sis.se
+sis/viewer/prod         https://viewer.standard.sis.se
 
 # SIS - CD
 sis/cd/dev/swagger   https://api-dev.standard.sis.se/swagger/index.html

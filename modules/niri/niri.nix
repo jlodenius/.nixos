@@ -3,7 +3,8 @@
     programs.niri.enable = true;
 
     environment.systemPackages = with pkgs; [
-      xwayland-satellite
+      # 0.8.2 fixes the panic when suspend/hotplug temporarily removes all outputs.
+      unstable.xwayland-satellite
     ];
 
     home-manager.users.jacob = {config, ...}: {
