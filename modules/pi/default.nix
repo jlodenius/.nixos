@@ -130,6 +130,8 @@
       home.file.".pi/agent/local-extensions".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/extensions";
 
+      home.file.".pi/agent/skills/mattpocock".source = "${inputs.mattpocock-skills}/skills";
+
       # Paj integration
       home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
