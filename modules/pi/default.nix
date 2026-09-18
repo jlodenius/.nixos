@@ -107,6 +107,10 @@
               --replace-fail 'if ((usageTotals.cacheRead > 0 || usageTotals.cacheWrite > 0) && latestCacheHitRate !== undefined)' 'if (false)'
           '';
       });
+
+      claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {
+        claude-code = pkgs.unstable.claude-code;
+      };
     in {
       home.packages = [
         pi
@@ -131,6 +135,16 @@
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/extensions";
 
       home.file.".pi/agent/skills/mattpocock".source = "${inputs.mattpocock-skills}/skills";
+
+      home.file.".pi/agent/extensions/claude-agent-sdk".source = "${claudeAgentSdk}/lib/node_modules/pi-claude-agent-sdk";
+
+      home.file.".pi/agent/claude-bridge.json".source = (pkgs.formats.json {}).generate "claude-bridge.json" {
+        provider = {
+          plan = "pro";
+          longContextExtraUsage = false;
+          pathToClaudeCodeExecutable = "${claudeAgentSdk.claudeCode}/bin/claude";
+        };
+      };
 
       # Paj integration
       home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
