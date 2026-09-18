@@ -85,35 +85,12 @@
       config,
       ...
     }: let
-      # pi's footer is hardcoded in compiled JS with no config knob, so patch it:
-      #  - stats/model line uses the `warning` role (our yellow) instead of `dim`;
-      #    the pwd line keeps `dim`.
-      #  - context shown as used/total tokens instead of percent/total.
-      #  - hide cumulative input/output/cache-read counts and cache hit rate;
-      #    cost, context, and model remain.
-      # --replace-fail means a future pi version that renames these lines fails the
-      # build loudly rather than silently reverting the styling.
-      pi = pkgs.unstable.pi-coding-agent.overrideAttrs (old: {
-        postFixup =
-          (old.postFixup or "")
-          + ''
-            substituteInPlace $out/lib/node_modules/pi-monorepo/dist/modes/interactive/components/footer.js \
-              --replace-fail 'theme.fg("dim", statsLeft)' 'theme.fg("warning", statsLeft)' \
-              --replace-fail 'theme.fg("dim", remainder)' 'theme.fg("warning", remainder)' \
-              --replace-fail '`''${contextPercent}%/''${formatTokens(contextWindow)}''${autoIndicator}`' '`''${formatTokens(Math.round(contextPercentValue / 100 * contextWindow))}/''${formatTokens(contextWindow)}''${autoIndicator}`' \
-              --replace-fail 'if (usageTotals.input)' 'if (false)' \
-              --replace-fail 'if (usageTotals.output)' 'if (false)' \
-              --replace-fail 'if (usageTotals.cacheRead)' 'if (false)' \
-              --replace-fail 'if ((usageTotals.cacheRead > 0 || usageTotals.cacheWrite > 0) && latestCacheHitRate !== undefined)' 'if (false)'
-          '';
-      });
-
       claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {
         claude-code = pkgs.unstable.claude-code;
       };
     in {
       home.packages = [
-        pi
+        pkgs.unstable.pi-coding-agent
         pkgs.ddgr
         pkgs.python3Packages.trafilatura
         inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default
