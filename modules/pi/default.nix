@@ -85,9 +85,7 @@
       config,
       ...
     }: let
-      claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {
-        claude-code = pkgs.unstable.claude-code;
-      };
+      claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {};
     in {
       home.packages = [
         pkgs.unstable.pi-coding-agent
@@ -119,7 +117,7 @@
         provider = {
           plan = "pro";
           longContextExtraUsage = false;
-          pathToClaudeCodeExecutable = "${claudeAgentSdk.claudeCode}/bin/claude";
+          pathToClaudeCodeExecutable = "${config.programs.claude-code.package}/bin/claude";
         };
       };
 
