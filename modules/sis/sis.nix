@@ -39,6 +39,34 @@
       "sd-api.dev.sis.se"
     ];
 
+    # Local SIS.ContentDelivery under the same site as the viewer. api-dev is the only
+    # *.standard.sis.se callback login-test accepts for the test.newsis client, so the
+    # name is borrowed from deployed dev. Comment this entry out to reach the deployed API.
+    networking.hosts."127.0.0.2" = [
+      "api-dev.standard.sis.se"
+    ];
+
+    # Docker's nginx holds 0.0.0.0:443, so Kestrel cannot listen on 443 itself.
+    # Redirect 127.0.0.2:443 to Kestrel's 127.0.0.1:4443 instead. Docker's own NAT
+    # rules skip 127.0.0.0/8, and the viewer on 127.0.0.1:443 is unaffected.
+    systemd.services.contentdelivery-local-redirect = {
+      description = "127.0.0.2:443 -> 127.0.0.1:4443 for local SIS.ContentDelivery";
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
+      path = [pkgs.iptables];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        iptables -t nat -C OUTPUT -d 127.0.0.2 -p tcp --dport 443 -j REDIRECT --to-ports 4443 2>/dev/null \
+          || iptables -t nat -A OUTPUT -d 127.0.0.2 -p tcp --dport 443 -j REDIRECT --to-ports 4443
+      '';
+      preStop = ''
+        iptables -t nat -D OUTPUT -d 127.0.0.2 -p tcp --dport 443 -j REDIRECT --to-ports 4443 || true
+      '';
+    };
+
     environment.shellAliases.sisvpn = "sudo openfortivpn --saml-login";
 
     environment.etc."openfortivpn/config" = {
