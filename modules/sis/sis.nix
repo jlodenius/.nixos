@@ -10,6 +10,16 @@
       "51.12.232.32/29"
     ];
 
+    openfortivpn = pkgs.openfortivpn.overrideAttrs (old: {
+      # Match NetworkManager's openresolv backend instead of auto-detecting resolvectl.
+      configureFlags =
+        old.configureFlags
+        ++ [
+          "--with-resolvconf=${pkgs.openresolv}/bin/resolvconf"
+          "--enable-resolvconf"
+        ];
+    });
+
     dotnet-wrapped = pkgs.symlinkJoin {
       name = "dotnet-sdk-wrapped";
       paths = [pkgs.dotnet-sdk_10];
@@ -74,6 +84,9 @@
       text = ''
         host = vpn-sis.it-total.se
         set-routes = 0
+        set-dns = 1
+        use-resolvconf = 1
+        pppd-use-peerdns = 0
         pppd-ipparam = sis
       '';
     };
@@ -108,7 +121,7 @@
       pkgs.libsecret
       pkgs.azure-cli
       pkgs.azuredatastudio
-      pkgs.openfortivpn
+      openfortivpn
     ];
   };
 }

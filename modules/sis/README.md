@@ -118,6 +118,24 @@ new routes. Check `ip route get <database-ip>` for the PPP interface and test
 the database connection with your usual client. Every listed route is removed
 when the PPP interface disappears.
 
+## DNS
+
 Gateway-provided DNS remains enabled; this is not domain-specific split DNS.
+The VPN is built to use the same `openresolv` manager as NetworkManager, with
+`use-resolvconf = 1` and `pppd-use-peerdns = 0` so only that manager writes
+`/etc/resolv.conf`.
+
+The default VPN package detects systemd's `resolvconf` compatibility tool at
+build time and disables managed DNS by default. Its direct file edits cause
+openresolv to reject Wi-Fi DNS updates with `signature mismatch`. After moving
+to another Wi-Fi network, disconnecting the VPN can therefore leave the old
+network's DNS behind until Wi-Fi reconnects. Sharing openresolv lets VPN
+cleanup regenerate DNS using NetworkManager's current settings instead.
+
+After rebuilding, start a new `sisvpn` process to use the fixed package. If DNS
+is already stale, disconnect the old VPN first, then run `sudo resolvconf -u`.
+Verify that `/etc/resolv.conf` contains the current Wi-Fi DNS after disconnecting
+the VPN, including after moving between networks.
+
 The `/etc/ppp/ip-up` hook ignores connections without `pppd-ipparam = sis`,
 but another module cannot independently replace the same hook.
