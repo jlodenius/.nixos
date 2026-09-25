@@ -12,6 +12,7 @@ sis/jira              https://sisswe.atlassian.net/jira/software/c/projects/SU/b
 sis/azure             https://portal.azure.com/?feature.msaljs=true#browse/Microsoft.App%2FcontainerApps
 sis/time              https://my355752-sso.sapbydesign.com/sap/ap/ui/repository/SAP_UI/HTMLOBERON5/client.html
 sis/timereport        https://my.kleer.se/web2/time-reporting/month
+sis/vpn               https://vpn-sis.it-total.se:443/remote/saml/start?redirect=1
 
 # SIS - Viewer
 sis/viewer/local        https://dev-viewer.standard.sis.se
