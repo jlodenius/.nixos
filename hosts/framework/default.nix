@@ -57,6 +57,10 @@ in {
         networking.hostName = "framework";
         boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
         hardware.intelgpu.driver = "xe";
+        hardware.graphics = {
+          package = pkgs.unstable.mesa;
+          package32 = pkgs.unstable.pkgsi686Linux.mesa;
+        };
         services.xserver.videoDrivers = [
           # Disabled until https://github.com/NixOS/nixpkgs/issues/281104 is fixed. Its sleep hook hangs without the dock.
           # "displaylink"
