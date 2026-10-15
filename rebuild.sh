@@ -39,6 +39,13 @@ else
     switched=true
 fi
 
+if systemctl --user is-active --quiet vicinae.service 2>/dev/null; then
+    echo "Refreshing Vicinae applications..."
+    if ! systemctl --user restart vicinae.service; then
+        echo "Warning: Could not restart Vicinae; applications may need a manual refresh." >&2
+    fi
+fi
+
 # 5. Commit staged changes
 if ! git diff --cached --quiet; then
     gen=$(nixos-rebuild list-generations --json | jq -r '.[] | select(.current) | .generation')
