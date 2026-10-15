@@ -21,6 +21,7 @@ in {
       ./hardware-configuration.nix
 
       # Features
+      "${inputs.nixpkgs-unstable}/nixos/modules/services/hardware/framework-control.nix"
       self.nixosModules.base
       self.nixosModules.laptop
       self.nixosModules.dev
@@ -55,6 +56,10 @@ in {
       # Host-specific config
       ({pkgs, ...}: {
         networking.hostName = "framework";
+        services.framework-control = {
+          enable = true;
+          package = pkgs.unstable.framework-control;
+        };
         boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
         hardware.intelgpu.driver = "xe";
         hardware.graphics = {
