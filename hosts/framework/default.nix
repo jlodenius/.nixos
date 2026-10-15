@@ -68,15 +68,32 @@ in {
           wantedBy = ["multi-user.target"];
           requires = ["power-profiles-daemon.service"];
           after = ["power-profiles-daemon.service"];
-          path = [pkgs.systemd pkgs.power-profiles-daemon];
-          serviceConfig.Type = "oneshot";
+          path = [pkgs.coreutils pkgs.systemd pkgs.power-profiles-daemon];
+          serviceConfig = {
+            Type = "oneshot";
+            RuntimeDirectory = "framework-power-profile";
+            RuntimeDirectoryMode = "0700";
+            RuntimeDirectoryPreserve = "yes";
+          };
           script = ''
+            state_file="$RUNTIME_DIRECTORY/power-source"
             if systemd-ac-power; then
+              power_source=ac
               profile=performance
             else
+              status=$?
+              if [[ "$status" != 1 ]]; then
+                exit "$status"
+              fi
+              power_source=battery
               profile=balanced
             fi
+            if [[ -f "$state_file" && "$(<"$state_file")" == "$power_source" ]]; then
+              exit 0
+            fi
             powerprofilesctl set "$profile"
+            printf '%s\n' "$power_source" > "$state_file.next"
+            mv "$state_file.next" "$state_file"
           '';
         };
         boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
