@@ -60,6 +60,25 @@ in {
           enable = true;
           package = pkgs.unstable.framework-control;
         };
+        services.udev.extraRules = ''
+          SUBSYSTEM=="power_supply", ACTION=="add|change|remove", ENV{POWER_SUPPLY_ONLINE}=="[01]", RUN+="${pkgs.systemd}/bin/systemctl --no-block restart framework-power-profile.service"
+        '';
+        systemd.services.framework-power-profile = {
+          description = "Select the power profile based on charger connection";
+          wantedBy = ["multi-user.target"];
+          requires = ["power-profiles-daemon.service"];
+          after = ["power-profiles-daemon.service"];
+          path = [pkgs.systemd pkgs.power-profiles-daemon];
+          serviceConfig.Type = "oneshot";
+          script = ''
+            if systemd-ac-power; then
+              profile=performance
+            else
+              profile=balanced
+            fi
+            powerprofilesctl set "$profile"
+          '';
+        };
         boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
         hardware.intelgpu.driver = "xe";
         hardware.graphics = {
