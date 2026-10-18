@@ -88,7 +88,7 @@
       claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {};
     in {
       home.packages = [
-        pkgs.unstable.pi-coding-agent
+        pkgs.pi-coding-agent
         pkgs.ddgr
         pkgs.python3Packages.trafilatura
         inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default

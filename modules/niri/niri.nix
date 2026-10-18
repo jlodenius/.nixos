@@ -4,7 +4,7 @@
 
     environment.systemPackages = with pkgs; [
       # 0.8.2 fixes the panic when suspend/hotplug temporarily removes all outputs.
-      unstable.xwayland-satellite
+      xwayland-satellite
     ];
 
     home-manager.users.jacob = {config, ...}: {

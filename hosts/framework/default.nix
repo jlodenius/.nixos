@@ -4,13 +4,6 @@
   ...
 }: let
   system = "x86_64-linux";
-
-  overlay-unstable = final: prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  };
 in {
   flake.nixosConfigurations.framework = inputs.nixpkgs.lib.nixosSystem {
     inherit system;
@@ -21,7 +14,6 @@ in {
       ./hardware-configuration.nix
 
       # Features
-      "${inputs.nixpkgs-unstable}/nixos/modules/services/hardware/framework-control.nix"
       self.nixosModules.base
       self.nixosModules.laptop
       self.nixosModules.dev
@@ -42,9 +34,6 @@ in {
       self.nixosModules.helium
       self.nixosModules.mlqs
 
-      # Unstable overlay
-      ({...}: {nixpkgs.overlays = [overlay-unstable];})
-
       # Home Manager
       inputs.home-manager.nixosModules.home-manager
       {
@@ -56,16 +45,13 @@ in {
       # Host-specific config
       ({pkgs, ...}: {
         networking.hostName = "framework";
-        services.framework-control = {
-          enable = true;
-          package = pkgs.unstable.framework-control;
-        };
+        services.framework-control.enable = true;
         services.udev.extraRules = ''
           SUBSYSTEM=="power_supply", ACTION=="add|change|remove", ENV{POWER_SUPPLY_ONLINE}=="[01]", RUN+="${pkgs.systemd}/bin/systemctl --no-block restart framework-power-profile.service"
         '';
         systemd.services.framework-power-profile = {
           description = "Select the power profile based on charger connection";
-          wantedBy = ["multi-user.target"];
+          wantedBy = ["graphical.target"];
           requires = ["power-profiles-daemon.service"];
           after = ["power-profiles-daemon.service"];
           path = [pkgs.coreutils pkgs.systemd pkgs.power-profiles-daemon];
@@ -96,12 +82,8 @@ in {
             mv "$state_file.next" "$state_file"
           '';
         };
-        boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+        boot.kernelPackages = pkgs.linuxPackages_latest;
         hardware.intelgpu.driver = "xe";
-        hardware.graphics = {
-          package = pkgs.unstable.mesa;
-          package32 = pkgs.unstable.pkgsi686Linux.mesa;
-        };
         services.xserver.videoDrivers = [
           # Disabled until https://github.com/NixOS/nixpkgs/issues/281104 is fixed. Its sleep hook hangs without the dock.
           # "displaylink"

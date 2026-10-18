@@ -6,7 +6,7 @@
     home-manager.users.jacob = {pkgs, ...}: {
       programs.claude-code = {
         enable = true;
-        package = pkgs.unstable.claude-code;
+        package = pkgs.claude-code;
         settings = {
           alwaysThinkingEnabled = true;
           permissions.defaultMode = "auto";

@@ -4,13 +4,6 @@
   ...
 }: let
   system = "x86_64-linux";
-
-  overlay-unstable = final: prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  };
 in {
   flake.nixosConfigurations.thinkpad = inputs.nixpkgs.lib.nixosSystem {
     inherit system;
@@ -39,9 +32,6 @@ in {
       self.nixosModules.tmux
       self.nixosModules.helium
       self.nixosModules.mlqs
-
-      # Unstable overlay
-      ({...}: {nixpkgs.overlays = [overlay-unstable];})
 
       # Home Manager
       inputs.home-manager.nixosModules.home-manager
