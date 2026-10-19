@@ -122,6 +122,8 @@
       };
 
       # Paj integration
+      home.file.".pi/agent/paj.json".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/paj.json";
       home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";

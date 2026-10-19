@@ -1,0 +1,13 @@
+{
+  "subagents": {
+    "model": {
+      "rules": [
+        { "parentFamily": "astra", "childFamily": "sol" },
+        { "parentFamily": "fable", "childFamily": "opus" }
+      ],
+      "provider": "same",
+      "version": "latest",
+      "fallback": "inherit"
+    }
+  }
+}
