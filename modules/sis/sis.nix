@@ -20,6 +20,9 @@
         ];
     });
 
+    credential-provider = "${pkgs.azure-artifacts-credprovider}/bin/CredentialProvider.Microsoft";
+    credential-provider-dll = "${pkgs.azure-artifacts-credprovider}/lib/azure-artifacts-credprovider/CredentialProvider.Microsoft.dll";
+
     dotnet-wrapped = pkgs.symlinkJoin {
       name = "dotnet-sdk-wrapped";
       paths = [pkgs.dotnet-sdk_10];
@@ -28,7 +31,8 @@
         rm "$out/bin/dotnet"
         makeBinaryWrapper "${pkgs.dotnet-sdk_10}/bin/dotnet" "$out/bin/dotnet" \
           --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [pkgs.libsecret pkgs.icu pkgs.openssl]}" \
-          --set DOTNET_ROLL_FORWARD LatestMajor
+          --set DOTNET_ROLL_FORWARD LatestMajor \
+          --set NUGET_NETCORE_PLUGIN_PATHS "${credential-provider-dll}"
       '';
     };
 
@@ -113,11 +117,32 @@
       '';
     };
 
-    environment.sessionVariables.DOTNET_ROOT = "${dotnet-wrapped}/share/dotnet";
+    environment.sessionVariables = {
+      DOTNET_ROOT = "${dotnet-wrapped}/share/dotnet";
+      NUGET_NETCORE_PLUGIN_PATHS = credential-provider-dll;
+    };
+
+    home-manager.users.jacob = {lib, ...}: {
+      home.file.".dotnet/tools/nuget-plugin-microsoft-artifacts-credential-provider" = {
+        source = credential-provider;
+        force = true;
+      };
+
+      # Back up outside PATH: NuGet also discovers executable nuget-plugin-*.backup files.
+      home.activation.migrateNugetCredentialProvider = lib.hm.dag.entryBetween ["linkGeneration"] ["writeBoundary"] ''
+        launcher="$HOME/.dotnet/tools/nuget-plugin-microsoft-artifacts-credential-provider"
+        if [[ -f "$launcher" && ! -L "$launcher" ]]; then
+          backupDir="$HOME/.local/state/nuget-credential-provider"
+          run mkdir -p "$backupDir"
+          run mv --backup=numbered -- "$launcher" "$backupDir/legacy-launcher"
+        fi
+      '';
+    };
 
     environment.systemPackages = [
       dotnet-wrapped
       roslyn-ls-wrapped
+      pkgs.azure-artifacts-credprovider
       pkgs.libsecret
       pkgs.azure-cli
       pkgs.azuredatastudio

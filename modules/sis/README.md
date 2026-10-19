@@ -139,3 +139,48 @@ the VPN, including after moving between networks.
 
 The `/etc/ppp/ip-up` hook ignores connections without `pppd-ipparam = sis`,
 but another module cannot independently replace the same hook.
+
+## .NET and Azure Artifacts authentication
+
+`sis.nix` installs `pkgs.azure-artifacts-credprovider` from the pinned nixpkgs revision. NuGet loads
+its managed DLL through the current SDK host, selected by `NUGET_NETCORE_PLUGIN_PATHS`. The system
+`dotnet` wrapper sets this variable too, so an existing terminal uses the correct provider
+after switching. Explicit discovery excludes the mutable global-tool launchers on `PATH`.
+
+Home Manager also owns `~/.dotnet/tools/nuget-plugin-microsoft-artifacts-credential-provider` as a
+symlink to the Nix package's launcher, which uses its own compatible .NET runtime. On first
+activation, the old executable moves to `~/.local/state/nuget-credential-provider/legacy-launcher`.
+Repeated migrations preserve older backups with numbered suffixes. Backups must stay outside
+`~/.dotnet/tools`: NuGet can discover executable `nuget-plugin-*.backup` files there too.
+
+This avoids a patched global tool retaining an old glibc interpreter/RUNPATH while loading a newly
+upgraded .NET runtime. Do not reinstall or patch this launcher with `dotnet tool install/update` or
+`patchelf`; update nixpkgs and rebuild instead. The old tool's `.store` payload is left alone.
+Provider versions follow nixpkgs (currently 2.0.1), not the previous mutable installation (2.0.4).
+Authentication, token caches, private-feed configuration, and NuGet auditing are unchanged.
+
+Build and run the isolated regression test before activating (Bash syntax):
+
+```bash
+config=.#nixosConfigurations.framework.config
+system=$(nix build "$config.system.build.toplevel" --no-link --print-out-paths)
+provider=$(nix eval --raw "$config.environment.sessionVariables.NUGET_NETCORE_PLUGIN_PATHS")
+python3 modules/sis/tests/nuget-provider.py "$system/sw/bin/dotnet" "$provider"
+```
+
+The test uses a temporary home, a localhost-only HTTP 401 feed, and a deliberately broken launcher
+first on `PATH`. It checks provider help, NuGet initialization and credential requests, and
+exclusion of that launcher. Restore should fail with HTTP 401, never with GLIBC
+or broken-pipe errors. It does not contact private feeds, use existing credentials,
+or start application code.
+
+Activate with the usual `sudo nixos-rebuild switch --flake ~/.nixos#framework` workflow. Start a new
+login session for other SDKs/IDE processes to inherit the session variable, then verify:
+
+```sh
+dotnet "$NUGET_NETCORE_PLUGIN_PATHS" -h
+~/.dotnet/tools/nuget-plugin-microsoft-artifacts-credential-provider -h
+```
+
+Both commands should print provider help without GLIBC errors. Private-feed restore still requires
+normal Azure authentication; this test verifies plugin startup, not access to a real feed.
