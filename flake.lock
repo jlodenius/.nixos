@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "claude-agent-sdk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790905979,
+        "narHash": "sha256-xw8K1d3hmbZGBBciLZF4MQcLWoq9Gq7/3dEY0SqGZhA=",
+        "owner": "pi-pod",
+        "repo": "pi-claude-agent-sdk",
+        "rev": "36a20bcb28e23bbd948f47fd0661120556e2620c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pi-pod",
+        "ref": "main",
+        "repo": "pi-claude-agent-sdk",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -253,6 +270,7 @@
     },
     "root": {
       "inputs": {
+        "claude-agent-sdk": "claude-agent-sdk",
         "flake-parts": "flake-parts",
         "helium": "helium",
         "home-manager": "home-manager",

@@ -41,6 +41,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    claude-agent-sdk = {
+      url = "github:pi-pod/pi-claude-agent-sdk/main";
+      flake = false;
+    };
+
     mattpocock-skills = {
       url = "github:mattpocock/skills";
       flake = false;

@@ -85,7 +85,9 @@
       config,
       ...
     }: let
-      claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {};
+      claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {
+        src = inputs.claude-agent-sdk;
+      };
     in {
       home.packages = [
         pkgs.pi-coding-agent
