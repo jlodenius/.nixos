@@ -132,11 +132,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790931655,
-        "narHash": "sha256-qwKmDIB4wtL8ghZRXffZFHhlUIZfM1mKOtTYWNlkJFE=",
+        "lastModified": 1792488905,
+        "narHash": "sha256-4ogn1It5ICNTgyHFu6qgKg1t3paZh/gtjQvb20wHJcA=",
         "owner": "daphen",
         "repo": "mlqs",
-        "rev": "785e2ce0329dd56213cb103c6099111948cecfaf",
+        "rev": "48b92cd485e47a0bd44ac2f7657d0b25acb28c02",
         "type": "github"
       },
       "original": {
