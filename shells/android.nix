@@ -10,7 +10,7 @@
   androidComposition = pkgs.androidenv.composeAndroidPackages {
     toolsVersion = null;
     platformVersions = ["36"];
-    buildToolsVersions = ["36.0.0"];
+    buildToolsVersions = ["35.0.0" "36.0.0"];
     includeNDK = true;
     ndkVersions = ["27.1.12297006"];
     includeCmake = true;
