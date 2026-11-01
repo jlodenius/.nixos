@@ -78,6 +78,8 @@ return {
     -- C#
     -- Note: roslyn.nvim calls vim.lsp.enable("roslyn")
     vim.lsp.config("roslyn", {
+      -- The SIS wrapper launches the DLL directly, which doesn't accept --daemon-mode.
+      cmd = { "roslyn-language-server", "--stdio", "--clientProcessId", tostring(vim.fn.getpid()) },
       capabilities = capabilities,
     })
 
