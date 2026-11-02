@@ -12,6 +12,6 @@
   ],
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-astra",
-  "defaultThinkingLevel": "xhigh",
+  "defaultThinkingLevel": "medium",
   "lastChangelogVersion": "1.2.0"
 }
