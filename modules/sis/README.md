@@ -159,21 +159,6 @@ upgraded .NET runtime. Do not reinstall or patch this launcher with `dotnet tool
 Provider versions follow nixpkgs (currently 2.0.1), not the previous mutable installation (2.0.4).
 Authentication, token caches, private-feed configuration, and NuGet auditing are unchanged.
 
-Build and run the isolated regression test before activating (Bash syntax):
-
-```bash
-config=.#nixosConfigurations.framework.config
-system=$(nix build "$config.system.build.toplevel" --no-link --print-out-paths)
-provider=$(nix eval --raw "$config.environment.sessionVariables.NUGET_NETCORE_PLUGIN_PATHS")
-python3 modules/sis/tests/nuget-provider.py "$system/sw/bin/dotnet" "$provider"
-```
-
-The test uses a temporary home, a localhost-only HTTP 401 feed, and a deliberately broken launcher
-first on `PATH`. It checks provider help, NuGet initialization and credential requests, and
-exclusion of that launcher. Restore should fail with HTTP 401, never with GLIBC
-or broken-pipe errors. It does not contact private feeds, use existing credentials,
-or start application code.
-
 Activate with the usual `sudo nixos-rebuild switch --flake ~/.nixos#framework` workflow. Start a new
 login session for other SDKs/IDE processes to inherit the session variable, then verify:
 
@@ -183,4 +168,4 @@ dotnet "$NUGET_NETCORE_PLUGIN_PATHS" -h
 ```
 
 Both commands should print provider help without GLIBC errors. Private-feed restore still requires
-normal Azure authentication; this test verifies plugin startup, not access to a real feed.
+normal Azure authentication; these commands verify plugin startup, not access to a real feed.

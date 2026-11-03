@@ -118,6 +118,7 @@
     };
 
     environment.sessionVariables = {
+      AZURE_TOKEN_CREDENTIALS = "AzureCliCredential";
       DOTNET_ROOT = "${dotnet-wrapped}/share/dotnet";
       NUGET_NETCORE_PLUGIN_PATHS = credential-provider-dll;
     };
