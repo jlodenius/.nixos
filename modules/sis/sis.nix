@@ -10,6 +10,23 @@
       "51.12.232.32/29"
     ];
 
+    portal-hosts = pkgs.lib.concatMap (environment:
+      map (service: "ca-${service}-sis-${environment.name}.${environment.domain}.swedencentral.azurecontainerapps.io")
+      ["delivery" "ingestion" "assets"]) [
+      {
+        name = "dev";
+        domain = "thankfulfield-d3885da1";
+      }
+      {
+        name = "tst";
+        domain = "icyplant-ba185545";
+      }
+      {
+        name = "prd";
+        domain = "orangeground-e50ff1e1";
+      }
+    ];
+
     openfortivpn = pkgs.openfortivpn.overrideAttrs (old: {
       # Match NetworkManager's openresolv backend instead of auto-detecting resolvectl.
       configureFlags =
@@ -113,6 +130,25 @@
         routes=(${pkgs.lib.escapeShellArgs vpn-routes})
         for route in "''${routes[@]}"; do
           ${pkgs.iproute2}/bin/ip route add "$route" dev "$1"
+        done
+        hosts=(${pkgs.lib.escapeShellArgs portal-hosts})
+        for host in "''${hosts[@]}"; do
+          addresses=""
+          # ip-up can run before openfortivpn installs VPN DNS in resolvconf.
+          for dns in 172.16.32.4 172.16.32.5; do
+            answer=$(${pkgs.dnsutils}/bin/dig +time=2 +tries=1 +short "@$dns" "$host" A) || continue
+            addresses=$(printf '%s\n' "$answer" | ${pkgs.gawk}/bin/awk '/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/')
+            if [ -n "$addresses" ]; then
+              break
+            fi
+          done
+          if [ -z "$addresses" ]; then
+            printf 'SIS VPN: cannot resolve %s; its VPN route was not installed.\n' "$host" >&2
+            continue
+          fi
+          while read -r address; do
+            ${pkgs.iproute2}/bin/ip route replace "$address/32" dev "$1"
+          done < <(printf '%s\n' "$addresses" | ${pkgs.coreutils}/bin/sort -u)
         done
       '';
     };

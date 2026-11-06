@@ -85,6 +85,30 @@ and `ip route get <resolved-ip>`, then connect using Azure Data Studio. A route
 alone does not establish that the SIS gateway permits or provides outbound
 access to Azure, or that the SQL firewall accepts its public egress address.
 
+## Portal APIs
+
+The PPP connection hook resolves Delivery, Ingestion, and Assets for dev, test,
+and prod using SIS DNS (`172.16.32.4`, then `172.16.32.5`). Each resolved IPv4
+address gets a `/32` route through the VPN, in addition to `vpn-routes`.
+The hook queries SIS DNS directly because VPN DNS registration may not yet be
+complete when PPP connects. These DNS servers are already covered by `172.16.0.0/16`.
+
+If a hostname cannot resolve, the hook prints a warning and continues installing
+other routes. A DNS failure still prevents access; a hostname cannot become an
+IP route without resolving it first. Reconnect after DNS records or ingress IPs
+change. Shared ingress IPs also route other applications on those IPs through
+the VPN. These routes disappear when the PPP interface goes away.
+
+Rebuild and reconnect, then verify an address returned by SIS DNS:
+
+```sh
+getent ahostsv4 ca-ingestion-sis-prd.orangeground-e50ff1e1.swedencentral.azurecontainerapps.io
+ip route get <resolved-ip>
+```
+
+The route should use the PPP interface. DNS resolution and gateway access must
+both work for the APIs to be reachable.
+
 ## Additional routes (including databases)
 
 Edit `vpn-routes` at the top of `modules/sis/sis.nix`. Use an IPv4 address with
