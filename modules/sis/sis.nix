@@ -1,29 +1,32 @@
 {...}: {
   flake.nixosModules.sis = {pkgs, ...}: let
-    vpn-routes = [
-      "172.16.0.0/16"
-      "10.10.20.0/24"
-      # Azure SQL Sweden Central gateways (Proxy policy); see README.md.
-      "51.12.46.32/27"
-      "51.12.96.32/29"
-      "51.12.224.32/29"
-      "51.12.232.32/29"
-    ];
+    vpn-routes =
+      [
+        "172.16.0.0/16"
+        "10.10.20.0/24"
+        # Azure SQL Sweden Central gateways (Proxy policy); see README.md.
+        "51.12.46.32/27"
+        "51.12.96.32/29"
+        "51.12.224.32/29"
+        "51.12.232.32/29"
+      ]
+      ++ map (environment: "${environment.ip}/32") portal-environments;
 
-    portal-hosts = pkgs.lib.concatMap (environment:
-      map (service: "ca-${service}-sis-${environment.name}.${environment.domain}.swedencentral.azurecontainerapps.io")
-      ["delivery" "ingestion" "assets"]) [
+    portal-environments = [
       {
         name = "dev";
         domain = "thankfulfield-d3885da1";
+        ip = "10.121.193.20";
       }
       {
         name = "tst";
         domain = "icyplant-ba185545";
+        ip = "10.121.129.33";
       }
       {
         name = "prd";
         domain = "orangeground-e50ff1e1";
+        ip = "10.121.65.59";
       }
     ];
 
@@ -63,18 +66,30 @@
       ./sd-api-ca.crt
     ];
 
-    networking.hosts."127.0.0.1" = [
-      "mol-dev.sis.se"
-      "mol-admin-dev.sis.se"
-      "dev-viewer.standard.sis.se"
-      "sd-api.dev.sis.se"
-    ];
+    networking.hosts = pkgs.lib.mkMerge [
+      (builtins.listToAttrs (map (environment: {
+          name = environment.ip;
+          value =
+            map
+            (service: "ca-${service}-sis-${environment.name}.${environment.domain}.swedencentral.azurecontainerapps.io")
+            ["delivery" "ingestion" "assets" "demo" "graph" "neo4j-graph" "mcp"];
+        })
+        portal-environments))
+      {
+        "127.0.0.1" = [
+          "mol-dev.sis.se"
+          "mol-admin-dev.sis.se"
+          "dev-viewer.standard.sis.se"
+          "sd-api.dev.sis.se"
+        ];
 
-    # Local SIS.ContentDelivery under the same site as the viewer. api-dev is the only
-    # *.standard.sis.se callback login-test accepts for the test.newsis client, so the
-    # name is borrowed from deployed dev. Comment this entry out to reach the deployed API.
-    networking.hosts."127.0.0.2" = [
-      "api-dev.standard.sis.se"
+        # Local SIS.ContentDelivery under the same site as the viewer. api-dev is the only
+        # *.standard.sis.se callback login-test accepts for the test.newsis client, so the
+        # name is borrowed from deployed dev. Comment this entry out to reach the deployed API.
+        "127.0.0.2" = [
+          "api-dev.standard.sis.se"
+        ];
+      }
     ];
 
     # Docker's nginx holds 0.0.0.0:443, so Kestrel cannot listen on 443 itself.
@@ -131,25 +146,7 @@
         for route in "''${routes[@]}"; do
           ${pkgs.iproute2}/bin/ip route add "$route" dev "$1"
         done
-        hosts=(${pkgs.lib.escapeShellArgs portal-hosts})
-        for host in "''${hosts[@]}"; do
-          addresses=""
-          # ip-up can run before openfortivpn installs VPN DNS in resolvconf.
-          for dns in 172.16.32.4 172.16.32.5; do
-            answer=$(${pkgs.dnsutils}/bin/dig +time=2 +tries=1 +short "@$dns" "$host" A) || continue
-            addresses=$(printf '%s\n' "$answer" | ${pkgs.gawk}/bin/awk '/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/')
-            if [ -n "$addresses" ]; then
-              break
-            fi
-          done
-          if [ -z "$addresses" ]; then
-            printf 'SIS VPN: cannot resolve %s; its VPN route was not installed.\n' "$host" >&2
-            continue
-          fi
-          while read -r address; do
-            ${pkgs.iproute2}/bin/ip route replace "$address/32" dev "$1"
-          done < <(printf '%s\n' "$addresses" | ${pkgs.coreutils}/bin/sort -u)
-        done
+
       '';
     };
 

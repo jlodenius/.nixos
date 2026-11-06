@@ -87,27 +87,30 @@ access to Azure, or that the SQL firewall accepts its public egress address.
 
 ## Portal APIs
 
-The PPP connection hook resolves Delivery, Ingestion, and Assets for dev, test,
-and prod using SIS DNS (`172.16.32.4`, then `172.16.32.5`). Each resolved IPv4
-address gets a `/32` route through the VPN, in addition to `vpn-routes`.
-The hook queries SIS DNS directly because VPN DNS registration may not yet be
-complete when PPP connects. These DNS servers are already covered by `172.16.0.0/16`.
+`portal-environments` in `modules/sis/sis.nix` defines the private ingress IPs:
 
-If a hostname cannot resolve, the hook prints a warning and continues installing
-other routes. A DNS failure still prevents access; a hostname cannot become an
-IP route without resolving it first. Reconnect after DNS records or ingress IPs
-change. Shared ingress IPs also route other applications on those IPs through
-the VPN. These routes disappear when the PPP interface goes away.
+- Dev: `10.121.193.20`
+- Test: `10.121.129.33`
+- Prod: `10.121.65.59`
 
-Rebuild and reconnect, then verify an address returned by SIS DNS:
+Each IP gets a `/32` VPN route and local host mappings for Delivery, Ingestion,
+Assets, Demo, Graph, Neo4j Graph, and MCP, using the supplied hostnames. This
+bypasses the current SIS DNS NXDOMAIN responses; the connection hook does not
+need DNS lookups. Update `portal-environments` if the ingress IPs change.
+Shared ingress IPs also route other applications on those IPs through the VPN.
+
+Rebuild and reconnect, then verify:
 
 ```sh
 getent ahostsv4 ca-ingestion-sis-prd.orangeground-e50ff1e1.swedencentral.azurecontainerapps.io
-ip route get <resolved-ip>
+ip route get 10.121.193.20
+ip route get 10.121.129.33
+ip route get 10.121.65.59
 ```
 
-The route should use the PPP interface. DNS resolution and gateway access must
-both work for the APIs to be reachable.
+The hostname should resolve to `10.121.65.59`, and all three routes should use
+the PPP interface. Routes disappear when the PPP interface goes away; local
+host mappings remain, but access still requires the VPN and gateway permission.
 
 ## Additional routes (including databases)
 
