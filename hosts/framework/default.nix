@@ -24,6 +24,7 @@ in {
       self.nixosModules.xkb
       self.nixosModules.desktop
       self.nixosModules.nordvpn
+      self.nixosModules.tailscale
       self.nixosModules.gaming
       self.nixosModules.niri
       self.nixosModules.colours

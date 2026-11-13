@@ -129,7 +129,7 @@
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/paj.json";
       home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
-      home.file.".pi/agent/extensions/paj-rc".source = "${inputs.paj-rc}/extensions";
+      home.file.".pi/agent/extensions/paj-rc".source = "${inputs.paj-rc}";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
       home.file.".pi/agent/skills/paj-subagents".source = "${inputs.paj}/skills/paj-subagents";
 
