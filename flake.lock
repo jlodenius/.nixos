@@ -239,17 +239,16 @@
         ]
       },
       "locked": {
+        "dirtyRev": "6d11056ef8215b791b482a9e29f8dcdc6405f829-dirty",
+        "dirtyShortRev": "6d11056-dirty",
         "lastModified": 1792442148,
-        "narHash": "sha256-4gUzU1Dp7Alv2In4aL06lqcMldqiRPZBClxhpCFRwbQ=",
-        "owner": "jlodenius",
-        "repo": "paj",
-        "rev": "6d11056ef8215b791b482a9e29f8dcdc6405f829",
-        "type": "github"
+        "narHash": "sha256-1VyhghsT3lwsZyLz5QpyYUoLoVmntJ449NyYLOPYSro=",
+        "type": "git",
+        "url": "file:///home/jacob/Development/paj"
       },
       "original": {
-        "owner": "jlodenius",
-        "repo": "paj",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/jacob/Development/paj"
       }
     },
     "paj-nvim": {
@@ -268,6 +267,23 @@
         "type": "github"
       }
     },
+    "paj-rc": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794587615,
+        "narHash": "sha256-fryHWcsxxKpiodIMkswgpmO2gl8+LFS3XlY4Z2/DHi0=",
+        "path": "/home/jacob/Development/paj-rc",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/jacob/Development/paj-rc",
+        "type": "path"
+      }
+    },
     "root": {
       "inputs": {
         "claude-agent-sdk": "claude-agent-sdk",
@@ -282,6 +298,7 @@
         "nixpkgs": "nixpkgs",
         "paj": "paj",
         "paj-nvim": "paj-nvim",
+        "paj-rc": "paj-rc",
         "stockfin": "stockfin",
         "vgit-nvim": "vgit-nvim",
         "vim-maximizer": "vim-maximizer",
