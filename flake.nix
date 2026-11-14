@@ -37,12 +37,12 @@
     };
 
     paj = {
-      url = "git+file:///home/jacob/Development/paj";
+      url = "github:jlodenius/paj";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     paj-rc = {
-      url = "path:/home/jacob/Development/paj-rc";
+      url = "github:jlodenius/paj-rc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
