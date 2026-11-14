@@ -239,16 +239,31 @@
         ]
       },
       "locked": {
-        "lastModified": 1794661778,
-        "narHash": "sha256-0T87adWJXTuGKEBH3SkKVnPBIzioo/CR04kp1atkazo=",
+        "lastModified": 1794692194,
+        "narHash": "sha256-XvbkO0cw6osQ+ms4NJ/BJjDV1h0hjyPwDYrAjB9a0E4=",
         "owner": "jlodenius",
         "repo": "paj",
-        "rev": "b5fdd22daf878ed03f3eb433715df6824e2d5d67",
+        "rev": "61dab4afef130e2019884ab4e512465ca6f1d8bf",
         "type": "github"
       },
       "original": {
         "owner": "jlodenius",
         "repo": "paj",
+        "type": "github"
+      }
+    },
+    "paj-captain": {
+      "locked": {
+        "lastModified": 1794696209,
+        "narHash": "sha256-uCDCb6Mamfrg/foZ1Fhza38DcIJWmHTiUiaFKzqK+Og=",
+        "owner": "jlodenius",
+        "repo": "paj-captain",
+        "rev": "bb81f64a6352c4dba047af73a44506fb9f560e4c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jlodenius",
+        "repo": "paj-captain",
         "type": "github"
       }
     },
@@ -301,6 +316,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "paj": "paj",
+        "paj-captain": "paj-captain",
         "paj-nvim": "paj-nvim",
         "paj-rc": "paj-rc",
         "stockfin": "stockfin",

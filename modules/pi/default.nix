@@ -89,6 +89,9 @@
         src = inputs.claude-agent-sdk;
       };
     in {
+      imports = [inputs.paj-captain.homeManagerModules.default];
+      programs.paj-captain.enable = true;
+
       home.packages = [
         pkgs.pi-coding-agent
         pkgs.ddgr

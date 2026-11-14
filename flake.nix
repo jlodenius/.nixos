@@ -46,6 +46,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    paj-captain.url = "github:jlodenius/paj-captain";
+
     claude-agent-sdk = {
       url = "github:pi-pod/pi-claude-agent-sdk/main";
       flake = false;
