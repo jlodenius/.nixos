@@ -85,6 +85,7 @@
       config,
       ...
     }: let
+      piCodingAgent = pkgs.callPackage ./_pi-coding-agent.nix {};
       claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {
         src = inputs.claude-agent-sdk;
       };
@@ -93,7 +94,7 @@
       programs.paj-captain.enable = true;
 
       home.packages = [
-        pkgs.pi-coding-agent
+        piCodingAgent
         pkgs.ddgr
         pkgs.python3Packages.trafilatura
         inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default

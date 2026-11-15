@@ -3,11 +3,11 @@
     "claude-agent-sdk": {
       "flake": false,
       "locked": {
-        "lastModified": 1790905979,
-        "narHash": "sha256-xw8K1d3hmbZGBBciLZF4MQcLWoq9Gq7/3dEY0SqGZhA=",
+        "lastModified": 1794342033,
+        "narHash": "sha256-O2pD2QXgE+6FnB+j1LRKSq7TmjNZxwvHJvgS6Arnbro=",
         "owner": "pi-pod",
         "repo": "pi-claude-agent-sdk",
-        "rev": "36a20bcb28e23bbd948f47fd0661120556e2620c",
+        "rev": "eaa6fb765fc3b4fe182cb91c628bba4adbfd1fbc",
         "type": "github"
       },
       "original": {
@@ -254,11 +254,11 @@
     },
     "paj-captain": {
       "locked": {
-        "lastModified": 1794696209,
-        "narHash": "sha256-uCDCb6Mamfrg/foZ1Fhza38DcIJWmHTiUiaFKzqK+Og=",
+        "lastModified": 1794773667,
+        "narHash": "sha256-NVKuoBlU/Y6Oiw9n3bVKXubD3SR6Ja+XcNFuFVdPuio=",
         "owner": "jlodenius",
         "repo": "paj-captain",
-        "rev": "bb81f64a6352c4dba047af73a44506fb9f560e4c",
+        "rev": "df825108ef9bb5ce14fd9e3b8b987291526f1ed7",
         "type": "github"
       },
       "original": {
