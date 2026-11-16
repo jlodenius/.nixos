@@ -254,11 +254,11 @@
     },
     "paj-captain": {
       "locked": {
-        "lastModified": 1794818811,
-        "narHash": "sha256-nkKDPv9RZumKVm1dA1SKAn4AHO4e8OarA8NaMm3Xo0g=",
+        "lastModified": 1794819614,
+        "narHash": "sha256-H7KFGg4RDX7w95qSOwHDBYxdE6bglbLHnU4HhvMe9A4=",
         "owner": "jlodenius",
         "repo": "paj-captain",
-        "rev": "69dc80d373510b2428e34fb5361a40e138ec8fe1",
+        "rev": "07646324dd8a0df1d0a78876d3cbab6867514160",
         "type": "github"
       },
       "original": {
