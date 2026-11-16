@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "languages": ["en"],
+  "responseLanguage": "en",
+  "addressPhrases": ["paj", "pie", "pi"],
+  "python": "paj-voice-audio",
+  "stt": {
+    "model": "/home/jacob/.local/share/paj-voice/models/faster-whisper-base.en",
+    "computeType": "int8"
+  },
+  "tts": {
+    "model": "/home/jacob/.local/share/paj-voice/models/en_US-ljspeech-medium.onnx",
+    "config": "/home/jacob/.local/share/paj-voice/models/en_US-ljspeech-medium.onnx.json"
+  },
+  "audio": {
+    "input": "paj_voice_source",
+    "output": "paj_voice_sink",
+    "echoCancellation": "external"
+  },
+  "turn": {
+    "silenceMs": 1200,
+    "maxSeconds": 45,
+    "prefixIntervalMs": 500,
+    "speechThreshold": 0.001
+  }
+}

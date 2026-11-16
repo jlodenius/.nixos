@@ -13,6 +13,6 @@
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
-  "lastChangelogVersion": "1.2.0",
+  "lastChangelogVersion": "1.5.2",
   "hideThinkingBlock": false
 }

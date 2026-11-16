@@ -12,8 +12,13 @@
       swayidle # drives the quickshell lock (idle timeout + before-sleep)
     ];
 
-    # Auth backend for the quickshell lock screen (LockScreen.qml).
-    security.pam.services.quickshell = {};
+    security.pam.services = {
+      quickshell.fprintAuth = false;
+      quickshell-fingerprint = {
+        unixAuth = false;
+        fprintAuth = true;
+      };
+    };
 
     home-manager.users.jacob = {config, ...}: {
       programs.quickshell = {

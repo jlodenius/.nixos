@@ -2,24 +2,43 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
-import Quickshell.Services.Pam
 import Quickshell.Services.UPower
 import "."
 
 // Session lock (ext-session-lock): blurred wallpaper, clock, and a minimal
-// underlined password prompt (shakes on failure). Auth goes through PAM
-// service "quickshell" (see quickshell.nix).
+// underlined password prompt (shakes on failure). Password and fingerprint
+// authentication use separate PAM services (see quickshell.nix).
 WlSessionLock {
     id: lock
 
     locked: LockState.locked
 
+    // Set to false to restore the original lockscreen visuals.
+    property bool blackScreen: true
     WlSessionLockSurface {
         id: surface
 
         color: "black"
 
         property bool failed: false
+
+        Connections {
+            target: LockState
+
+            function onPasswordRejected() {
+                password.text = ""
+                surface.failed = true
+                shake.restart()
+                Qt.callLater(() => password.forceActiveFocus())
+            }
+
+            function onLockedChanged() {
+                if (!lock.locked) {
+                    password.text = ""
+                    surface.failed = false
+                }
+            }
+        }
 
         // Bleed past the edges so the blur kernel never samples outside the
         // image (which shows up as a bright halo at the borders).
@@ -90,7 +109,7 @@ WlSessionLock {
                     horizontalAlignment: TextInput.AlignHCenter
                     echoMode: TextInput.Password
                     passwordCharacter: "•"
-                    enabled: !pam.active
+                    enabled: !LockState.passwordActive
                     focus: true
                     color: Theme.fg
                     font.family: Theme.fontFamily
@@ -115,7 +134,7 @@ WlSessionLock {
                         }
                     }
                     onTextEdited: surface.failed = false
-                    onAccepted: pam.start()
+                    onAccepted: LockState.submitPassword(text)
                 }
 
                 // Only failure is marked; otherwise nothing but the blurred
@@ -167,29 +186,39 @@ WlSessionLock {
             }
         }
 
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+            visible: lock.blackScreen
+            z: 100
+
+            Column {
+                anchors.centerIn: parent
+                spacing: 16
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: "•".repeat(password.text.length)
+                    color: Theme.fg
+                    font.family: Theme.fontFamily
+                    font.pixelSize: 20
+                    font.letterSpacing: 4
+                }
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: surface.failed ? LockState.authError : ""
+                    color: Theme.red
+                    font.family: Theme.fontFamily
+                    font.pixelSize: Theme.fontSize
+                }
+            }
+        }
+
         SystemClock {
             id: clock
             precision: SystemClock.Minutes
         }
 
-        PamContext {
-            id: pam
-            config: "quickshell"
-
-            onPamMessage: {
-                if (this.responseRequired) this.respond(password.text)
-            }
-            onCompleted: result => {
-                password.text = ""
-                if (result === PamResult.Success) {
-                    surface.failed = false
-                    LockState.locked = false
-                } else {
-                    surface.failed = true
-                    shake.restart()
-                    password.forceActiveFocus()
-                }
-            }
-        }
     }
 }
