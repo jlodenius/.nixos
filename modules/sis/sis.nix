@@ -4,6 +4,8 @@
       [
         "172.16.0.0/16"
         "10.10.20.0/24"
+        # Production internal network: pm-api.sis.se (10.160.11.10) and the VPN's own pool.
+        "10.160.0.0/16"
         # Azure SQL Sweden Central gateways (Proxy policy); see README.md.
         "51.12.46.32/27"
         "51.12.96.32/29"

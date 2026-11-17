@@ -28,7 +28,9 @@ configuration: its contents are readable in the Nix store.
 
 ## Routing and verification
 
-The VPN explicitly routes `172.16.0.0/16` and the Azure SQL gateway ranges
+The VPN explicitly routes `172.16.0.0/16`, `10.10.20.0/24` (test services such as
+`pm-api-test.sis.se`), `10.160.0.0/16` (production services such as `pm-api.sis.se`,
+also the tunnel's own address pool) and the Azure SQL gateway ranges
 listed below. `172.16.0.0/16` is the gist's selected SIS range, not a confirmed
 inventory of every SIS network or the VPN gateway's requested routing policy.
 Check for local subnet conflicts and ensure this split-tunnel policy is
@@ -40,6 +42,7 @@ While connected:
 ```sh
 ip route show exact 172.16.0.0/16
 ip route get 172.16.32.4
+ip route get 10.160.11.10
 getent ahostsv4 pm.sis.se
 getent ahostsv4 intra.sis.se
 ```
