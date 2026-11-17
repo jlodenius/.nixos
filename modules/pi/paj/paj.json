@@ -27,8 +27,6 @@
       "en"
     ],
     "responseLanguage": "en",
-    "python": "/home/jacob/Development/paj-voice/result-addon/bin/paj-voice-audio",
-    "cacheDir": "/home/jacob/Development/paj-voice/.cache/runtime",
     "stt": {
       "computeType": "int8"
     },
