@@ -22,24 +22,7 @@
     }
   },
   "voice": {
-    "version": 1,
-    "languages": [
-      "en"
-    ],
-    "responseLanguage": "en",
-    "stt": {
-      "computeType": "int8"
-    },
-    "tts": {},
-    "audio": {
-      "input": "alsa_input.pci-0000_00_1f.3.analog-stereo",
-      "output": "bluez_output.58_18_62_86_34_AC.1",
-      "echoCancellation": "none"
-    },
-    "turn": {
-      "silenceMs": 800,
-      "maxSeconds": 20,
-      "speechThreshold": 0.001
-    }
+    "voice": "ljspeech",
+    "maxMessageSeconds": 20
   }
 }
