@@ -23,7 +23,6 @@
   },
   "voice": {
     "voice": "ljspeech",
-    "pauseSeconds": 3,
-    "maxMessageSeconds": 20
+    "pauseSeconds": 2.5
   }
 }
