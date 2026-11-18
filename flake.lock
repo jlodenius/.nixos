@@ -239,11 +239,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794952511,
-        "narHash": "sha256-X+iEtN9uGg6obBKtxuXA//tJv/wTmSk6o7CEDz16PwE=",
+        "lastModified": 1794960329,
+        "narHash": "sha256-S9Rc+yWSU+ZmHZNumOP0b6ci4l3APs2P22QIric4v2M=",
         "owner": "jlodenius",
         "repo": "paj",
-        "rev": "43971eb04ec519b56add4c1030e01d47b2a5a868",
+        "rev": "b50a6c537fc8b0e185eb71e404f2281a0af50668",
         "type": "github"
       },
       "original": {
@@ -254,11 +254,11 @@
     },
     "paj-captain": {
       "locked": {
-        "lastModified": 1794952513,
-        "narHash": "sha256-QH8owIahGd+JeVaDlUuH79kT3PAJ6ekkkVYHduCoYy4=",
+        "lastModified": 1794959362,
+        "narHash": "sha256-p+b9FPkHeiy5eYqQE3JGmICFUVk/4LwYWPKztzL3Pm0=",
         "owner": "jlodenius",
         "repo": "paj-captain",
-        "rev": "b4598ac2b5afee6c4b47c86e289e7c7fc2f8cf00",
+        "rev": "331130418ad06613e191b23cd6316db000489dec",
         "type": "github"
       },
       "original": {
@@ -290,16 +290,31 @@
         ]
       },
       "locked": {
-        "lastModified": 1794781148,
-        "narHash": "sha256-exAisgNpHbK82AXIqaBlY2klOqRcoesIXlBtHOeGLS0=",
+        "lastModified": 1794960328,
+        "narHash": "sha256-zL+4E4ftQkZ4mNjcCWMnUsU+EQkFpMEtf/8F7Oz8bLY=",
         "owner": "jlodenius",
         "repo": "paj-rc",
-        "rev": "b814dd898782e0062bbbb5528f40484413331e0b",
+        "rev": "646fe2ed08b95cb8424e9abacc16c6d663a842d9",
         "type": "github"
       },
       "original": {
         "owner": "jlodenius",
         "repo": "paj-rc",
+        "type": "github"
+      }
+    },
+    "paj-voice": {
+      "locked": {
+        "lastModified": 1794960324,
+        "narHash": "sha256-C10Z9aKLkgwwrVg4ZS3gLpX6V00LmC5YsrWw/2xE7UE=",
+        "owner": "jlodenius",
+        "repo": "paj-voice",
+        "rev": "0d901d9a75ca0082fa1a9503eb64a965704b8b94",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jlodenius",
+        "repo": "paj-voice",
         "type": "github"
       }
     },
@@ -319,6 +334,7 @@
         "paj-captain": "paj-captain",
         "paj-nvim": "paj-nvim",
         "paj-rc": "paj-rc",
+        "paj-voice": "paj-voice",
         "stockfin": "stockfin",
         "vgit-nvim": "vgit-nvim",
         "vim-maximizer": "vim-maximizer",

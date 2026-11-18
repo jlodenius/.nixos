@@ -90,8 +90,12 @@
         src = inputs.claude-agent-sdk;
       };
     in {
-      imports = [inputs.paj-captain.homeManagerModules.default];
+      imports = [
+        inputs.paj-captain.homeManagerModules.default
+        inputs.paj-voice.homeManagerModules.default
+      ];
       programs.paj-captain.enable = true;
+      programs.paj-voice.enable = true;
 
       home.packages = [
         piCodingAgent
@@ -133,7 +137,8 @@
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/paj/paj.json";
       home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
-      home.file.".pi/agent/extensions/paj-rc".source = "${inputs.paj-rc}";
+      home.file.".pi/agent/extensions/paj-rc".source =
+        "${inputs.paj-rc.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/node_modules/paj-rc";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
       home.file.".pi/agent/skills/paj-subagents".source = "${inputs.paj}/skills/paj-subagents";
 

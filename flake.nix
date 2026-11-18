@@ -47,6 +47,7 @@
     };
 
     paj-captain.url = "github:jlodenius/paj-captain";
+    paj-voice.url = "github:jlodenius/paj-voice";
 
     claude-agent-sdk = {
       url = "github:pi-pod/pi-claude-agent-sdk/main";
