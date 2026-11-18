@@ -122,8 +122,8 @@
 
       home.file.".pi/agent/skills/mattpocock".source = "${inputs.mattpocock-skills}/skills";
 
+      # Claude workaround
       home.file.".pi/agent/extensions/claude-agent-sdk".source = "${claudeAgentSdk}/lib/node_modules/pi-claude-agent-sdk";
-
       home.file.".pi/agent/claude-bridge.json".source = (pkgs.formats.json {}).generate "claude-bridge.json" {
         provider = {
           plan = "pro";
@@ -137,8 +137,7 @@
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/paj/paj.json";
       home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
-      home.file.".pi/agent/extensions/paj-rc".source =
-        "${inputs.paj-rc.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/node_modules/paj-rc";
+      home.file.".pi/agent/extensions/paj-rc".source = "${inputs.paj-rc.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/node_modules/paj-rc";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
       home.file.".pi/agent/skills/paj-subagents".source = "${inputs.paj}/skills/paj-subagents";
 

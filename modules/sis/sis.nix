@@ -78,6 +78,13 @@
         })
         portal-environments))
       {
+        # Production Product Master API. Public DNS points this name at the SIS web
+        # server; only SIS internal DNS, which Tailscale's resolver shadows, knows the
+        # VPN address. pm-api-test.sis.se is public with its internal address and needs nothing.
+        "10.160.11.10" = [
+          "pm-api.sis.se"
+        ];
+
         "127.0.0.1" = [
           "mol-dev.sis.se"
           "mol-admin-dev.sis.se"

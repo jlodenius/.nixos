@@ -102,6 +102,18 @@ bypasses the current SIS DNS NXDOMAIN responses; the connection hook does not
 need DNS lookups. Update `portal-environments` if the ingress IPs change.
 Shared ingress IPs also route other applications on those IPs through the VPN.
 
+## Product Master API
+
+`pm-api.sis.se` is pinned to `10.160.11.10` in `networking.hosts`. Public DNS answers that
+name with the SIS web server, and Tailscale's resolver sits in front of the SIS internal DNS
+the VPN pushes, so without the pin the connection reaches the wrong host and TLS fails with
+"unrecognized name". `pm-api-test.sis.se` is published publicly with its internal address
+and needs no pin. Verify with:
+
+```sh
+curl -sk -o /dev/null -w "%{http_code}\n" https://pm-api.sis.se/api/v1.0/ics/list
+```
+
 Rebuild and reconnect, then verify:
 
 ```sh
