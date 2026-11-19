@@ -25,17 +25,17 @@
     "voice": "ljspeech",
     "volume": 40,
     "speed": 1,
-    "pauseSeconds": 2,
+    "pauseSeconds": 1.5,
     "maxMessageSeconds": 120,
     "feedback": {
       "receipt": "Heard",
       "steeringReceipt": "Steering",
       "progressUpdates": true,
-      "idleReminders": true
+      "idleReminders": false
     },
     "backgroundAudio": {
       "enabled": true,
-      "gain": 0.2,
+      "gain": 0.1,
       "ignoreApps": []
     }
   }
