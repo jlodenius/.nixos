@@ -18,7 +18,7 @@ return {
         less = { "prettier" },
         scss = { "prettier" },
         markdown = { "prettier" },
-        json = { "prettier" },
+        json = { "prettierd" },
         yaml = { "prettier" },
         lua = { "stylua" },
         python = { "ruff" },
