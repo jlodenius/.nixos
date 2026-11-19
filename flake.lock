@@ -305,11 +305,11 @@
     },
     "paj-voice": {
       "locked": {
-        "lastModified": 1795094283,
-        "narHash": "sha256-sLWsCDJyRXBpmVdvgSSU+CN8bPPgcUJ5ozUGzEawJYQ=",
+        "lastModified": 1795096310,
+        "narHash": "sha256-oJCD2B+nhh4V/SecUYBzm3zUraMQRYSez6vmyT07AwE=",
         "owner": "jlodenius",
         "repo": "paj-voice",
-        "rev": "c5cdb726ddf48fecd6806f75f8164353fc690786",
+        "rev": "ed78dbb5053383231017c0d23cb8924ed063145d",
         "type": "github"
       },
       "original": {
