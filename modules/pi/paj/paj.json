@@ -23,6 +23,11 @@
   },
   "voice": {
     "voice": "ljspeech",
-    "pauseSeconds": 2
+    "pauseSeconds": 2,
+    "backgroundAudio": {
+      "enabled": true,
+      "gain": 0.2,
+      "ignoreApps": []
+    }
   }
 }
