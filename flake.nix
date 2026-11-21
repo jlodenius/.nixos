@@ -37,17 +37,17 @@
     };
 
     paj = {
-      url = "git+file:///home/jacob/Development/Paj/paj?rev=3f416b11acd6491c47c2b539d80924a4877af0b6";
+      url = "github:jlodenius/paj/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     paj-rc = {
-      url = "github:jlodenius/paj-rc";
+      url = "github:jlodenius/paj-rc/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    paj-captain.url = "git+file:///home/jacob/Development/Paj/paj-captain?rev=1fbb794355793e01fb3fe1c9346748a4c6a4d4e6";
-    paj-voice.url = "git+file:///home/jacob/Development/Paj/paj-voice?rev=2727e468fca236104a09b3098ceeba75f869b5f4";
+    paj-captain.url = "github:jlodenius/paj-captain/master";
+    paj-voice.url = "github:jlodenius/paj-voice/master";
 
     claude-agent-sdk = {
       url = "github:pi-pod/pi-claude-agent-sdk/main";
@@ -61,7 +61,7 @@
 
     # Neovim plugin sources
     paj-nvim = {
-      url = "github:jlodenius/paj.nvim";
+      url = "github:jlodenius/paj.nvim/master";
       flake = false;
     };
 

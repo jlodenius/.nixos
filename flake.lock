@@ -241,46 +241,47 @@
       "locked": {
         "lastModified": 1795302198,
         "narHash": "sha256-eXmeO/jIu9TGmHbEziAnoQH8m3PvQSn+hXQXBVQNVjM=",
-        "ref": "refs/heads/message-read-pagination",
+        "owner": "jlodenius",
+        "repo": "paj",
         "rev": "3f416b11acd6491c47c2b539d80924a4877af0b6",
-        "revCount": 69,
-        "type": "git",
-        "url": "file:///home/jacob/Development/Paj/paj"
+        "type": "github"
       },
       "original": {
-        "rev": "3f416b11acd6491c47c2b539d80924a4877af0b6",
-        "type": "git",
-        "url": "file:///home/jacob/Development/Paj/paj"
+        "owner": "jlodenius",
+        "ref": "master",
+        "repo": "paj",
+        "type": "github"
       }
     },
     "paj-captain": {
       "locked": {
         "lastModified": 1795300942,
         "narHash": "sha256-5VVmojlEmtRWIeg+LwiH9JaKwHzAz1deKG59akiHLm4=",
-        "ref": "refs/heads/captain-coordinated-release",
+        "owner": "jlodenius",
+        "repo": "paj-captain",
         "rev": "1fbb794355793e01fb3fe1c9346748a4c6a4d4e6",
-        "revCount": 33,
-        "type": "git",
-        "url": "file:///home/jacob/Development/Paj/paj-captain"
+        "type": "github"
       },
       "original": {
-        "rev": "1fbb794355793e01fb3fe1c9346748a4c6a4d4e6",
-        "type": "git",
-        "url": "file:///home/jacob/Development/Paj/paj-captain"
+        "owner": "jlodenius",
+        "ref": "master",
+        "repo": "paj-captain",
+        "type": "github"
       }
     },
     "paj-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1795293321,
-        "narHash": "sha256-edOng00g+U6hWe76VOcum5QAWzfTYhcr+KbQ9LU93Ns=",
+        "lastModified": 1795300604,
+        "narHash": "sha256-LKs5NNT0GXNZbpx3RZaJADUUg5ubU5MGX5256RFHgao=",
         "owner": "jlodenius",
         "repo": "paj.nvim",
-        "rev": "e4943828316f9c25b242b8e7ed074d3a7d426307",
+        "rev": "9d71d068d41e9b13c05c005f7a0b45d51060682f",
         "type": "github"
       },
       "original": {
         "owner": "jlodenius",
+        "ref": "master",
         "repo": "paj.nvim",
         "type": "github"
       }
@@ -292,15 +293,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1795296196,
-        "narHash": "sha256-lfIvAoloMOdH7wrlxtyZAmCworxvCWe5I1sRrdIFauY=",
+        "lastModified": 1795300604,
+        "narHash": "sha256-6+Ahr+d6qc//JpAIc6oUFHZX0j1hBrkGEDQjzzX0NdU=",
         "owner": "jlodenius",
         "repo": "paj-rc",
-        "rev": "51a06792f244c746e8465acff9f484a13ca1f665",
+        "rev": "2118db4d62cfdfec1ca475966b422fc221dc474a",
         "type": "github"
       },
       "original": {
         "owner": "jlodenius",
+        "ref": "master",
         "repo": "paj-rc",
         "type": "github"
       }
@@ -309,16 +311,16 @@
       "locked": {
         "lastModified": 1795302451,
         "narHash": "sha256-bLdp5gtaZ+TTlnWZbz6lhviT6hzUQKdVjsQvkPGzO/U=",
-        "ref": "refs/heads/config/audio-ducking",
+        "owner": "jlodenius",
+        "repo": "paj-voice",
         "rev": "2727e468fca236104a09b3098ceeba75f869b5f4",
-        "revCount": 56,
-        "type": "git",
-        "url": "file:///home/jacob/Development/Paj/paj-voice"
+        "type": "github"
       },
       "original": {
-        "rev": "2727e468fca236104a09b3098ceeba75f869b5f4",
-        "type": "git",
-        "url": "file:///home/jacob/Development/Paj/paj-voice"
+        "owner": "jlodenius",
+        "ref": "master",
+        "repo": "paj-voice",
+        "type": "github"
       }
     },
     "root": {
