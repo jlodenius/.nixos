@@ -37,7 +37,7 @@
     };
 
     paj = {
-      url = "github:jlodenius/paj";
+      url = "git+file:///home/jacob/Development/Paj/paj?rev=3f416b11acd6491c47c2b539d80924a4877af0b6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -46,8 +46,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    paj-captain.url = "github:jlodenius/paj-captain";
-    paj-voice.url = "github:jlodenius/paj-voice";
+    paj-captain.url = "git+file:///home/jacob/Development/Paj/paj-captain?rev=1fbb794355793e01fb3fe1c9346748a4c6a4d4e6";
+    paj-voice.url = "git+file:///home/jacob/Development/Paj/paj-voice?rev=2727e468fca236104a09b3098ceeba75f869b5f4";
 
     claude-agent-sdk = {
       url = "github:pi-pod/pi-claude-agent-sdk/main";

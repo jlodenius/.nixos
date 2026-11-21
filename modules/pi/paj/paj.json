@@ -1,4 +1,5 @@
 {
+  "projects": { "roots": ["~/Development/**"] },
   "subagents": {
     "model": {
       "rules": [
@@ -33,7 +34,7 @@
       "progressUpdates": true,
       "idleReminders": false
     },
-    "backgroundAudio": {
+    "audioDucking": {
       "enabled": true,
       "gain": 0.1,
       "ignoreApps": []

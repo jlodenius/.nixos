@@ -81,6 +81,18 @@ export default function(pi: ExtensionAPI) {
             `${directory}${branch ? ` (${branch})` : ""}`,
           );
 
+          const locationText = theme.fg("dim", location);
+          let locationRow = truncateToWidth(locationText, width, "");
+          if (footerData.getExtensionStatuses().get("paj-captain") === "Captain") {
+            const badge = theme.fg("customMessageLabel", "> Captain");
+            const locationWidth = width - visibleWidth(badge) - 2;
+            if (locationWidth > 0) {
+              const fittedLocation = truncateToWidth(locationText, locationWidth, "");
+              const gap = " ".repeat(locationWidth - visibleWidth(fittedLocation) + 2);
+              locationRow = fittedLocation + gap + badge;
+            }
+          }
+
           const usage = ctx.getContextUsage();
           const used =
             usage?.tokens === null ? "?" : formatTokens(usage?.tokens ?? 0);
@@ -117,10 +129,7 @@ export default function(pi: ExtensionAPI) {
             Math.max(0, width - visibleWidth(left) - visibleWidth(right)),
           );
 
-          return [
-            truncateToWidth(theme.fg("dim", location), width, ""),
-            left + padding + right,
-          ];
+          return [locationRow, left + padding + right];
         },
       };
     });

@@ -85,6 +85,9 @@
       config,
       ...
     }: let
+      system = pkgs.stdenv.hostPlatform.system;
+      paj = inputs.paj.packages.${system}.default;
+      pajRc = inputs.paj-rc.packages.${system}.default;
       piCodingAgent = pkgs.callPackage ./_pi-coding-agent.nix {};
       claudeAgentSdk = pkgs.callPackage ./_claude-agent-sdk.nix {
         src = inputs.claude-agent-sdk;
@@ -101,8 +104,8 @@
         piCodingAgent
         pkgs.ddgr
         pkgs.python3Packages.trafilatura
-        inputs.paj.packages.${pkgs.stdenv.hostPlatform.system}.default
-        inputs.paj-rc.packages.${pkgs.stdenv.hostPlatform.system}.default
+        paj
+        pajRc
       ];
 
       home.file.".pi/agent/settings.json".source =
@@ -135,11 +138,26 @@
       # Paj integration
       home.file.".pi/agent/paj.json".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.nixos/modules/pi/paj/paj.json";
-      home.sessionVariables.PAJ_PROJECT_DIRS = "${config.home.homeDirectory}/Development,${config.home.homeDirectory}/Development/work";
       home.file.".pi/agent/extensions/paj".source = "${inputs.paj}/extensions/paj";
-      home.file.".pi/agent/extensions/paj-rc".source = "${inputs.paj-rc.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/node_modules/paj-rc";
+      home.file.".pi/agent/extensions/paj-rc".source = "${pajRc}/lib/node_modules/paj-rc";
       home.file.".pi/agent/skills/paj".source = "${inputs.paj}/skills/paj";
       home.file.".pi/agent/skills/paj-subagents".source = "${inputs.paj}/skills/paj-subagents";
+
+      systemd.user.services.paj-rc = {
+        Unit = {
+          Description = "Private browser control for live Paj sessions";
+          StartLimitIntervalSec = 60;
+          StartLimitBurst = 5;
+        };
+        Service = {
+          ExecStart = "${pajRc}/bin/paj-rc serve --paj ${paj}/bin/paj";
+          Restart = "on-failure";
+          RestartSec = 2;
+          UMask = "0077";
+          NoNewPrivileges = true;
+        };
+        Install.WantedBy = ["default.target"];
+      };
 
       # Theme
       home.file.".pi/agent/themes/colours.json".source =
