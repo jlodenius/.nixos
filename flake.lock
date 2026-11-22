@@ -112,11 +112,11 @@
     "mattpocock-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1788511407,
-        "narHash": "sha256-dF5i37jHnqfcXD1IRSVzSSm/pfCYSUmOsEhhs5Zx340=",
+        "lastModified": 1795095298,
+        "narHash": "sha256-fc5+qmchp1IQ/rQP1olWKC1eC4VdYhaB7YYzC3+JBe0=",
         "owner": "mattpocock",
         "repo": "skills",
-        "rev": "3cca18b368ae95cdbdebbff572ccafa662551015",
+        "rev": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
         "type": "github"
       },
       "original": {
@@ -239,11 +239,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795302198,
-        "narHash": "sha256-eXmeO/jIu9TGmHbEziAnoQH8m3PvQSn+hXQXBVQNVjM=",
+        "lastModified": 1795305132,
+        "narHash": "sha256-suBwlCAY6qv3pJ/Xs+wADgPcyRwGd2mOKhSExe/LWTI=",
         "owner": "jlodenius",
         "repo": "paj",
-        "rev": "3f416b11acd6491c47c2b539d80924a4877af0b6",
+        "rev": "cdbba5fcc4acc4b9e043ebe6b998e88767b5907d",
         "type": "github"
       },
       "original": {
@@ -255,11 +255,11 @@
     },
     "paj-captain": {
       "locked": {
-        "lastModified": 1795300942,
-        "narHash": "sha256-5VVmojlEmtRWIeg+LwiH9JaKwHzAz1deKG59akiHLm4=",
+        "lastModified": 1795305132,
+        "narHash": "sha256-TmJCFpA25pqYEGVyVBRpLZchFQnNDka64g9hm22C5XI=",
         "owner": "jlodenius",
         "repo": "paj-captain",
-        "rev": "1fbb794355793e01fb3fe1c9346748a4c6a4d4e6",
+        "rev": "f2b7ab9b44c58066101e66bc109407f490b61b18",
         "type": "github"
       },
       "original": {
@@ -272,11 +272,11 @@
     "paj-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1795300604,
-        "narHash": "sha256-LKs5NNT0GXNZbpx3RZaJADUUg5ubU5MGX5256RFHgao=",
+        "lastModified": 1795305132,
+        "narHash": "sha256-4gU3i2rawP+x6ufVHTLrH4L2gD+CS/P2IMcALD2QZMI=",
         "owner": "jlodenius",
         "repo": "paj.nvim",
-        "rev": "9d71d068d41e9b13c05c005f7a0b45d51060682f",
+        "rev": "cccea389639854d8259efe97438516b9abd9b446",
         "type": "github"
       },
       "original": {
@@ -293,11 +293,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795300604,
-        "narHash": "sha256-6+Ahr+d6qc//JpAIc6oUFHZX0j1hBrkGEDQjzzX0NdU=",
+        "lastModified": 1795305132,
+        "narHash": "sha256-A6T9Pl5+hMy4Dnm7abyrHH7ZIdS+jmjwMvTwaQClTGc=",
         "owner": "jlodenius",
         "repo": "paj-rc",
-        "rev": "2118db4d62cfdfec1ca475966b422fc221dc474a",
+        "rev": "3390732ee9784a0235316dbae08eca4edf11afe1",
         "type": "github"
       },
       "original": {
@@ -309,11 +309,11 @@
     },
     "paj-voice": {
       "locked": {
-        "lastModified": 1795302451,
-        "narHash": "sha256-bLdp5gtaZ+TTlnWZbz6lhviT6hzUQKdVjsQvkPGzO/U=",
+        "lastModified": 1795305132,
+        "narHash": "sha256-N17zfmnJ6Y564omDg2ScNfmPOew6OAbC85dftF17A5w=",
         "owner": "jlodenius",
         "repo": "paj-voice",
-        "rev": "2727e468fca236104a09b3098ceeba75f869b5f4",
+        "rev": "a798f1bab81a7afc6b95cae87ed418f0aed3c2e7",
         "type": "github"
       },
       "original": {
