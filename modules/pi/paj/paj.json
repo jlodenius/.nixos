@@ -24,7 +24,7 @@
   },
   "voice": {
     "voice": "ljspeech",
-    "volume": 40,
+    "volume": 30,
     "speed": 1,
     "pauseSeconds": 1.5,
     "maxMessageSeconds": 120,
