@@ -1,10 +1,5 @@
 {inputs, ...}: {
-  flake.nixosModules.desktop = {pkgs, ...}: let
-    pipewire = pkgs.pipewire.overrideAttrs (old: {
-      # Backport https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/3004.
-      patches = (old.patches or []) ++ [./patches/pipewire-bluetooth-removal.patch];
-    });
-  in {
+  flake.nixosModules.desktop = {pkgs, ...}: {
     # Graphics
     hardware.graphics = {
       enable = true;
@@ -29,7 +24,6 @@
 
     services.pipewire = {
       enable = true;
-      package = pipewire;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
@@ -37,7 +31,6 @@
 
       wireplumber = {
         enable = true;
-        package = pkgs.wireplumber.override {inherit pipewire;};
         extraConfig = {
           "10-bluez" = {
             "monitor.bluez.properties" = {
