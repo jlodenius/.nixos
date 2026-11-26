@@ -1,12 +1,10 @@
-{
-  pkgs ?
-    import (builtins.getFlake (toString ../.)).inputs.nixpkgs {
-      config = {
-        allowUnfree = true;
-        android_sdk.accept_license = true;
-      };
-    },
-}: let
+{pkgs ?
+  import (builtins.getFlake (toString ../.)).inputs.nixpkgs {
+    config = {
+      allowUnfree = true;
+      android_sdk.accept_license = true;
+    };
+  }}: let
   androidComposition = pkgs.androidenv.composeAndroidPackages {
     toolsVersion = null;
     platformVersions = ["36"];
