@@ -73,27 +73,40 @@
 
     home-manager.users.jacob = {
       config,
+      lib,
       pkgs,
       ...
-    }: {
+    }: let
+      heliumOpen = pkgs.writeShellApplication {
+        name = "helium-open";
+        runtimeInputs = [pkgs.niri pkgs.jq pkgs.coreutils];
+        text = lib.removePrefix "#!/usr/bin/env bash\n" (builtins.readFile ./niri/scripts/helium-open.sh);
+      };
+      heliumMimeTypes = [
+        "text/html"
+        "application/pdf"
+        "application/xhtml+xml"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+        "x-scheme-handler/about"
+        "x-scheme-handler/unknown"
+      ];
+    in {
       home.sessionVariables = {
         MOZ_ENABLE_WAYLAND = "1";
         XDG_CONFIG_HOME = "$HOME/.config";
-        BROWSER = "helium";
+        BROWSER = lib.getExe heliumOpen;
       };
 
-      # Default applications
+      xdg.desktopEntries.helium-open = {
+        name = "Helium (oldest window)";
+        exec = "${lib.getExe heliumOpen} %U";
+        noDisplay = true;
+        mimeType = heliumMimeTypes;
+      };
       xdg.mimeApps = {
         enable = true;
-        defaultApplications = {
-          "text/html" = "helium.desktop";
-          "application/pdf" = "helium.desktop";
-          "application/xhtml+xml" = "helium.desktop";
-          "x-scheme-handler/http" = "helium.desktop";
-          "x-scheme-handler/https" = "helium.desktop";
-          "x-scheme-handler/about" = "helium.desktop";
-          "x-scheme-handler/unknown" = "helium.desktop";
-        };
+        defaultApplications = lib.genAttrs heliumMimeTypes (_: "helium-open.desktop");
       };
 
       # GTK, QT & Dark theme

@@ -1,23 +1,22 @@
 #!/usr/bin/env bash
-# Open a URL in Helium (sent to the running instance, or launches it), then
-# focus the Helium window.
 set -euo pipefail
 
-target="${1:?usage: helium-open.sh <url>}"
+if (($# == 0)); then
+  exec helium
+fi
 
-niri msg action spawn -- helium "$target"
+# Niri assigns window IDs in creation order, regardless of focus history.
+oldest=$(niri msg -j windows 2>/dev/null \
+  | jq -r '[.[] | select(.app_id == "helium")] | min_by(.id) | .id // empty') || oldest=""
 
-# Already in a Helium window: the tab opens there, don't yank focus elsewhere.
-focused=$(niri msg -j windows 2>/dev/null \
-      | jq -r '.[] | select(.is_focused and .app_id == "helium") | .id // empty') || focused=""
-[ -n "$focused" ] && exit 0
+if [[ -n "$oldest" ]] && niri msg action focus-window --id "$oldest" 2>/dev/null; then
+  for _ in {1..20}; do
+    if niri msg -j focused-window 2>/dev/null | jq -e --argjson id "$oldest" '.id == $id' >/dev/null; then
+      unset XDG_ACTIVATION_TOKEN DESKTOP_STARTUP_ID
+      break
+    fi
+    sleep 0.05
+  done
+fi
 
-for _ in 1 2 3 4 5; do
-  id=$(niri msg -j windows 2>/dev/null \
-        | jq -r '[.[] | select(.app_id == "helium")] | sort_by(.id) | .[0].id // empty') || id=""
-  if [ -n "$id" ]; then
-    niri msg action focus-window --id "$id"
-    break
-  fi
-  sleep 0.2
-done
+exec helium -- "$@"
