@@ -79,7 +79,7 @@
     }: let
       heliumOpen = pkgs.writeShellApplication {
         name = "helium-open";
-        runtimeInputs = [pkgs.niri pkgs.jq pkgs.coreutils];
+        runtimeInputs = [pkgs.jq pkgs.coreutils];
         text = lib.removePrefix "#!/usr/bin/env bash\n" (builtins.readFile ./niri/scripts/helium-open.sh);
       };
       heliumMimeTypes = [
@@ -95,11 +95,11 @@
       home.sessionVariables = {
         MOZ_ENABLE_WAYLAND = "1";
         XDG_CONFIG_HOME = "$HOME/.config";
-        BROWSER = lib.getExe heliumOpen;
+        BROWSER = "helium-open";
       };
 
       xdg.desktopEntries.helium-open = {
-        name = "Helium (oldest window)";
+        name = "Opener";
         exec = "${lib.getExe heliumOpen} %U";
         noDisplay = true;
         mimeType = heliumMimeTypes;
@@ -166,6 +166,7 @@
 
       # User packages
       home.packages = with pkgs; [
+        heliumOpen
         # System & UI
         bluetuith
         grim

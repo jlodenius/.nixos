@@ -40,6 +40,7 @@
       # Wayland-native rendering (consistent with MOZ_ENABLE_WAYLAND elsewhere)
       flags = [
         "--ozone-platform-hint=auto"
+        "--load-extension=${./opener}"
       ];
 
       # Chromium enterprise policies. Reference:
